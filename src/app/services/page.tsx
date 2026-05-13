@@ -1,14 +1,21 @@
+import type { Metadata } from "next";
 import { ApplyModal } from "@/components/apply-modal";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ContactFooter } from "@/components/contact-footer";
-import { Hero } from "@/components/hero";
 import { Navbar } from "@/components/navbar";
+import { ServicesSection } from "@/components/services-section";
 import { SiteEffects } from "@/components/site-effects";
 import { SupportWidget } from "@/components/support-widget";
 import { GalanaProvider } from "@/providers/galana-provider";
 import { loadSiteData } from "@/lib/load-site-data";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Services — Galana Group",
+  description:
+    "Discover our precast concrete, drainage, roofing, and paving solutions and services.",
+};
+
+export default function ServicesPage() {
   const siteData = loadSiteData();
 
   return (
@@ -17,7 +24,7 @@ export default function Home() {
       <div className="cursor-ring" id="cursorRing" />
       <Navbar />
       <main>
-        <Hero />
+        <ServicesSection />
         <ContactFooter />
       </main>
       <CartDrawer />

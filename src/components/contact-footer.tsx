@@ -45,14 +45,44 @@ export function ContactFooter() {
                   </div>
                 </div>
               </div>
-              <div className="contact-item reveal reveal-delay-2">
+              {contact.altPhoneTel && (
+                <div className="contact-item reveal reveal-delay-1">
+                  <div className="contact-icon">📱</div>
+                  <div>
+                    <div className="contact-item-label">Alternative Phone</div>
+                    <div className="contact-item-value">
+                      <a href={`tel:${contact.altPhoneTel}`}>
+                        {contact.altPhoneDisplay}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {contact.generalEmail && (
+                <div className="contact-item reveal reveal-delay-2">
+                  <div className="contact-icon">📧</div>
+                  <div>
+                    <div className="contact-item-label">General Inquiries</div>
+                    <div className="contact-item-value">
+                      <a href={`mailto:${contact.generalEmail}`}>
+                        {contact.generalEmail}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="contact-item reveal reveal-delay-3">
                 <div className="contact-icon">📍</div>
                 <div>
                   <div className="contact-item-label">Location</div>
-                  <div className="contact-item-value">{contact.location}</div>
+                  <div className="contact-item-value">
+                    <a href={contact.locationUrl} target="_blank" rel="noopener noreferrer">
+                      {contact.location}
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div className="contact-item reveal reveal-delay-3">
+              <div className="contact-item reveal reveal-delay-4">
                 <div className="contact-icon">⏰</div>
                 <div>
                   <div className="contact-item-label">Operating Hours</div>
@@ -60,6 +90,24 @@ export function ContactFooter() {
                     {contact.operatingHours}
                   </div>
                 </div>
+              </div>
+              <div className="contact-actions reveal reveal-delay-5" style={{ marginTop: "1.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                <a
+                  href={`https://wa.me/${contact.whatsappDigits}?text=${encodeURIComponent(data.help.whatsappPrefill)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary"
+                  style={{ flex: "1", minWidth: "150px", textAlign: "center" }}
+                >
+                  💬 WhatsApp
+                </a>
+                <a
+                  href={`tel:${contact.phoneTel}`}
+                  className="btn-outline"
+                  style={{ flex: "1", minWidth: "150px", textAlign: "center" }}
+                >
+                  📞 Call Now
+                </a>
               </div>
             </div>
           </div>
@@ -194,19 +242,19 @@ export function ContactFooter() {
             <h4>Services</h4>
             <ul>
               <li>
-                <Link href="/#services">Precast Products</Link>
+                <Link href="/services">Precast Products</Link>
               </li>
               <li>
-                <Link href="/#services">Custom Design</Link>
+                <Link href="/services">Custom Design</Link>
               </li>
               <li>
-                <Link href="/#services">Site Assessment</Link>
+                <Link href="/services">Site Assessment</Link>
               </li>
               <li>
-                <Link href="/#services">Delivery & Logistics</Link>
+                <Link href="/services">Delivery & Logistics</Link>
               </li>
               <li>
-                <Link href="/#services">Contractor Accounts</Link>
+                <Link href="/services">Contractor Accounts</Link>
               </li>
             </ul>
           </div>
@@ -214,19 +262,19 @@ export function ContactFooter() {
             <h4>Products</h4>
             <ul>
               <li>
-                <Link href="/#products">Concrete Pipes</Link>
+                <Link href="/products">Concrete Pipes</Link>
               </li>
               <li>
-                <Link href="/#products">Paving Blocks</Link>
+                <Link href="/products">Paving Blocks</Link>
               </li>
               <li>
-                <Link href="/#products">Precast Elements</Link>
+                <Link href="/products">Precast Elements</Link>
               </li>
               <li>
-                <Link href="/#products">Roof Tiles</Link>
+                <Link href="/products">Roof Tiles</Link>
               </li>
               <li>
-                <Link href="/#calculator">Materials Calculator</Link>
+                <Link href="/calculator">Materials Calculator</Link>
               </li>
             </ul>
           </div>
@@ -234,16 +282,16 @@ export function ContactFooter() {
             <h4>Company</h4>
             <ul>
               <li>
-                <Link href="/#why">About Galana</Link>
+                <Link href="/why-us">About Galana</Link>
               </li>
               <li>
                 <Link href="/careers">Careers</Link>
               </li>
               <li>
-                <Link href="/#contact">Contact Us</Link>
+                <Link href="/">Contact Us</Link>
               </li>
               <li>
-                <Link href="/#contact">Get a Quote</Link>
+                <Link href="/">Get a Quote</Link>
               </li>
             </ul>
           </div>
