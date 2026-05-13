@@ -43,8 +43,9 @@ export function SiteEffects() {
     if (syncRingToCursor) document.addEventListener("mousemove", syncRingToCursor);
 
     const onScroll = () => {
-      const nav = document.getElementById("navbar");
-      nav?.classList.toggle("scrolled", window.scrollY > 60);
+      document
+        .getElementById("siteHeader")
+        ?.classList.toggle("scrolled", window.scrollY > 60);
     };
     window.addEventListener("scroll", onScroll);
     onScroll();
@@ -62,7 +63,7 @@ export function SiteEffects() {
     const hookHover = () => {
       document
         .querySelectorAll(
-          "a,button,.product-card,.service-card,.job-card,.calc-tab,.nav-cart-btn,.help-fab-main,.cart-drawer-close,.nav-menu-toggle"
+          "a,button,.product-card,.service-card,.job-card,.calc-tab,.nav-cart-btn,.help-fab-wa,.help-fab-ai,.cart-drawer-close,.nav-menu-toggle"
         )
         .forEach((el) => {
           const h = el as HTMLElement;

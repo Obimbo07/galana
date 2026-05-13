@@ -8,6 +8,7 @@ export function WhySection() {
   return (
     <section id="why">
       <div className="why-mood-strip" aria-hidden />
+      <div className="section-inner">
       <div className="why-wrapper">
         <div>
           <div className="section-tag reveal">{w.sectionTag}</div>
@@ -39,6 +40,7 @@ export function WhySection() {
             ))}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

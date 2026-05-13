@@ -5,21 +5,28 @@
       "note": "The Galana logo is embedded as one long data: image/png;base64,... URI on the nav and footer <img> in galana_group_index.html (same asset in both places). It is not duplicated in this file."
     }
   },
+  "social": {
+    "twitter": "https://twitter.com/galanagroup",
+    "facebook": "https://www.facebook.com/galanagroup",
+    "linkedin": "https://www.linkedin.com/company/galana-group",
+    "instagram": "https://www.instagram.com/galanagroup",
+    "youtube": "https://www.youtube.com/@galanagroup"
+  },
   "hero": {
     "eyebrow": "Kenya's Premier Concrete Solutions",
     "titleLines": [
-      "You Dream.",
-      "We Deliver."
+      "At Galana Group",
+      "You Dream We Deliver"
     ],
     "titleItalicIndex": 1,
     "sub": "From precast walls to precision drainage, Galana Group engineers every concrete solution with accuracy, speed, and a commitment that goes beyond supply.",
     "primaryCta": {
       "label": "Explore Products",
-      "href": "#products"
+      "href": "/#products"
     },
     "secondaryCta": {
       "label": "⚡ Materials Calculator",
-      "href": "#calculator"
+      "href": "/#calculator"
     },
     "stats": [
       {
@@ -53,42 +60,48 @@
       "icon": "🏗️",
       "name": "Precast Concrete Products",
       "desc": "Pipes, wall panels, roof tiles, paving blocks, drainage systems and 40+ custom elements — manufactured to KEBS standards with precision vibration technology.",
-      "tag": "Core Service"
+      "tag": "Core Service",
+      "image": "/images/wallpapers/concrete-pipes.png"
     },
     {
       "num": "02",
       "icon": "📐",
       "name": "Custom Design & Engineering",
       "desc": "Our engineers work with architects and developers to design bespoke precast elements — beyond catalogue products. Submit your drawings, we manufacture to spec.",
-      "tag": "Differentiator"
+      "tag": "Differentiator",
+      "image": "/images/wallpapers/custom-designs.png"
     },
     {
       "num": "03",
       "icon": "🔍",
       "name": "Site Assessment & Consultation",
       "desc": "We send qualified technicians to your site to assess drainage needs, recommend pipe sizes, calculate quantities and advise on the right products — free for qualifying projects.",
-      "tag": "Differentiator"
+      "tag": "Differentiator",
+      "image": "/images/wallpapers/site-assesment.jpeg"
     },
     {
       "num": "04",
       "icon": "🚛",
       "name": "Tracked Delivery & Logistics",
       "desc": "Real-time order tracking with WhatsApp & SMS notifications. Construction timelines are tight — we respect yours. Available across Kenya and East Africa.",
-      "tag": "Differentiator"
+      "tag": "Differentiator",
+      "image": "/images/wallpapers/tracked-delievery.jpeg"
     },
     {
       "num": "05",
       "icon": "🏢",
       "name": "Contractor & Bulk Accounts",
       "desc": "Dedicated portal for developers, county governments and NGOs. Access order history, invoices, preferred pricing and priority stock allocation in one dashboard.",
-      "tag": "Differentiator"
+      "tag": "Differentiator",
+      "image": "/images/wallpapers/contractor.jpeg"
     },
     {
       "num": "06",
       "icon": "🔧",
       "name": "Installation Referral Network",
       "desc": "Need laying or installation help? We connect you to our vetted contractor network — certified professionals who work with our products daily.",
-      "tag": "Added Value"
+      "tag": "Added Value",
+      "image": "/images/wallpapers/connector-network.jpeg"
     }
   ],
   "why": {
@@ -154,8 +167,12 @@
     "heading": "Build Your Career With Us",
     "sub": "We're growing. We're ambitious. And we invest in people who share our drive to deliver extraordinary things.",
     "openApplicationCta": "Submit Open Application →",
+    "featuredJobSlug": "civil-structural-engineer",
+    "featuredSummary": "Lead structural design and calculations for precast concrete, drainage and roofing scope—from drawings through site coordination—with Kenya/EAC codes and manufacturing realities in mind.",
+    "viewAllRolesCta": "View all roles",
     "jobs": [
       {
+        "slug": "civil-structural-engineer",
         "title": "Civil / Structural Engineer",
         "tags": [
           "Nairobi",
@@ -165,6 +182,7 @@
         "modalKey": "Civil Engineer"
       },
       {
+        "slug": "sales-executive-construction",
         "title": "Sales Executive – Construction Materials",
         "tags": [
           "Nairobi / Field",
@@ -174,6 +192,7 @@
         "modalKey": "Sales Executive"
       },
       {
+        "slug": "production-supervisor-precast",
         "title": "Production Supervisor – Precast Plant",
         "tags": [
           "Nairobi",
@@ -183,6 +202,7 @@
         "modalKey": "Production Supervisor"
       },
       {
+        "slug": "logistics-delivery-coordinator",
         "title": "Logistics & Delivery Coordinator",
         "tags": [
           "Nairobi",
@@ -192,6 +212,7 @@
         "modalKey": "Logistics Coordinator"
       },
       {
+        "slug": "quantity-surveyor-estimator",
         "title": "Quantity Surveyor / Estimator",
         "tags": [
           "Nairobi",
@@ -201,6 +222,7 @@
         "modalKey": "Quantity Surveyor"
       },
       {
+        "slug": "it-digital-marketing-intern",
         "title": "IT & Digital Marketing Intern",
         "tags": [
           "Nairobi",
@@ -212,7 +234,7 @@
     ]
   },
   "footer": {
-    "tagline": "You Dream, We Deliver",
+    "tagline": "At Galana Group",
     "about": "Kenya's trusted partner for precast concrete, drainage, roofing and paving solutions since the 1960s.",
     "copyright": "© 2025 Galana Group. All Rights Reserved. | Nairobi, Kenya"
   },

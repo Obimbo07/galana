@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { NavSocialLinks } from "@/components/nav-social";
 import { useGalana } from "@/providers/galana-provider";
 
 export function ContactFooter() {
@@ -14,6 +15,7 @@ export function ContactFooter() {
   return (
     <>
       <section id="contact">
+        <div className="section-inner">
         <div className="contact-wrapper">
           <div>
             <div className="section-tag reveal">Get In Touch</div>
@@ -159,9 +161,11 @@ export function ContactFooter() {
             )}
           </div>
         </div>
+        </div>
       </section>
 
       <footer>
+        <div className="section-inner">
         <div className="footer-top">
           <div>
             <div className="footer-brand">
@@ -190,19 +194,19 @@ export function ContactFooter() {
             <h4>Services</h4>
             <ul>
               <li>
-                <Link href="#services">Precast Products</Link>
+                <Link href="/#services">Precast Products</Link>
               </li>
               <li>
-                <Link href="#services">Custom Design</Link>
+                <Link href="/#services">Custom Design</Link>
               </li>
               <li>
-                <Link href="#services">Site Assessment</Link>
+                <Link href="/#services">Site Assessment</Link>
               </li>
               <li>
-                <Link href="#services">Delivery & Logistics</Link>
+                <Link href="/#services">Delivery & Logistics</Link>
               </li>
               <li>
-                <Link href="#services">Contractor Accounts</Link>
+                <Link href="/#services">Contractor Accounts</Link>
               </li>
             </ul>
           </div>
@@ -210,19 +214,19 @@ export function ContactFooter() {
             <h4>Products</h4>
             <ul>
               <li>
-                <Link href="#products">Concrete Pipes</Link>
+                <Link href="/#products">Concrete Pipes</Link>
               </li>
               <li>
-                <Link href="#products">Paving Blocks</Link>
+                <Link href="/#products">Paving Blocks</Link>
               </li>
               <li>
-                <Link href="#products">Precast Elements</Link>
+                <Link href="/#products">Precast Elements</Link>
               </li>
               <li>
-                <Link href="#products">Roof Tiles</Link>
+                <Link href="/#products">Roof Tiles</Link>
               </li>
               <li>
-                <Link href="#calculator">Materials Calculator</Link>
+                <Link href="/#calculator">Materials Calculator</Link>
               </li>
             </ul>
           </div>
@@ -230,36 +234,26 @@ export function ContactFooter() {
             <h4>Company</h4>
             <ul>
               <li>
-                <Link href="#why">About Galana</Link>
+                <Link href="/#why">About Galana</Link>
               </li>
               <li>
-                <Link href="#careers">Careers</Link>
+                <Link href="/careers">Careers</Link>
               </li>
               <li>
-                <Link href="#contact">Contact Us</Link>
+                <Link href="/#contact">Contact Us</Link>
               </li>
               <li>
-                <Link href="#contact">Get a Quote</Link>
+                <Link href="/#contact">Get a Quote</Link>
               </li>
             </ul>
           </div>
         </div>
         <div className="footer-bottom">
           <div className="footer-copy">{footer.copyright}</div>
-          <div className="social-row">
-            <a href="#" className="social-btn" title="Facebook">
-              f
-            </a>
-            <a href="#" className="social-btn" title="Instagram">
-              in
-            </a>
-            <a href="#" className="social-btn" title="LinkedIn">
-              Li
-            </a>
-            <a href="#" className="social-btn" title="WhatsApp">
-              W
-            </a>
+          <div className="social-row footer-social-wrap">
+            <NavSocialLinks social={data.social} />
           </div>
+        </div>
         </div>
       </footer>
     </>

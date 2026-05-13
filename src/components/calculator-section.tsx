@@ -30,6 +30,7 @@ export function CalculatorSection() {
 
   return (
     <section id="calculator">
+      <div className="section-inner">
       <div className="section-tag reveal">Smart Tools</div>
       <h2 className="section-title reveal reveal-delay-1">
         Materials <em>Calculator</em>
@@ -428,11 +429,12 @@ export function CalculatorSection() {
             </div>
           </div>
           <div style={{ marginTop: "2rem" }}>
-            <Link href="#contact" className="btn-primary">
+            <Link href="/#contact" className="btn-primary">
               Request Formal Quote →
             </Link>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

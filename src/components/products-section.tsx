@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useGalana } from "@/providers/galana-provider";
 
@@ -23,6 +24,7 @@ export function ProductsSection() {
 
   return (
     <section id="products">
+      <div className="section-inner">
       <div className="section-tag reveal">Product Catalog</div>
       <h2 className="section-title reveal reveal-delay-1">
         Built for Every <em>Project</em>
@@ -103,9 +105,10 @@ export function ProductsSection() {
         style={{ textAlign: "center", marginTop: "2.5rem" }}
         className="reveal reveal-delay-4"
       >
-        <a href="#contact" className="btn-outline">
+        <Link href="/#contact" className="btn-outline">
           Request Full Catalog →
-        </a>
+        </Link>
+      </div>
       </div>
     </section>
   );

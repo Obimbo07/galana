@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { ThemeInit } from "@/components/theme-init";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -18,7 +19,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Galana Group – You Dream We Deliver",
+  title: "Galana Group — At Galana You Dream We Deliver",
   description:
     "Precast concrete, drainage, paving and roofing solutions across Kenya and East Africa.",
 };
@@ -30,7 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${cormorant.variable}`}>
-      <body>{children}</body>
+      <body>
+        <ThemeInit />
+        {children}
+      </body>
     </html>
   );
 }

@@ -2,6 +2,14 @@ export interface SiteData {
   branding?: {
     logo?: { source?: string; note?: string };
   };
+  /** Public profile URLs; omit keys or leave empty string to hide */
+  social?: {
+    twitter?: string;
+    facebook?: string;
+    linkedin?: string;
+    instagram?: string;
+    youtube?: string;
+  };
   hero: {
     eyebrow: string;
     titleLines: string[];
@@ -18,6 +26,8 @@ export interface SiteData {
     name: string;
     desc: string;
     tag: string;
+    /** Public URL (/images/...) or absolute http(s); overrides accent map when set */
+    image?: string;
   }>;
   why: {
     sectionTag: string;
@@ -31,7 +41,13 @@ export interface SiteData {
     heading: string;
     sub: string;
     openApplicationCta: string;
+    /** Homepage featured role; matches one job.slug */
+    featuredJobSlug: string;
+    /** Short blurb for the homepage featured card */
+    featuredSummary?: string;
+    viewAllRolesCta: string;
     jobs: Array<{
+      slug: string;
       title: string;
       tags: string[];
       modalKey: string;

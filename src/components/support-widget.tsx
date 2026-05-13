@@ -1,27 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { AiAssistantFab } from "@/components/ai-assistant-fab";
 import { AssistantChat } from "@/components/assistant-chat";
+import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { useAiSoundPreference } from "@/hooks/use-ai-sound-preference";
 import { tryPlayAiAssistantChime } from "@/lib/ai-assistant-sfx";
-import { faqAnswer } from "@/lib/faq-match";
 import type { SiteData } from "@/types/site-data";
 
-type HelpMode = "wa" | "assistant" | "faq";
+const ASSISTANT_PANEL_ID = "helpAssistantPanel";
 
 export function SupportWidget({ data }: { data: SiteData }) {
-  const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<HelpMode>("wa");
+  const [assistantOpen, setAssistantOpen] = useState(false);
   const { soundsEnabled, setSoundsEnabled } = useAiSoundPreference();
-  const [faqLog, setFaqLog] = useState<
-    Array<{ role: "user" | "bot"; text: string }>
-  >([
-    {
-      role: "bot",
-      text: "Ask about delivery, certification, products, or pricing. Short questions work best.",
-    },
-  ]);
-  const [faqInput, setFaqInput] = useState("");
 
   const digits = String(data.contact?.whatsappDigits ?? "").replace(
     /\D/g,
@@ -35,9 +26,9 @@ export function SupportWidget({ data }: { data: SiteData }) {
     : "#";
 
   useEffect(() => {
-    if (!open || mode !== "assistant") return;
+    if (!assistantOpen) return;
     tryPlayAiAssistantChime();
-  }, [open, mode, soundsEnabled]);
+  }, [assistantOpen, soundsEnabled]);
 
   const setAssistantSoundsEnabled = useCallback(
     (next: boolean) => {
@@ -47,138 +38,40 @@ export function SupportWidget({ data }: { data: SiteData }) {
     [setSoundsEnabled]
   );
 
-  function sendFaq() {
-    const t = faqInput.trim();
-    if (!t) return;
-    setFaqLog((prev) => [
-      ...prev,
-      { role: "user", text: t },
-      { role: "bot", text: faqAnswer(data, t) },
-    ]);
-    setFaqInput("");
-  }
-
-  let panelHead = "WhatsApp";
-  if (mode === "faq") panelHead = "Quick FAQ";
-  if (mode === "assistant") panelHead = "AI assistant";
-
   return (
     <div className="help-fab-wrap" id="helpFabWrap">
       <div
-        className={`help-panel${open ? " open" : ""}`}
-        id="helpPanel"
+        className={`help-panel${assistantOpen ? " open" : ""}`}
+        id={ASSISTANT_PANEL_ID}
+        aria-hidden={!assistantOpen}
         aria-live="polite"
       >
-        <div className="help-panel-head" id="helpPanelHead">
-          {panelHead}
+        <div className="help-panel-head help-panel-head-row" id="helpPanelHead">
+          <span>AI assistant</span>
+          <button
+            type="button"
+            className="help-panel-close"
+            aria-label="Close AI assistant"
+            onClick={() => setAssistantOpen(false)}
+          >
+            ×
+          </button>
         </div>
-
-        {mode === "wa" ? (
-          <>
-            <div className="help-chat-log help-wa-body" id="helpChatLog">
-              <div className="help-msg bot">
-                Tap below to chat with us on WhatsApp — fastest for timelines,
-                layouts, or site photos.
-              </div>
-            </div>
-            <div className="help-chat-input-row" id="helpWaRow">
-              <a
-                className="btn-primary"
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  textDecoration: "none",
-                }}
-                id="helpWaLink"
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={digits ? undefined : "Set contact.whatsappDigits in JSON"}
-              >
-                Open WhatsApp
-              </a>
-            </div>
-          </>
-        ) : null}
-
-        {mode === "faq" ? (
-          <>
-            <div className="help-chat-log" id="helpChatLog">
-              {faqLog.map((m, i) => (
-                <div
-                  key={`${i}-${m.role}`}
-                  className={`help-msg ${m.role === "bot" ? "bot" : "user"}`}
-                >
-                  {m.text}
-                </div>
-              ))}
-            </div>
-            <div className="help-chat-input-row" id="helpChatInputRow">
-              <input
-                type="text"
-                id="helpChatInput"
-                placeholder="Keyword question…"
-                autoComplete="off"
-                value={faqInput}
-                onChange={(e) => setFaqInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") sendFaq();
-                }}
-              />
-              <button type="button" id="helpChatSend" onClick={sendFaq}>
-                Send
-              </button>
-            </div>
-          </>
-        ) : null}
-
-        {mode === "assistant" ? (
-          <AssistantChat
-            data={data}
-            soundsEnabled={soundsEnabled}
-            onSoundsEnabledChange={setAssistantSoundsEnabled}
-          />
-        ) : null}
+        <AssistantChat
+          data={data}
+          soundsEnabled={soundsEnabled}
+          onSoundsEnabledChange={setAssistantSoundsEnabled}
+        />
       </div>
 
-      <div className="help-mode-toggle three" id="helpModeToggle">
-        <button
-          type="button"
-          data-mode="wa"
-          className={mode === "wa" ? "active" : ""}
-          onClick={() => setMode("wa")}
-        >
-          WhatsApp
-        </button>
-        <button
-          type="button"
-          data-mode="assistant"
-          className={mode === "assistant" ? "active" : ""}
-          onClick={() => setMode("assistant")}
-        >
-          AI
-        </button>
-        <button
-          type="button"
-          data-mode="faq"
-          className={mode === "faq" ? "active" : ""}
-          onClick={() => setMode("faq")}
-          title="Keyword FAQ"
-        >
-          FAQ
-        </button>
+      <div className="help-fab-stack">
+        <AiAssistantFab
+          open={assistantOpen}
+          onOpenChange={setAssistantOpen}
+          panelId={ASSISTANT_PANEL_ID}
+        />
+        <WhatsAppFab href={waHref} configured={Boolean(digits)} />
       </div>
-
-      <button
-        type="button"
-        className="help-fab-main"
-        id="helpFabBtn"
-        title="Help"
-        aria-label="Open help"
-        onClick={() => setOpen(!open)}
-      >
-        ?
-      </button>
     </div>
   );
 }

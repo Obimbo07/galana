@@ -14,16 +14,6 @@ function formatProductSnapshot(data: SiteData): string {
   return lines.join("\n");
 }
 
-function formatFaqSnippets(data: SiteData): string {
-  const items = (data.faq ?? []).slice(0, 16);
-  return items
-    .map((f, i) => {
-      const k = (f.keywords ?? []).join(", ");
-      return `#${i + 1} [${k}]\n${f.answer}`;
-    })
-    .join("\n---\n");
-}
-
 function calculatorFormulasDigest(data: SiteData): string {
   const c = data.calculator;
   return [
@@ -62,9 +52,6 @@ export function buildAssistantContextBlock(data: SiteData): string {
     "",
     "=== CALCULATOR FORMULAS (must match site behaviour) ===",
     calculatorFormulasDigest(data),
-    "",
-    "=== FAQ SNIPPETS ===",
-    formatFaqSnippets(data),
     "",
     "=== CONTACT & HANDOFF ===",
     contactBlock,
