@@ -1,22 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  extractSuggestedCalculator,
-  findMentionedProductIds,
-} from "@/lib/chat-parse";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { extractSuggestedCalculator } from "@/lib/chat-parse";
 import { useGalana } from "@/providers/galana-provider";
 import type { ChatApiMessage, SuggestedCalculatorPayload } from "@/types/chat";
-import type { SiteData } from "@/types/site-data";
-
-type CatalogProduct = {
-  id: string;
-  name: string;
-  cat: string;
-  catLabel: string;
-  use: string;
-  image: string;
-};
 
 function newSessionId(): string {
   const c = typeof globalThis !== "undefined" ? globalThis.crypto : undefined;
@@ -175,49 +162,27 @@ function applySuggestedToCalc(
 }
 
 export function AssistantChat({
-  data,
   soundsEnabled,
   onSoundsEnabledChange,
 }: {
-  data: SiteData;
   soundsEnabled: boolean;
   onSoundsEnabledChange: (enabled: boolean) => void;
 }) {
-  const { addToCart, setCalc, setMainTab } = useGalana();
-  const [catalog, setCatalog] = useState<CatalogProduct[]>([]);
+  const { setCalc, setMainTab } = useGalana();
   const [messages, setMessages] = useState<ChatApiMessage[]>([
     {
       role: "assistant",
       content:
-        "I'm Galana's assistant. Ask about concrete pipes, paving, roofing, precast, delivery, or estimates. I only know products from our current catalogue — for firm pricing, use **Request quote** or WhatsApp.",
+        "Ask a short question — for example concrete pipes, paving coverage, roofing allowances, delivery, or how to **Request quote**. I summarise from our published info; firm pricing needs a formal quote or WhatsApp.",
     },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [streamVisible, setStreamVisible] = useState("");
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
-  const [productFilter, setProductFilter] = useState("");
-  const [highlightIds, setHighlightIds] = useState<string[]>([]);
   const [lastSuggestion, setLastSuggestion] =
     useState<SuggestedCalculatorPayload | null>(null);
   const [sessionId] = useState(() => newSessionId());
   const logRef = useRef<HTMLDivElement | null>(null);
-
-  const productIndex = useMemo(() => new Map(data.products.map((p) => [p.id, p])), [data.products]);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/products")
-      .then((r) => r.json())
-      .then((j: { products?: CatalogProduct[] }) => {
-        if (cancelled) return;
-        if (Array.isArray(j.products)) setCatalog(j.products);
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -225,27 +190,6 @@ export function AssistantChat({
       if (el) el.scrollTop = el.scrollHeight;
     });
   }, [messages, streamVisible, busy]);
-
-  const filteredProducts = useMemo(() => {
-    const q = productFilter.trim().toLowerCase();
-    const list = catalog.length ? catalog : data.products;
-    if (!q) return list;
-    return list.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.catLabel.toLowerCase().includes(q) ||
-        p.id.toLowerCase().includes(q)
-    );
-  }, [catalog, data.products, productFilter]);
-
-  const toggleProduct = useCallback((id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }, []);
 
   const send = useCallback(async () => {
     const t = input.trim();
@@ -260,7 +204,6 @@ export function AssistantChat({
     const payload = {
       messages: nextThread,
       sessionId,
-      selectedProductIds: [...selectedIds],
       stream: true,
     };
 
@@ -310,9 +253,6 @@ export function AssistantChat({
 
       const finalAssistant = assistantText.trim() || "…";
 
-      const mentioned = findMentionedProductIds(finalAssistant, data.products);
-      setHighlightIds((prev) => [...new Set([...prev, ...mentioned])]);
-
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: finalAssistant },
@@ -332,23 +272,7 @@ export function AssistantChat({
     } finally {
       setBusy(false);
     }
-  }, [
-    busy,
-    data.products,
-    input,
-    messages,
-    selectedIds,
-    sessionId,
-  ]);
-
-  const addSelectionToCart = useCallback(() => {
-    for (const id of selectedIds) {
-      const p = productIndex.get(id);
-      if (p) addToCart(p);
-    }
-  }, [addToCart, productIndex, selectedIds]);
-
-  const highlightSet = useMemo(() => new Set(highlightIds), [highlightIds]);
+  }, [busy, input, messages, sessionId]);
 
   return (
     <div className="assistant-pane">
@@ -367,20 +291,20 @@ export function AssistantChat({
           {soundsEnabled ? "Sound on" : "Sounds off"}
         </button>
       </div>
+
+      <header className="assistant-header">
+        <h2 className="assistant-header-title">Galana assistant</h2>
+        <p className="assistant-header-lead">
+          Quick answers about products, site support, and estimate guidance. For official
+          numbers or a formal quote, use <strong>Request quote</strong> or WhatsApp.
+        </p>
+      </header>
+
       <div className="help-chat-log assistant-log" ref={logRef}>
-        <div className="assistant-greeting">
-          <p className="assistant-greeting-title">What are you building today?</p>
-          <p className="assistant-greeting-hint">
-            Ask about Galana products, quantities, or a quote — or pick items below to
-            include in your next message.
-          </p>
-        </div>
         {messages.map((m, i) => (
           <div
             key={`msg-${m.role}-${i}-${m.content.length}-${m.content.slice(0, 16)}`}
-            className={`help-msg ${m.role === "user" ? "user" : "bot assistant-md"}${
-              i === 0 && m.role === "assistant" ? " assistant-msg-intro" : ""
-            }`}
+            className={`help-msg ${m.role === "user" ? "user" : "bot assistant-md"}`}
           >
             {liteMarkdownChunks(m.content).map((para, pi) => (
               <div className="assistant-md-p" key={`para-${para.length}-${para.slice(0, 36)}-${pi}`}>
@@ -422,56 +346,10 @@ export function AssistantChat({
         </div>
       ) : null}
 
-      <div className="assistant-product-panel">
-        <div className="assistant-product-head">
-          <span>Products</span>
-          <input
-            type="search"
-            className="assistant-product-search"
-            placeholder="Filter…"
-            value={productFilter}
-            onChange={(e) => setProductFilter(e.target.value)}
-            aria-label="Filter products"
-          />
-        </div>
-        <div className="assistant-chip-row">
-          {filteredProducts.slice(0, 80).map((p) => {
-            const on = selectedIds.has(p.id);
-            const hi = highlightSet.has(p.id);
-            return (
-              <button
-                type="button"
-                key={p.id}
-                className={`assistant-chip${on ? " on" : ""}${hi ? " hi" : ""}`}
-                onClick={() => toggleProduct(p.id)}
-                title={p.use}
-              >
-                {p.name}
-              </button>
-            );
-          })}
-        </div>
-        <div className="assistant-actions">
-          <button
-            type="button"
-            className="assistant-cart-btn"
-            disabled={!selectedIds.size || busy}
-            onClick={addSelectionToCart}
-          >
-            Add selection to basket
-          </button>
-          {selectedIds.size ? (
-            <span className="assistant-sel-hint">
-              {selectedIds.size} selected — sent with your next message
-            </span>
-          ) : null}
-        </div>
-      </div>
-
       <div className="help-chat-input-row assistant-input-row">
         <input
           type="text"
-          placeholder="Message Galana…"
+          placeholder="Ask about materials or quoting…"
           autoComplete="off"
           value={input}
           disabled={busy}

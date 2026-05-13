@@ -7,7 +7,6 @@ import { NextResponse } from "next/server";
 import { loadSiteData } from "@/lib/load-site-data";
 import {
   buildFullSystemInstruction,
-  buildSelectionSummary,
   createGeminiModel,
   normalizeGeminiHistory,
 } from "@/lib/gemini-chat";
@@ -60,11 +59,9 @@ function parseBody(body: unknown): ChatRequestBody {
     throw new Error("Provide at least one user message.");
   }
 
-  let selectedProductIds: string[] | undefined;
-  const sel = b.selectedProductIds;
-  if (sel !== undefined) {
+  if (b.selectedProductIds !== undefined) {
+    const sel = b.selectedProductIds;
     if (!Array.isArray(sel)) throw new Error("selectedProductIds must be an array.");
-    selectedProductIds = [...new Set(sel.map(String))].slice(0, 32);
   }
 
   let sessionId: string | undefined;
@@ -80,7 +77,6 @@ function parseBody(body: unknown): ChatRequestBody {
   return {
     messages,
     sessionId,
-    selectedProductIds,
     stream,
   };
 }
@@ -116,11 +112,7 @@ export async function POST(req: Request) {
   }
 
   const data = loadSiteData();
-  const selectionBlock = buildSelectionSummary(
-    data,
-    parsed.selectedProductIds ?? []
-  );
-  const instruction = buildFullSystemInstruction(data, selectionBlock);
+  const instruction = buildFullSystemInstruction(data);
 
   let history;
   let lastUserText;

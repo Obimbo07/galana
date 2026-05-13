@@ -11,37 +11,12 @@ export function resolveGeminiModelName(): string {
   return process.env.GEMINI_MODEL?.trim() || "gemini-2.0-flash";
 }
 
-export function buildFullSystemInstruction(
-  data: SiteData,
-  selectedProductLines: string
-): string {
-  const sel =
-    selectedProductLines.trim().length > 0
-      ? `\n\n=== USER HAS SELECTED PRODUCTS ===\n${selectedProductLines}\nReference these IDs when advising basket additions or quotations.\n`
-      : "";
-
+export function buildFullSystemInstruction(data: SiteData): string {
   return [
     GALANA_ASSISTANT_BASE_PROMPT,
     "\n\n=== LIVE SITE CONTEXT (this request) ===\n",
     buildAssistantContextBlock(data),
-    sel,
   ].join("");
-}
-
-function formatSelectedProducts(
-  data: SiteData,
-  ids: string[] | undefined
-): string {
-  if (!ids?.length) return "";
-  const map = new Map(data.products.map((p) => [p.id, p]));
-  return ids
-    .map((id) => {
-      const p = map.get(id);
-      return p
-        ? `- ${p.id} — ${p.name} (${p.catLabel})`
-        : `- ${id} (not found in catalogue snapshot)`;
-    })
-    .join("\n");
 }
 
 function mergeAdjacentSameRole(history: Content[]): Content[] {
@@ -137,9 +112,3 @@ export function createGeminiModel(apiKey: string, systemInstruction: string) {
   });
 }
 
-export function buildSelectionSummary(
-  data: SiteData,
-  selectedProductIds: string[] | undefined
-): string {
-  return formatSelectedProducts(data, selectedProductIds);
-}

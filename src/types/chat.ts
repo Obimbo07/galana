@@ -9,7 +9,7 @@ export interface ChatRequestBody {
   messages: ChatApiMessage[];
   /** Optional opaque id echoed in responses */
   sessionId?: string;
-  /** Product IDs the user tapped in the widget; merged into prompt */
+  /** Ignored (backward compatible). Formerly used for product-chip context. */
   selectedProductIds?: string[];
   /** Prefer streaming NDJSON (`application/x-ndjson`) vs JSON body */
   stream?: boolean;

@@ -58,7 +58,6 @@ export function SupportWidget({ data }: { data: SiteData }) {
           </button>
         </div>
         <AssistantChat
-          data={data}
           soundsEnabled={soundsEnabled}
           onSoundsEnabledChange={setAssistantSoundsEnabled}
         />
