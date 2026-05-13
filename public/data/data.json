@@ -22,11 +22,11 @@
     "sub": "From precast walls to precision drainage, Galana Group engineers every concrete solution with accuracy, speed, and a commitment that goes beyond supply.",
     "primaryCta": {
       "label": "Explore Products",
-      "href": "/#products"
+      "href": "/products"
     },
     "secondaryCta": {
       "label": "⚡ Materials Calculator",
-      "href": "/#calculator"
+      "href": "/calculator"
     },
     "stats": [
       {
@@ -236,15 +236,19 @@
   "footer": {
     "tagline": "At Galana Group",
     "about": "Kenya's trusted partner for precast concrete, drainage, roofing and paving solutions since the 1960s.",
-    "copyright": "© 2025 Galana Group. All Rights Reserved. | Nairobi, Kenya"
+    "copyright": "© 2026 Galana Group. All Rights Reserved."
   },
   "contact": {
     "quoteEmail": "quotes@galanagroup.co.ke",
     "infoEmail": "info@galanagroup.co.ke",
-    "phoneDisplay": "+254 700 000 000",
-    "phoneTel": "+254700000000",
-    "whatsappDigits": "254700000000",
-    "location": "Nairobi, Kenya",
+    "generalEmail": "Ghalanagroup@gmail.com",
+    "phoneDisplay": "+254 713 490 752",
+    "phoneTel": "0713490752",
+    "altPhoneDisplay": "+254 726 847 725",
+    "altPhoneTel": "0726847725",
+    "whatsappDigits": "254713490752",
+    "location": "Near old Malindi Road, Nairobi, Kenya",
+    "locationUrl": "https://maps.google.com/?q=-3.9790476,39.7170752&entry=gps&shh=CAE&lucs=,94297699,94231188,94280568,47071704,94218641,94282134,94286869&g_st=iwb",
     "operatingHours": "Mon–Fri: 08:00–17:00 · Sat: 08:00–13:00"
   },
   "help": {

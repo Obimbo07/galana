@@ -1,14 +1,21 @@
+import type { Metadata } from "next";
 import { ApplyModal } from "@/components/apply-modal";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ContactFooter } from "@/components/contact-footer";
-import { Hero } from "@/components/hero";
 import { Navbar } from "@/components/navbar";
+import { WhySection } from "@/components/why-section";
 import { SiteEffects } from "@/components/site-effects";
 import { SupportWidget } from "@/components/support-widget";
 import { GalanaProvider } from "@/providers/galana-provider";
 import { loadSiteData } from "@/lib/load-site-data";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Why Us — Galana Group",
+  description:
+    "Learn why Galana Group is Kenya's trusted partner for precast concrete and building materials.",
+};
+
+export default function WhyUsPage() {
   const siteData = loadSiteData();
 
   return (
@@ -17,7 +24,7 @@ export default function Home() {
       <div className="cursor-ring" id="cursorRing" />
       <Navbar />
       <main>
-        <Hero />
+        <WhySection />
         <ContactFooter />
       </main>
       <CartDrawer />

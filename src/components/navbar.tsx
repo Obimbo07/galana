@@ -68,22 +68,27 @@ export function Navbar() {
         </button>
         <ul className={`nav-links ${open ? "nav-links-open" : ""}`}>
           <li>
-            <Link href="/#services" onClick={() => setOpen(false)}>
+            <Link href="/" onClick={() => setOpen(false)}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link href="/services" onClick={() => setOpen(false)}>
               Services
             </Link>
           </li>
           <li>
-            <Link href="/#calculator" onClick={() => setOpen(false)}>
+            <Link href="/calculator" onClick={() => setOpen(false)}>
               Calculator
             </Link>
           </li>
           <li>
-            <Link href="/#products" onClick={() => setOpen(false)}>
+            <Link href="/products" onClick={() => setOpen(false)}>
               Products
             </Link>
           </li>
           <li>
-            <Link href="/#why" onClick={() => setOpen(false)}>
+            <Link href="/why-us" onClick={() => setOpen(false)}>
               Why Us
             </Link>
           </li>
