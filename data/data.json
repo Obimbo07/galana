@@ -1,0 +1,607 @@
+{
+  "branding": {
+    "logo": {
+      "source": "inline-html",
+      "note": "The Galana logo is embedded as one long data: image/png;base64,... URI on the nav and footer <img> in galana_group_index.html (same asset in both places). It is not duplicated in this file."
+    }
+  },
+  "hero": {
+    "eyebrow": "Kenya's Premier Concrete Solutions",
+    "titleLines": [
+      "You Dream.",
+      "We Deliver."
+    ],
+    "titleItalicIndex": 1,
+    "sub": "From precast walls to precision drainage, Galana Group engineers every concrete solution with accuracy, speed, and a commitment that goes beyond supply.",
+    "primaryCta": {
+      "label": "Explore Products",
+      "href": "#products"
+    },
+    "secondaryCta": {
+      "label": "⚡ Materials Calculator",
+      "href": "#calculator"
+    },
+    "stats": [
+      {
+        "num": "60+",
+        "label": "Years in Industry",
+        "dataTarget": 60
+      },
+      {
+        "num": "42+",
+        "label": "Product Types"
+      },
+      {
+        "num": "EA",
+        "label": "East Africa Coverage"
+      }
+    ],
+    "diffBand": [
+      "Instant Materials Calculator",
+      "Custom Precast Design",
+      "Online Quote Builder",
+      "Delivery Tracking",
+      "Site Assessment",
+      "KEBS Certified",
+      "East Africa Coverage",
+      "Contractor Portal"
+    ]
+  },
+  "services": [
+    {
+      "num": "01",
+      "icon": "🏗️",
+      "name": "Precast Concrete Products",
+      "desc": "Pipes, wall panels, roof tiles, paving blocks, drainage systems and 40+ custom elements — manufactured to KEBS standards with precision vibration technology.",
+      "tag": "Core Service"
+    },
+    {
+      "num": "02",
+      "icon": "📐",
+      "name": "Custom Design & Engineering",
+      "desc": "Our engineers work with architects and developers to design bespoke precast elements — beyond catalogue products. Submit your drawings, we manufacture to spec.",
+      "tag": "Differentiator"
+    },
+    {
+      "num": "03",
+      "icon": "🔍",
+      "name": "Site Assessment & Consultation",
+      "desc": "We send qualified technicians to your site to assess drainage needs, recommend pipe sizes, calculate quantities and advise on the right products — free for qualifying projects.",
+      "tag": "Differentiator"
+    },
+    {
+      "num": "04",
+      "icon": "🚛",
+      "name": "Tracked Delivery & Logistics",
+      "desc": "Real-time order tracking with WhatsApp & SMS notifications. Construction timelines are tight — we respect yours. Available across Kenya and East Africa.",
+      "tag": "Differentiator"
+    },
+    {
+      "num": "05",
+      "icon": "🏢",
+      "name": "Contractor & Bulk Accounts",
+      "desc": "Dedicated portal for developers, county governments and NGOs. Access order history, invoices, preferred pricing and priority stock allocation in one dashboard.",
+      "tag": "Differentiator"
+    },
+    {
+      "num": "06",
+      "icon": "🔧",
+      "name": "Installation Referral Network",
+      "desc": "Need laying or installation help? We connect you to our vetted contractor network — certified professionals who work with our products daily.",
+      "tag": "Added Value"
+    }
+  ],
+  "why": {
+    "sectionTag": "Why Galana Group",
+    "title": "The Galana Difference",
+    "items": [
+      {
+        "icon": "📊",
+        "title": "Instant Pricing Estimates",
+        "body": "Unlike competitors, we give you indicative price ranges and quantity estimates online — no waiting days for a quote just to budget."
+      },
+      {
+        "icon": "🛰️",
+        "title": "Real-Time Delivery Tracking",
+        "body": "Every order dispatched is trackable. Receive WhatsApp + SMS alerts at dispatch, en route, and at delivery. Zero surprises."
+      },
+      {
+        "icon": "🌍",
+        "title": "East African Reach",
+        "body": "Supply and logistics across Kenya, Uganda, Tanzania and beyond — with one point of contact and consistent quality standards."
+      },
+      {
+        "icon": "🏛️",
+        "title": "KEBS & Standards Certified",
+        "body": "Every product manufactured in compliance with Kenya Bureau of Standards. Documentation provided with every order for project records."
+      },
+      {
+        "icon": "♻️",
+        "title": "Sustainability Reporting",
+        "body": "We provide carbon footprint data, recycled content percentages and water management benefits for green building certifications."
+      }
+    ],
+    "hexMetrics": [
+      {
+        "num": "60+",
+        "label": "Years Experience"
+      },
+      {
+        "num": "42+",
+        "label": "Product Types"
+      },
+      {
+        "num": "5",
+        "label": "Day Delivery"
+      },
+      {
+        "num": "100%",
+        "label": "KEBS Certified"
+      },
+      {
+        "num": "EA",
+        "label": "East Africa"
+      },
+      {
+        "num": "24/7",
+        "label": "Support"
+      }
+    ]
+  },
+  "gallery": [],
+  "team": [],
+  "careers": {
+    "heading": "Build Your Career With Us",
+    "sub": "We're growing. We're ambitious. And we invest in people who share our drive to deliver extraordinary things.",
+    "openApplicationCta": "Submit Open Application →",
+    "jobs": [
+      {
+        "title": "Civil / Structural Engineer",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Engineering"
+        ],
+        "modalKey": "Civil Engineer"
+      },
+      {
+        "title": "Sales Executive – Construction Materials",
+        "tags": [
+          "Nairobi / Field",
+          "Full-Time",
+          "Sales"
+        ],
+        "modalKey": "Sales Executive"
+      },
+      {
+        "title": "Production Supervisor – Precast Plant",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Manufacturing"
+        ],
+        "modalKey": "Production Supervisor"
+      },
+      {
+        "title": "Logistics & Delivery Coordinator",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Logistics"
+        ],
+        "modalKey": "Logistics Coordinator"
+      },
+      {
+        "title": "Quantity Surveyor / Estimator",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Technical"
+        ],
+        "modalKey": "Quantity Surveyor"
+      },
+      {
+        "title": "IT & Digital Marketing Intern",
+        "tags": [
+          "Nairobi",
+          "Internship",
+          "Technology"
+        ],
+        "modalKey": "IT & Digital Marketing"
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "You Dream, We Deliver",
+    "about": "Kenya's trusted partner for precast concrete, drainage, roofing and paving solutions since the 1960s.",
+    "copyright": "© 2025 Galana Group. All Rights Reserved. | Nairobi, Kenya"
+  },
+  "contact": {
+    "quoteEmail": "quotes@galanagroup.co.ke",
+    "infoEmail": "info@galanagroup.co.ke",
+    "phoneDisplay": "+254 700 000 000",
+    "phoneTel": "+254700000000",
+    "whatsappDigits": "254700000000",
+    "location": "Nairobi, Kenya",
+    "operatingHours": "Mon–Fri: 08:00–17:00 · Sat: 08:00–13:00"
+  },
+  "help": {
+    "whatsappPrefill": "Hello Galana Group — I have a question about materials / delivery."
+  },
+  "calculator": {
+    "paving": {
+      "defaultWastagePercent": 10,
+      "blocksPerM2Options": [
+        {
+          "id": "uni",
+          "label": "Uni Block (40/m²)",
+          "blocksPerM2": 40
+        },
+        {
+          "id": "hex",
+          "label": "Hexagon Block (35/m²)",
+          "blocksPerM2": 35
+        },
+        {
+          "id": "quad",
+          "label": "Quad Block (38/m²)",
+          "blocksPerM2": 38
+        },
+        {
+          "id": "shell",
+          "label": "Shell Block (44/m²)",
+          "blocksPerM2": 44
+        }
+      ]
+    },
+    "pipes": {
+      "defaultExtraPercent": 5,
+      "pipeTypes": [
+        {
+          "id": "ogee",
+          "label": "Ogee Joint (2.5m sections)",
+          "sectionM": 2.5
+        },
+        {
+          "id": "half",
+          "label": "Half Round Ogee (2m sections)",
+          "sectionM": 2
+        },
+        {
+          "id": "flex",
+          "label": "Spigot & Socket Flexible (2.5m)",
+          "sectionM": 2.5
+        },
+        {
+          "id": "rigid",
+          "label": "Spigot & Socket Rigid (2.5m)",
+          "sectionM": 2.5
+        }
+      ]
+    },
+    "roofing": {
+      "defaultWastagePercent": 10,
+      "tileTypes": [
+        {
+          "id": "roman",
+          "label": "Double Roman (12/m²)",
+          "tilesPerM2": 12
+        },
+        {
+          "id": "venician",
+          "label": "Venician (14/m²)",
+          "tilesPerM2": 14
+        }
+      ]
+    }
+  },
+  "products": [
+    {
+      "id": "pipe-ogee",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Ogee Joint Concrete Pipes",
+      "use": "Land surface water drainage systems",
+      "image": "/images/products/pipe-ogee.jpg"
+    },
+    {
+      "id": "pipe-half",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Half Round Ogee Concrete Pipes",
+      "use": "Open storm water drainage systems",
+      "image": "/images/products/pipe-half.jpg"
+    },
+    {
+      "id": "pipe-flex",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Spigot & Socket – Flexible Jointed",
+      "use": "Sewerage systems",
+      "image": "/images/products/pipe-flex.jpg"
+    },
+    {
+      "id": "pipe-rigid",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Spigot & Socket – Rigid Jointed",
+      "use": "Storm water & sewerage systems",
+      "image": "/images/products/pipe-rigid.jpg"
+    },
+    {
+      "id": "pipe-manhole",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Manhole Rings",
+      "use": "Access points for drainage maintenance",
+      "image": "/images/products/pipe-manhole.jpg"
+    },
+    {
+      "id": "pipe-porous",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Porous Concrete Pipes",
+      "use": "Kenya's only porous pipe manufacturer",
+      "image": "/images/products/pipe-porous.jpg"
+    },
+    {
+      "id": "pipe-bend",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Concrete Pipe Bends",
+      "use": "Changes of direction in buried drainage and sewer runs",
+      "image": "/images/products/pipe-bend.jpg"
+    },
+    {
+      "id": "pipe-saddle",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Concrete Pipe Saddle",
+      "use": "Branch connections onto main drainage lines",
+      "image": "/images/products/pipe-saddle.jpg"
+    },
+    {
+      "id": "pipe-backdrop",
+      "cat": "pipes",
+      "catLabel": "Concrete Pipes",
+      "name": "Concrete Backdrops & Junction Pipes",
+      "use": "Junctions and backdrop fittings for drainage networks",
+      "image": "/images/products/pipe-backdrop.png"
+    },
+    {
+      "id": "pav-quad",
+      "cat": "paving",
+      "catLabel": "Paving Blocks",
+      "name": "Quad Paving Block",
+      "use": "Driveways & public spaces",
+      "image": "/images/products/pav-quad.jpg"
+    },
+    {
+      "id": "pav-hex",
+      "cat": "paving",
+      "catLabel": "Paving Blocks",
+      "name": "Hexagon Paving Block",
+      "use": "Decorative honeycomb surfaces",
+      "image": "/images/products/pav-hex.jpg"
+    },
+    {
+      "id": "pav-uni",
+      "cat": "paving",
+      "catLabel": "Paving Blocks",
+      "name": "Uni Paving Block",
+      "use": "Versatile all-surface solution",
+      "image": "/images/products/pav-uni.jpg"
+    },
+    {
+      "id": "pav-shell",
+      "cat": "paving",
+      "catLabel": "Paving Blocks",
+      "name": "Shell Paving Block",
+      "use": "Curved / scalloped profile for pavements and plazas",
+      "image": "/images/products/pav-shell.jpg"
+    },
+    {
+      "id": "pav-eclipse",
+      "cat": "paving",
+      "catLabel": "Paving Blocks",
+      "name": "Eclipse Blocks",
+      "use": "Decorative paving patterns",
+      "image": "/images/products/pav-eclipse.jpg"
+    },
+    {
+      "id": "pre-wall",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Wall Panel, Post & Base",
+      "use": "Complete precast boundary wall system",
+      "image": "/images/products/pre-wall.jpg"
+    },
+    {
+      "id": "pre-bal",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Balustrade & Balustrade Copping",
+      "use": "Staircases & balconies",
+      "image": "/images/products/pre-bal.jpg"
+    },
+    {
+      "id": "pre-garden",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Garden Chair & Safety Barrier",
+      "use": "Public spaces & landscaping",
+      "image": "/images/products/pre-garden.jpg"
+    },
+    {
+      "id": "pre-shallow-drain",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Shallow Block Drain",
+      "use": "Drains surface water into drainage pipes",
+      "image": "/images/products/pre-shallow-drain.jpg"
+    },
+    {
+      "id": "pre-side-slab",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Side Slab",
+      "use": "Channel sides and structural precast elements",
+      "image": "/images/products/pre-side-slab.jpg"
+    },
+    {
+      "id": "pre-interlock-tiles",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Interlocking Floor & Wall Tiles",
+      "use": "Industrial and utility flooring and wall finishes",
+      "image": "/images/products/pre-interlock-tiles.jpg"
+    },
+    {
+      "id": "pre-dhobi-sink",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Dhobi Sink",
+      "use": "Wash areas and service yards",
+      "image": "/images/products/pre-dhobi-sink.jpg"
+    },
+    {
+      "id": "pre-road-channel",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Road Channel",
+      "use": "Roadside and pavement surface water collection",
+      "image": "/images/products/pre-road-channel.jpg"
+    },
+    {
+      "id": "pre-invert-drain",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Invert Block Drain",
+      "use": "Low-profile drainage inverts",
+      "image": "/images/products/pre-invert-drain.png"
+    },
+    {
+      "id": "pre-rect-invert",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Rectangular Invert Block Drain",
+      "use": "Rectangular invert channels for storm water",
+      "image": "/images/products/pre-rect-invert.jpg"
+    },
+    {
+      "id": "pre-kerb",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Road Kerbs & Garden Kerbs",
+      "use": "Edge restraint for roads, parking and landscaping",
+      "image": "/images/products/pre-kerb.jpg"
+    },
+    {
+      "id": "pre-pcc-markers",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "PCC Marker Posts, Earth Box & Stay Blocks",
+      "use": "Utilities markers and stay blocks for infrastructure",
+      "image": "/images/products/pre-pcc-markers.jpg"
+    },
+    {
+      "id": "pre-quadrant",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Quadrant",
+      "use": "Precast quadrant fittings for drainage transitions",
+      "image": "/images/products/pre-quadrant.jpg"
+    },
+    {
+      "id": "pre-flowerpot",
+      "cat": "precast",
+      "catLabel": "Precast",
+      "name": "Flowerpots",
+      "use": "Landscaping and street furniture",
+      "image": "/images/products/pre-flowerpot.jpg"
+    },
+    {
+      "id": "roof-roman",
+      "cat": "roofing",
+      "catLabel": "Concrete Roof Tiles",
+      "name": "Double Roman",
+      "use": "Residential roofing",
+      "image": "/images/products/roof-roman.jpg"
+    },
+    {
+      "id": "roof-ven",
+      "cat": "roofing",
+      "catLabel": "Concrete Roof Tiles",
+      "name": "Venician",
+      "use": "Classic profile roof tile",
+      "image": "/images/products/roof-ven.jpg"
+    },
+    {
+      "id": "roof-hatari",
+      "cat": "roofing",
+      "catLabel": "Concrete Roof Tiles",
+      "name": "Hatari Tiles",
+      "use": "Profiled concrete roof tile range",
+      "image": "/images/products/roof-hatari.jpg"
+    }
+  ],
+  "faq": [
+    {
+      "keywords": [
+        "deliver",
+        "delivery",
+        "logistics",
+        "lead"
+      ],
+      "answer": "We dispatch across Kenya and can coordinate East Africa deliveries. Typical lead times depend on product and plant load — share your site location in a quote request for a concrete timeline."
+    },
+    {
+      "keywords": [
+        "kebs",
+        "cert",
+        "standard"
+      ],
+      "answer": "Our catalogue products are manufactured with KEBS-aligned quality processes. Project documentation can be provided with your order for records."
+    },
+    {
+      "keywords": [
+        "pipe",
+        "drain",
+        "hydraulic"
+      ],
+      "answer": "Drainage quantities depend on run length, joint type, and fall. Use the drainage calculator for sections, then our engineers can validate networks on site."
+    },
+    {
+      "keywords": [
+        "pav",
+        "block",
+        "driveway"
+      ],
+      "answer": "Paving estimates use m² × blocks per m² plus a wastage buffer for cuts. Patterns and edge restraints may add margin — the calculator is a solid first pass."
+    },
+    {
+      "keywords": [
+        "roof",
+        "tile",
+        "ridge"
+      ],
+      "answer": "Roof tile counts exclude ridge and special pieces by default. Add a note in your quote if you need ridges, starters, or accessories."
+    },
+    {
+      "keywords": [
+        "pay",
+        "price",
+        "cost"
+      ],
+      "answer": "Indicative pricing is confirmed per project. Use “Request quote” with your calculator + cart — we respond with formal pricing."
+    },
+    {
+      "keywords": [
+        "hours",
+        "open",
+        "contact"
+      ],
+      "answer": "See contact details on this page for hours and channels. WhatsApp is fastest for quick questions."
+    }
+  ]
+}

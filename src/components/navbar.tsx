@@ -1,0 +1,101 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { useGalana } from "@/providers/galana-provider";
+
+export function Navbar() {
+  const { cartCount, setCartOpen } = useGalana();
+  const [open, setOpen] = useState(false);
+  const [cartBump, setCartBump] = useState(false);
+  const prevCart = useRef(cartCount);
+
+  useEffect(() => {
+    if (prevCart.current !== cartCount && cartCount > 0) {
+      setCartBump(true);
+      const t = window.setTimeout(() => setCartBump(false), 500);
+      return () => window.clearTimeout(t);
+    }
+    prevCart.current = cartCount;
+  }, [cartCount]);
+
+  return (
+    <nav id="navbar">
+      <Link href="#hero" className="nav-logo" onClick={() => setOpen(false)}>
+        <Image
+          src="/images/logo.jpg"
+          alt="Galana Group"
+          width={180}
+          height={52}
+          priority
+          style={{ height: 52, width: "auto" }}
+        />
+      </Link>
+      <button
+        type="button"
+        className="nav-menu-toggle"
+        aria-expanded={open}
+        aria-label={open ? "Close menu" : "Open menu"}
+        onClick={() => setOpen(!open)}
+      >
+        {open ? "✕" : "☰"}
+      </button>
+      <ul className={`nav-links ${open ? "nav-links-open" : ""}`}>
+        <li>
+          <Link href="#services" onClick={() => setOpen(false)}>
+            Services
+          </Link>
+        </li>
+        <li>
+          <Link href="#calculator" onClick={() => setOpen(false)}>
+            Calculator
+          </Link>
+        </li>
+        <li>
+          <Link href="#products" onClick={() => setOpen(false)}>
+            Products
+          </Link>
+        </li>
+        <li>
+          <Link href="#why" onClick={() => setOpen(false)}>
+            Why Us
+          </Link>
+        </li>
+        <li>
+          <Link href="#careers" onClick={() => setOpen(false)}>
+            Careers
+          </Link>
+        </li>
+        <li>
+          <button
+            type="button"
+            className="nav-cart-btn"
+            aria-label="Open cart"
+            onClick={() => {
+              setCartOpen(true);
+              setOpen(false);
+            }}
+          >
+            Cart{" "}
+            <span
+              className={`nav-cart-count${cartBump ? " nav-cart-count-bump" : ""}`}
+              data-empty={cartCount ? "0" : "1"}
+            >
+              {cartCount}
+            </span>
+          </button>
+        </li>
+        <li>
+          <Link
+            href="#contact"
+            className="nav-cta"
+            onClick={() => setOpen(false)}
+          >
+            Get a Quote
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
+}
