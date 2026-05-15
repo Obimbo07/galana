@@ -63,9 +63,17 @@ export function ContactFooter() {
                 <div>
                   <div className="contact-item-label">Location</div>
                   <div className="contact-item-value">
-                    <a href={contact.locationUrl} target="_blank" rel="noopener noreferrer">
-                      {contact.location}
-                    </a>
+                    {contact.locationUrl?.trim() ? (
+                      <a
+                        href={contact.locationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {contact.location}
+                      </a>
+                    ) : (
+                      contact.location
+                    )}
                   </div>
                 </div>
               </div>

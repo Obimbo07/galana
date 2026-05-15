@@ -68,6 +68,8 @@ export interface SiteData {
     altPhoneTel?: string;
     whatsappDigits: string;
     location: string;
+    /** Maps or directions URL; omit for plain address text (no link) */
+    locationUrl?: string;
     operatingHours: string;
   };
   help: {
