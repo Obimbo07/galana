@@ -63,6 +63,9 @@ export interface SiteData {
     infoEmail: string;
     phoneDisplay: string;
     phoneTel: string;
+    /** Secondary line number; omit or leave empty to hide */
+    altPhoneDisplay?: string;
+    altPhoneTel?: string;
     whatsappDigits: string;
     location: string;
     operatingHours: string;

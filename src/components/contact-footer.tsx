@@ -45,32 +45,19 @@ export function ContactFooter() {
                   </div>
                 </div>
               </div>
-              {contact.altPhoneTel && (
-                <div className="contact-item reveal reveal-delay-1">
-                  <div className="contact-icon">📱</div>
+              {contact.altPhoneTel ? (
+                <div className="contact-item reveal reveal-delay-2">
+                  <div className="contact-icon">📞</div>
                   <div>
-                    <div className="contact-item-label">Alternative Phone</div>
+                    <div className="contact-item-label">Alternate phone</div>
                     <div className="contact-item-value">
                       <a href={`tel:${contact.altPhoneTel}`}>
-                        {contact.altPhoneDisplay}
+                        {contact.altPhoneDisplay ?? contact.altPhoneTel}
                       </a>
                     </div>
                   </div>
                 </div>
-              )}
-              {contact.generalEmail && (
-                <div className="contact-item reveal reveal-delay-2">
-                  <div className="contact-icon">📧</div>
-                  <div>
-                    <div className="contact-item-label">General Inquiries</div>
-                    <div className="contact-item-value">
-                      <a href={`mailto:${contact.generalEmail}`}>
-                        {contact.generalEmail}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              )}
+              ) : null}
               <div className="contact-item reveal reveal-delay-3">
                 <div className="contact-icon">📍</div>
                 <div>
