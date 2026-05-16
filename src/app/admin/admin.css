@@ -1,0 +1,255 @@
+/* Galana admin console — separate from public marketing styles */
+:root {
+  --adm-bg: #0f1419;
+  --adm-surface: #1a222c;
+  --adm-border: #2d3a47;
+  --adm-text: #e8eef4;
+  --adm-muted: #8b9bab;
+  --adm-accent: #4ab9d9;
+  --adm-accent-dim: #148eb2;
+  --adm-ok: #3ecf8e;
+  --adm-warn: #e9cf6e;
+}
+
+.admin-root {
+  min-height: 100vh;
+  background: var(--adm-bg);
+  color: var(--adm-text);
+  font-family: var(--font-outfit, system-ui, sans-serif);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.admin-root a {
+  color: var(--adm-accent);
+  text-decoration: none;
+}
+
+.admin-root a:hover {
+  text-decoration: underline;
+}
+
+.admin-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  background: var(--adm-surface);
+  border-bottom: 1px solid var(--adm-border);
+}
+
+.admin-nav-brand {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-right: auto;
+  color: var(--adm-text);
+}
+
+.admin-nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.admin-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.admin-h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.admin-muted {
+  color: var(--adm-muted);
+  font-size: 0.9rem;
+  margin: 0 0 1.25rem;
+}
+
+.admin-card {
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--adm-border);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--adm-border);
+}
+
+.admin-table th {
+  background: rgba(20, 142, 178, 0.12);
+  color: var(--adm-muted);
+  font-weight: 500;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-processing {
+  background: rgba(233, 207, 110, 0.2);
+  color: var(--adm-warn);
+}
+
+.badge-quoted {
+  background: rgba(74, 185, 217, 0.18);
+  color: var(--adm-accent);
+}
+
+.badge-confirmed {
+  background: rgba(62, 207, 142, 0.18);
+  color: var(--adm-ok);
+}
+
+.badge-declined,
+.badge-archived {
+  background: rgba(139, 155, 171, 0.2);
+  color: var(--adm-muted);
+}
+
+.admin-form label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--adm-muted);
+  margin-bottom: 0.25rem;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+  width: 100%;
+  max-width: 420px;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-bg);
+  color: var(--adm-text);
+  font: inherit;
+  margin-bottom: 1rem;
+}
+
+.admin-form textarea {
+  max-width: 100%;
+  min-height: 120px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-surface);
+  color: var(--adm-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.admin-btn:hover {
+  border-color: var(--adm-accent-dim);
+}
+
+.admin-btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--adm-accent-dim),
+    var(--adm-accent)
+  );
+  border-color: transparent;
+  color: #0a1620;
+  font-weight: 600;
+}
+
+.admin-btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+.admin-btn-ghost {
+  background: transparent;
+}
+
+.admin-alert {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: rgba(233, 207, 110, 0.12);
+  border: 1px solid rgba(233, 207, 110, 0.35);
+  color: var(--adm-warn);
+  margin-bottom: 1rem;
+}
+
+.admin-alert-error {
+  background: rgba(220, 80, 80, 0.12);
+  border-color: rgba(220, 80, 80, 0.4);
+  color: #f0a8a8;
+}
+
+.admin-pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.8rem;
+  background: var(--adm-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--adm-border);
+  max-height: 420px;
+  overflow: auto;
+}
+
+.admin-login-box {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+}
+
+.role-pill {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(74, 185, 217, 0.15);
+  color: var(--adm-accent);
+}
+
+.role-pill-admin {
+  background: rgba(201, 168, 82, 0.2);
+  color: var(--adm-warn);
+}

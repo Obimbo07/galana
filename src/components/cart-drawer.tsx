@@ -11,6 +11,14 @@ export function CartDrawer() {
     setLineNote,
     removeLine,
     scrollToCalculatorAndOpenQuote,
+    quoteEmail,
+    setQuoteEmail,
+    quotePhone,
+    setQuotePhone,
+    quoteLocation,
+    setQuoteLocation,
+    postQuoteApi,
+    downloadQuotePdf,
   } = useGalana();
 
   return (
@@ -73,13 +81,91 @@ export function CartDrawer() {
           )}
         </div>
         <div className="cart-drawer-foot">
+          <div className="cart-drawer-quote-fields">
+            <h4 className="cart-drawer-quote-heading">Quote details</h4>
+            <p className="cart-drawer-quote-note">
+              All optional — add what you have so we can reach you.
+            </p>
+            <label className="cart-drawer-label" htmlFor="cartQuoteEmail">
+              Email
+            </label>
+            <input
+              id="cartQuoteEmail"
+              type="email"
+              className="cart-drawer-input"
+              placeholder="you@company.com"
+              autoComplete="email"
+              value={quoteEmail}
+              onChange={(e) => setQuoteEmail(e.target.value)}
+            />
+            <label className="cart-drawer-label" htmlFor="cartQuotePhone">
+              Phone / WhatsApp
+            </label>
+            <input
+              id="cartQuotePhone"
+              type="tel"
+              className="cart-drawer-input"
+              placeholder="+254…"
+              autoComplete="tel"
+              value={quotePhone}
+              onChange={(e) => setQuotePhone(e.target.value)}
+            />
+            <label className="cart-drawer-label" htmlFor="cartQuoteLoc">
+              Location
+            </label>
+            <input
+              id="cartQuoteLoc"
+              type="text"
+              className="cart-drawer-input"
+              placeholder="City, site, county…"
+              value={quoteLocation}
+              onChange={(e) => setQuoteLocation(e.target.value)}
+            />
+          </div>
           <button
             type="button"
             className="btn-primary"
             style={{ width: "100%", justifyContent: "center" }}
+            onClick={async () => {
+              const res = await postQuoteApi({ source: "cart" });
+              if (!res.ok) {
+                window.alert(res.message);
+                return;
+              }
+              if (res.id) {
+                try {
+                  await downloadQuotePdf(res.id);
+                  window.alert(
+                    `Quote saved (reference ${res.id}). Your PDF download should start.`
+                  );
+                  setCartOpen(false);
+                } catch (e) {
+                  window.alert(
+                    e instanceof Error
+                      ? e.message
+                      : "PDF download failed. The quote is still saved."
+                  );
+                }
+              } else {
+                window.alert(
+                  "Could not save a quote copy. Configure FIREBASE_SERVICE_ACCOUNT_JSON to enable saving and PDF."
+                );
+              }
+            }}
+          >
+            Save quote &amp; download PDF
+          </button>
+          <button
+            type="button"
+            className="btn-outline"
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              marginTop: "0.55rem",
+            }}
             onClick={scrollToCalculatorAndOpenQuote}
           >
-            Send quote / Request quote
+            Open calculator quote form
           </button>
         </div>
       </div>

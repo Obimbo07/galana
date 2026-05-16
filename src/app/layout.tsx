@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
-import { ThemeInit } from "@/components/theme-init";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -32,7 +31,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${cormorant.variable}`}>
       <body>
-        <ThemeInit />
         {children}
       </body>
     </html>

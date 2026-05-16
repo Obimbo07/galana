@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    /**
+     * Galana production model: the Next.js server uses the Firebase Admin SDK
+     * (privileged) for all reads/writes. Browser clients talk only to /api/* routes.
+     * This deny-all rule keeps your database closed if a key ever leaks.
+     *
+     * If you later add direct Firestore access from the browser, replace this with
+     * role checks on admin_profiles (admin | staff) instead of opening writes.
+     */
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -20,8 +20,6 @@ export default function ProductsPage() {
 
   return (
     <GalanaProvider data={siteData}>
-      <div className="cursor" id="cursor" />
-      <div className="cursor-ring" id="cursorRing" />
       <Navbar />
       <main>
         <ProductsSection />

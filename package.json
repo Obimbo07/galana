@@ -10,10 +10,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "download-product-images": "node scripts/download-product-images.mjs"
+    "download-product-images": "node scripts/download-product-images.mjs",
+    "firebase-service-account:one-line": "node scripts/firebase-service-account-one-line.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@react-pdf/renderer": "^4.5.1",
+    "firebase": "^12.13.0",
+    "firebase-admin": "^13.10.0",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"

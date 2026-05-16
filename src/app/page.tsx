@@ -13,8 +13,6 @@ export default function Home() {
 
   return (
     <GalanaProvider data={siteData}>
-      <div className="cursor" id="cursor" />
-      <div className="cursor-ring" id="cursorRing" />
       <Navbar />
       <main>
         <Hero />

@@ -16,12 +16,17 @@ export function CalculatorSection() {
     roofResult,
     quoteEmail,
     setQuoteEmail,
+    quotePhone,
+    setQuotePhone,
+    quoteLocation,
+    setQuoteLocation,
     quotePanelOpen,
     setQuotePanelOpen,
     quoteBody,
     recentEmails,
     openMailtoQuote,
     postQuoteApi,
+    downloadQuotePdf,
   } = useGalana();
 
   function switchCalc(type: CalcTab) {
@@ -330,13 +335,12 @@ export function CalculatorSection() {
                 }}
               >
                 Summary uses the <strong>active calculator tab</strong>, your{" "}
-                <strong>hero quick estimate</strong>, and your{" "}
-                <strong>cart</strong>. Email opens via{" "}
-                <code style={{ color: "var(--blue-light)" }}>mailto:</code>.
+                <strong>cart</strong>, and optional details below. Or open a{" "}
+                <strong>mailto</strong> draft.
               </p>
               <div className="form-field">
                 <label className="calc-label" htmlFor="quoteEmailInput">
-                  Your email
+                  Your email <span style={{ opacity: 0.7 }}>(optional)</span>
                 </label>
                 <input
                   id="quoteEmailInput"
@@ -353,6 +357,34 @@ export function CalculatorSection() {
                   ))}
                 </datalist>
               </div>
+              <div className="form-field">
+                <label className="calc-label" htmlFor="quotePhoneInput">
+                  Phone / WhatsApp{" "}
+                  <span style={{ opacity: 0.7 }}>(optional)</span>
+                </label>
+                <input
+                  id="quotePhoneInput"
+                  type="tel"
+                  className="calc-input"
+                  placeholder="+254…"
+                  value={quotePhone}
+                  onChange={(e) => setQuotePhone(e.target.value)}
+                />
+              </div>
+              <div className="form-field">
+                <label className="calc-label" htmlFor="quoteLocationInput">
+                  Project / delivery location{" "}
+                  <span style={{ opacity: 0.7 }}>(optional)</span>
+                </label>
+                <input
+                  id="quoteLocationInput"
+                  type="text"
+                  className="calc-input"
+                  placeholder="City, site, county…"
+                  value={quoteLocation}
+                  onChange={(e) => setQuoteLocation(e.target.value)}
+                />
+              </div>
               <button
                 type="button"
                 className="btn-primary"
@@ -367,20 +399,45 @@ export function CalculatorSection() {
               </button>
               <button
                 type="button"
-                className="btn-outline"
+                className="btn-primary"
                 style={{
                   width: "100%",
                   justifyContent: "center",
                   marginTop: "0.65rem",
                 }}
-                onClick={() => void postQuoteApi()}
+                onClick={async () => {
+                  const res = await postQuoteApi({ source: "calculator" });
+                  if (!res.ok) {
+                    window.alert(res.message);
+                    return;
+                  }
+                  if (res.id) {
+                    try {
+                      await downloadQuotePdf(res.id);
+                      window.alert(
+                        `Quote saved (reference ${res.id}). Your PDF download should start.`
+                      );
+                    } catch (e) {
+                      window.alert(
+                        e instanceof Error
+                          ? e.message
+                          : "PDF download failed. The quote is still saved."
+                      );
+                    }
+                  } else {
+                    window.alert(
+                      "Quote was accepted but not stored — add FIREBASE_SERVICE_ACCOUNT_JSON in .env so we can save an ID and build your PDF."
+                    );
+                  }
+                }}
               >
-                Submit via API (optional)
+                Save quote &amp; download PDF
               </button>
               <p className="quote-api-hint" id="quoteApiHint">
-                Configure <code>QUOTE_API_URL</code> in{" "}
-                <code>.env.local</code> (see <code>.env.example</code>) so{" "}
-                <code>/api/quote</code> can forward JSON to your backend.
+                Saves your summary to Firestore (status: processing) when{" "}
+                <code>FIREBASE_SERVICE_ACCOUNT_JSON</code> is set, then downloads
+                a branded PDF. Optional forward to{" "}
+                <code>QUOTE_API_URL</code> — see <code>.env.example</code>.
               </p>
               <div className="form-field">
                 <label className="calc-label" htmlFor="quoteBodyTextarea">

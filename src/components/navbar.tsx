@@ -1,24 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { NavSocialLinks } from "@/components/nav-social";
+import { SiteLogo } from "@/components/site-logo";
 import { useGalana } from "@/providers/galana-provider";
-
-const NavThemeToggle = dynamic(
-  () =>
-    import("@/components/nav-theme-toggle").then((m) => ({
-      default: m.NavThemeToggle,
-    })),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="nav-theme nav-theme-pending" aria-hidden="true" />
-    ),
-  }
-);
 
 export function Navbar() {
   const { cartCount, setCartOpen, data } = useGalana();
@@ -48,14 +34,7 @@ export function Navbar() {
       </div>
       <nav id="navbar">
         <Link href="/" className="nav-logo bg-transparent" onClick={() => setOpen(false)}>
-          <Image
-            src="/images/logo2.png"
-            alt="Galana Group"
-            width={180}
-            height={180}
-            priority
-            style={{ height: 52, width: "auto" }}
-          />
+          <SiteLogo priority heightPx={52} />
         </Link>
         <button
           type="button"
@@ -96,9 +75,6 @@ export function Navbar() {
             <Link href="/careers" onClick={() => setOpen(false)}>
               Careers
             </Link>
-          </li>
-          <li className="nav-theme-wrap">
-            <NavThemeToggle onChoice={() => setOpen(false)} />
           </li>
           <li>
             <button

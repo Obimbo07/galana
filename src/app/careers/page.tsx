@@ -19,8 +19,6 @@ export default function CareersPage() {
 
   return (
     <GalanaProvider data={siteData}>
-      <div className="cursor" id="cursor" />
-      <div className="cursor-ring" id="cursorRing" />
       <Navbar />
       <main className="site-main-offset careers-page-main">
         <div className="section-inner careers-page-inner">

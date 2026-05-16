@@ -1,20 +1,19 @@
-:root,
-html[data-theme="dark"] {
+:root {
   /* Primary blue — nav chrome, links, CTAs */
   --blue: #148eb2;
   --blue-dark: #0e6f8a;
   --blue-deeper: #085566;
   --blue-light: #4ab9d9;
   --blue-pale: #e8f4f8;
-  /* Near-black surfaces + light copy */
-  --black: #000000;
-  --black-soft: #0a0a0a;
-  --dark: #0c0c0c;
-  --mid: #141414;
-  --border: #2a333d;
-  --text: #f5f5f5;
-  --muted: #9eb0bd;
-  --white: #f7f9fa;
+  /* Light UI surfaces + dark copy */
+  --black: #f8fafc;
+  --black-soft: #f1f5f9;
+  --dark: #e8eef4;
+  --mid: #d7dee8;
+  --border: #b8c5d4;
+  --text: #0f1b24;
+  --muted: #5c6f80;
+  --white: #0a1620;
   /* Warm gold — premium accent alongside blue */
   --gold-deep: #5c4218;
   --gold: #c9a852;
@@ -43,24 +42,24 @@ html[data-theme="dark"] {
     var(--blue) 44%,
     color-mix(in srgb, var(--gold-mid), var(--blue-dark) 52%) 100%
   );
-  /* Theme-aware surfaces (nav, outline buttons, hero calc — dark defaults) */
-  --nav-bg: rgba(0, 0, 0, 0.72);
-  --nav-bg-scrolled: rgba(0, 0, 0, 0.94);
-  --nav-border: rgba(20, 142, 178, 0.28);
+  /* Nav, outline buttons, hero calc — light UI */
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --nav-bg-scrolled: rgba(255, 255, 255, 0.96);
+  --nav-border: rgba(20, 142, 178, 0.26);
   --nav-border-scrolled: rgba(20, 142, 178, 0.38);
-  --nav-mobile-menu-bg: rgba(8, 8, 8, 0.98);
-  --btn-outline-surface: rgba(12, 12, 12, 0.82);
-  --hero-calc-bg: rgba(12, 12, 12, 0.82);
-  --quote-send-bg: rgba(0, 0, 0, 0.52);
-  /* Over imagery: stays dark in both themes (white CTA copy on photos) */
+  --nav-mobile-menu-bg: rgba(255, 255, 255, 0.98);
+  --btn-outline-surface: rgba(255, 255, 255, 0.78);
+  --hero-calc-bg: rgba(255, 255, 255, 0.94);
+  --quote-send-bg: rgba(255, 255, 255, 0.88);
+  /* Over imagery: dark scrim so light text/CTAs stay readable on photos */
   --media-bottom-scrim: linear-gradient(
     to top,
     rgba(10, 10, 10, 0.82) 0%,
     transparent 60%
   );
-  /* Modal / drawer stacks (theme-aware below) */
-  --scrim-modal-bg: rgba(8, 10, 12, 0.92);
-  --scrim-drawer: rgba(0, 0, 0, 0.52);
+  /* Modal / drawer stacks */
+  --scrim-modal-bg: rgba(20, 30, 36, 0.88);
+  --scrim-drawer: rgba(18, 28, 34, 0.4);
   /* Layout: hero shell + major sections share max width & FAB-aware gutters */
   --section-max: 1320px;
   --fab-size: 56px;
@@ -79,191 +78,23 @@ html[data-theme="dark"] {
   --section-squeeze: max(0px, calc((100% - min(var(--section-max), 100%)) / 2));
   /* Fixed header = tagline row + main nav — keeps hero clear of overlap */
   --nav-stack-extra: 2.65rem;
-  /* Services: card surfaces (theme-aware; light mode overrides below) */
-  --service-card-surface: color-mix(in srgb, var(--dark) 72%, var(--black-soft));
-  --service-card-border: color-mix(in srgb, var(--border), transparent 38%);
-  --service-card-media-bg: color-mix(in srgb, var(--mid) 55%, var(--black) 45%);
-}
-
-/* OS prefers light — only when `data-theme` is not forcing a palette */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {
-    --black: #f8fafc;
-    --black-soft: #f1f5f9;
-    --dark: #e8eef4;
-    --mid: #d7dee8;
-    --border: #b8c5d4;
-    --text: #0f1b24;
-    --muted: #5c6f80;
-    --white: #0a1620;
-    --nav-bg: rgba(255, 255, 255, 0.9);
-    --nav-bg-scrolled: rgba(255, 255, 255, 0.96);
-    --nav-border: rgba(20, 142, 178, 0.26);
-    --nav-border-scrolled: rgba(20, 142, 178, 0.38);
-    --nav-mobile-menu-bg: rgba(255, 255, 255, 0.98);
-    --btn-outline-surface: rgba(255, 255, 255, 0.78);
-    --hero-calc-bg: rgba(255, 255, 255, 0.94);
-    --quote-send-bg: rgba(255, 255, 255, 0.88);
-    --scrim-modal-bg: rgba(20, 30, 36, 0.88);
-    --scrim-drawer: rgba(18, 28, 34, 0.4);
-    --service-card-surface: color-mix(in srgb, #ffffff 88%, var(--dark));
-    --service-card-border: color-mix(in srgb, var(--border), transparent 25%);
-    --service-card-media-bg: color-mix(in srgb, var(--mid) 42%, var(--black-soft) 58%);
-  }
-
-  :root:not([data-theme]) .hero-bg {
-    background:
-      radial-gradient(ellipse 92% 58% at 50% 108%, rgba(201, 168, 82, 0.06) 0%, transparent 56%),
-      radial-gradient(ellipse 48% 42% at 12% 18%, rgba(218, 184, 106, 0.045) 0%, transparent 62%),
-      linear-gradient(
-        105deg,
-        rgba(248, 250, 252, 0.76) 0%,
-        rgba(241, 245, 249, 0.36) 40%,
-        rgba(232, 238, 244, 0.12) 68%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.32) 0%,
-        transparent 46%,
-        rgba(248, 250, 252, 0.48) 100%
-      ),
-      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(20, 142, 178, 0.085) 0%, transparent 72%),
-      radial-gradient(ellipse 40% 50% at 18% 82%, rgba(20, 142, 178, 0.055) 0%, transparent 62%);
-  }
-
-  :root:not([data-theme]) .hero-grid {
-    background-image:
-      linear-gradient(rgba(20, 142, 178, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(20, 142, 178, 0.045) 1px, transparent 1px);
-  }
-
-  :root:not([data-theme]) .hero-copy {
-    isolation: isolate;
-  }
-
-  :root:not([data-theme]) .hero-copy::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: -1.5rem -2.25rem -2rem -1.75rem;
-    border-radius: 1.1rem;
-    background: radial-gradient(
-      ellipse 118% 118% at 16% 44%,
-      rgba(248, 250, 252, 0.9) 0%,
-      rgba(248, 250, 252, 0.38) 54%,
-      transparent 74%
-    );
-    pointer-events: none;
-  }
-
-  :root:not([data-theme]) h1.hero-title {
-    filter: drop-shadow(0 1px 2px rgba(248, 250, 252, 0.9));
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    :root:not([data-theme]) .hero-photo::after {
-      opacity: 0.36;
-    }
-  }
-
-  :root:not([data-theme]) .why-mood-strip {
-    background:
-      linear-gradient(to right, rgba(248, 250, 252, 0.94), rgba(241, 245, 249, 0.9), rgba(248, 250, 252, 0.94)),
-      linear-gradient(105deg, rgba(20, 142, 178, 0.12), transparent 55%),
-      url("/wallpaper/pavement-lay.png") center / cover no-repeat;
-  }
-}
-
-/* Explicit light palette (DevTools, or `localStorage['galana_theme'] === 'light'` via ThemeInit) */
-html[data-theme="light"] {
-  --black: #f8fafc;
-  --black-soft: #f1f5f9;
-  --dark: #e8eef4;
-  --mid: #d7dee8;
-  --border: #b8c5d4;
-  --text: #0f1b24;
-  --muted: #5c6f80;
-  --white: #0a1620;
-  --nav-bg: rgba(255, 255, 255, 0.9);
-  --nav-bg-scrolled: rgba(255, 255, 255, 0.96);
-  --nav-border: rgba(20, 142, 178, 0.26);
-  --nav-border-scrolled: rgba(20, 142, 178, 0.38);
-  --nav-mobile-menu-bg: rgba(255, 255, 255, 0.98);
-  --btn-outline-surface: rgba(255, 255, 255, 0.78);
-  --hero-calc-bg: rgba(255, 255, 255, 0.94);
-  --quote-send-bg: rgba(255, 255, 255, 0.88);
-  --scrim-modal-bg: rgba(20, 30, 36, 0.88);
-  --scrim-drawer: rgba(18, 28, 34, 0.4);
+  /* Services: card surfaces */
   --service-card-surface: color-mix(in srgb, #ffffff 88%, var(--dark));
   --service-card-border: color-mix(in srgb, var(--border), transparent 25%);
   --service-card-media-bg: color-mix(in srgb, var(--mid) 42%, var(--black-soft) 58%);
 }
 
-html[data-theme="light"] .hero-bg {
-  background:
-    radial-gradient(ellipse 92% 58% at 50% 108%, rgba(201, 168, 82, 0.06) 0%, transparent 56%),
-    radial-gradient(ellipse 48% 42% at 12% 18%, rgba(218, 184, 106, 0.045) 0%, transparent 62%),
-    linear-gradient(
-      105deg,
-      rgba(248, 250, 252, 0.76) 0%,
-      rgba(241, 245, 249, 0.36) 40%,
-      rgba(232, 238, 244, 0.12) 68%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.32) 0%,
-      transparent 46%,
-      rgba(248, 250, 252, 0.48) 100%
-    ),
-    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(20, 142, 178, 0.085) 0%, transparent 72%),
-    radial-gradient(ellipse 40% 50% at 18% 82%, rgba(20, 142, 178, 0.055) 0%, transparent 62%);
+html {
+  color-scheme: light;
 }
 
-html[data-theme="light"] .hero-grid {
-  background-image:
-    linear-gradient(rgba(20, 142, 178, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 142, 178, 0.045) 1px, transparent 1px);
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-html[data-theme="light"] .hero-copy {
-  isolation: isolate;
-}
-
-html[data-theme="light"] .hero-copy::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -1.5rem -2.25rem -2rem -1.75rem;
-  border-radius: 1.1rem;
-  background: radial-gradient(
-    ellipse 118% 118% at 16% 44%,
-    rgba(248, 250, 252, 0.9) 0%,
-    rgba(248, 250, 252, 0.38) 54%,
-    transparent 74%
-  );
-  pointer-events: none;
-}
-
-html[data-theme="light"] h1.hero-title {
-  filter: drop-shadow(0 1px 2px rgba(248, 250, 252, 0.9));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html[data-theme="light"] .hero-photo::after {
-    opacity: 0.36;
-  }
-}
-
-html[data-theme="light"] .why-mood-strip {
-  background:
-    linear-gradient(to right, rgba(248, 250, 252, 0.94), rgba(241, 245, 249, 0.9), rgba(248, 250, 252, 0.94)),
-    linear-gradient(105deg, rgba(20, 142, 178, 0.12), transparent 55%),
-    url("/wallpaper/pavement-lay.png") center / cover no-repeat;
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -278,31 +109,6 @@ body {
   font-weight: 300;
   line-height: 1.65;
   overflow-x: hidden;
-  cursor: none;
-}
-
-/* CURSOR */
-.cursor {
-  width: 12px; height: 12px;
-  background: var(--blue);
-  border-radius: 50%;
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.15s ease;
-  mix-blend-mode: screen;
-}
-.cursor-ring {
-  width: 36px; height: 36px;
-  border: 1px solid var(--blue);
-  border-radius: 50%;
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0.6;
 }
 
 /* SCROLLBAR */
@@ -434,21 +240,8 @@ body {
   );
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
-/* X — black disc + white glyph on light UI; light disc + black glyph on dark UI */
+/* X — black disc + white glyph on light UI */
 .nav-social-link--twitter {
-  background: #f5f5f5;
-  color: #000000;
-  border-color: rgba(255, 255, 255, 0.18);
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) .nav-social-link--twitter {
-    background: #000000;
-    color: #ffffff;
-    border-color: transparent;
-  }
-}
-html[data-theme="light"] .nav-social-link--twitter {
   background: #000000;
   color: #ffffff;
   border-color: transparent;
@@ -570,56 +363,6 @@ html[data-theme="light"] .nav-social-link--twitter {
   outline: 2px solid var(--blue-light);
   outline-offset: 3px;
 }
-.nav-theme-wrap {
-  display: flex;
-  align-items: center;
-  list-style: none;
-}
-.nav-theme {
-  display: inline-flex;
-  align-items: stretch;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--btn-outline-surface), transparent 40%);
-}
-.nav-theme-btn {
-  font-family: var(--font-outfit), sans-serif;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.38rem 0.65rem;
-  border: none;
-  border-right: 1px solid var(--border);
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-  transition: color 0.2s ease, background 0.2s ease;
-}
-.nav-theme-btn:last-child {
-  border-right: none;
-}
-.nav-theme-btn:hover {
-  color: var(--blue-light);
-}
-.nav-theme-btn-active {
-  background: rgba(20, 142, 178, 0.2);
-  color: var(--blue-light);
-}
-.nav-theme-btn:focus-visible {
-  outline: 2px solid var(--blue-light);
-  outline-offset: 2px;
-  z-index: 1;
-  position: relative;
-}
-.nav-theme-pending {
-  min-height: 1.85rem;
-  min-width: min(200px, 100%);
-  border-radius: 999px;
-  border: 1px solid transparent;
-  box-sizing: border-box;
-}
 
 /* ─── HERO ─── */
 #hero {
@@ -649,7 +392,7 @@ html[data-theme="light"] .nav-social-link--twitter {
       radial-gradient(ellipse 70% 65% at 28% 38%, rgba(20,142,178,0.14) 0%, transparent 62%),
       radial-gradient(ellipse 55% 50% at 78% 62%, rgba(20,142,178,0.08) 0%, transparent 58%);
     mix-blend-mode: screen;
-    opacity: 0.55;
+    opacity: 0.36;
     animation: heroPhotoGlow 22s ease-in-out infinite alternate;
   }
 }
@@ -662,30 +405,31 @@ html[data-theme="light"] .nav-social-link--twitter {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 92% 58% at 50% 108%, rgba(201, 162, 39, 0.055) 0%, transparent 56%),
-    radial-gradient(ellipse 48% 42% at 12% 18%, rgba(214, 175, 92, 0.045) 0%, transparent 62%),
+    radial-gradient(ellipse 92% 58% at 50% 108%, rgba(201, 168, 82, 0.06) 0%, transparent 56%),
+    radial-gradient(ellipse 48% 42% at 12% 18%, rgba(218, 184, 106, 0.045) 0%, transparent 62%),
     linear-gradient(
       105deg,
-      color-mix(in srgb, var(--black-soft) 86%, transparent) 0%,
-      color-mix(in srgb, var(--black-soft) 72%, transparent) 38%,
-      color-mix(in srgb, var(--dark) 46%, transparent) 100%
+      rgba(248, 250, 252, 0.76) 0%,
+      rgba(241, 245, 249, 0.36) 40%,
+      rgba(232, 238, 244, 0.12) 68%,
+      transparent 100%
     ),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--black) 48%, transparent) 0%,
-      transparent 42%,
-      color-mix(in srgb, var(--black-soft) 70%, transparent) 100%
+      rgba(255, 255, 255, 0.32) 0%,
+      transparent 46%,
+      rgba(248, 250, 252, 0.48) 100%
     ),
-    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(20,142,178,0.12) 0%, transparent 72%),
-    radial-gradient(ellipse 40% 50% at 18% 82%, rgba(20,142,178,0.075) 0%, transparent 62%);
+    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(20, 142, 178, 0.085) 0%, transparent 72%),
+    radial-gradient(ellipse 40% 50% at 18% 82%, rgba(20, 142, 178, 0.055) 0%, transparent 62%);
 }
 .hero-grid {
   position:absolute; inset:0;
   z-index: 2;
   pointer-events: none;
-  background-image: 
-    linear-gradient(rgba(20,142,178,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20,142,178,0.04) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(20, 142, 178, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 142, 178, 0.045) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
 }
@@ -693,6 +437,21 @@ html[data-theme="light"] .nav-social-link--twitter {
   position: relative;
   z-index: 2;
   max-width: 640px;
+  isolation: isolate;
+}
+.hero-copy::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -1.5rem -2.25rem -2rem -1.75rem;
+  border-radius: 1.1rem;
+  background: radial-gradient(
+    ellipse 118% 118% at 16% 44%,
+    rgba(248, 250, 252, 0.9) 0%,
+    rgba(248, 250, 252, 0.38) 54%,
+    transparent 74%
+  );
+  pointer-events: none;
 }
 @media (prefers-reduced-motion: no-preference) {
   .hero-eyebrow {
@@ -726,6 +485,7 @@ h1.hero-title {
   font-weight: 300; line-height: 1.05;
   color: var(--white);
   margin-bottom: 1.5rem;
+  filter: drop-shadow(0 1px 2px rgba(248, 250, 252, 0.9));
 }
 h1.hero-title em.hero-title-accent {
   font-style: italic;
@@ -1297,12 +1057,7 @@ h2.section-title em { font-style:italic; color:var(--blue-light); }
   margin-top: -2rem;
   height: clamp(140px, 22vw, 220px);
   background:
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--black-soft) 88%, transparent),
-      color-mix(in srgb, var(--dark) 72%, transparent),
-      color-mix(in srgb, var(--black-soft) 88%, transparent)
-    ),
+    linear-gradient(to right, rgba(248, 250, 252, 0.94), rgba(241, 245, 249, 0.9), rgba(248, 250, 252, 0.94)),
     linear-gradient(105deg, rgba(20, 142, 178, 0.12), transparent 55%),
     url("/wallpaper/pavement-lay.png") center / cover no-repeat;
   border-top: 1px solid var(--border);
@@ -2157,6 +1912,47 @@ footer {
   padding: 1rem 1.25rem 1.25rem;
   border-top: 1px solid var(--border);
 }
+.cart-drawer-quote-fields {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.cart-drawer-quote-heading {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.35rem;
+  font-family: var(--font-outfit), sans-serif;
+}
+.cart-drawer-quote-note {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin: 0 0 0.65rem;
+  line-height: 1.45;
+}
+.cart-drawer-label {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+  font-family: var(--font-outfit), sans-serif;
+}
+.cart-drawer-input {
+  width: 100%;
+  padding: 0.42rem 0.55rem;
+  margin-bottom: 0.5rem;
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.78rem;
+}
+.cart-drawer-input::placeholder {
+  color: color-mix(in srgb, var(--muted), transparent 35%);
+}
 .cart-empty-msg {
   color: var(--muted);
   font-size: 0.85rem;
@@ -2582,17 +2378,6 @@ footer {
   }
 }
 
-/* Touch devices: restore default cursor (custom cursor is desktop-only) */
-@media (pointer: coarse) {
-  body {
-    cursor: auto;
-  }
-  .cursor,
-  .cursor-ring {
-    display: none !important;
-  }
-}
-
 /* Mobile navigation (HTML hid .nav-links; we expose a toggle for usability) */
 .nav-menu-toggle {
   display: none;
@@ -2652,26 +2437,10 @@ footer {
     width: 100%;
     justify-content: center;
   }
-  .nav-links .nav-theme-wrap {
-    width: 100%;
-  }
-  .nav-links .nav-theme {
-    width: 100%;
-  }
-  .nav-theme-btn {
-    flex: 1;
-    text-align: center;
-    padding: 0.42rem 0.35rem;
-    font-size: 0.58rem;
-  }
 }
 
 /* ─── prefers-reduced-motion (global) ─── */
 @media (prefers-reduced-motion: reduce) {
-  .cursor,
-  .cursor-ring {
-    transition: none !important;
-  }
   .reveal,
   .reveal.visible {
     opacity: 1 !important;
