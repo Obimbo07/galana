@@ -45,6 +45,7 @@ export function SupportWidget({ data }: { data: SiteData }) {
         id={ASSISTANT_PANEL_ID}
         aria-hidden={!assistantOpen}
         aria-live="polite"
+        {...(!assistantOpen ? { inert: true } : {})}
       >
         <div className="help-panel-head help-panel-head-row" id="helpPanelHead">
           <span>AI assistant</span>

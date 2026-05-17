@@ -21,7 +21,12 @@ export function SiteEffects() {
           if (e.isIntersecting) e.target.classList.add("visible");
         });
       },
-      { threshold: 0.1 }
+      /**
+       * `threshold: 0.1` left tall blocks effectively invisible (`opacity:0`) until ~10%
+       * was visible — on phones that reads as a dead zone where taps hit empty layers.
+       * Activate as soon as any pixel crosses the viewport; eager margins reduce races while scrolling.
+       */
+      { threshold: 0, rootMargin: "120px 0px 160px 0px" }
     );
 
     /** Re-scan on pathname change — client-rendered `.reveal` blocks would otherwise stay opacity:0 forever. */

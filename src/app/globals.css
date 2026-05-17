@@ -111,6 +111,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Faster, reliable taps on touch devices (avoids double-tap zoom delay). */
+button,
+input,
+select,
+textarea,
+a {
+  touch-action: manipulation;
+}
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--black); }
@@ -127,6 +136,13 @@ body {
   transition:
     box-shadow 0.35s ease,
     border-color 0.35s ease;
+}
+@media (max-width: 900px) {
+  /* iOS/WebKit: backdrop blur on fixed headers can mis-hit touches under the bar. */
+  .site-header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 .site-header.scrolled {
   box-shadow:
@@ -391,6 +407,7 @@ body {
 /* ─── HERO ─── */
 #hero {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -423,6 +440,11 @@ body {
   object-fit: cover;
   object-position: center;
   filter: saturate(1.06) contrast(1.03);
+}
+/* Hero media must never sit above interactive shell due to stacking quirks. */
+.hero-photo,
+.hero-photo * {
+  pointer-events: none;
 }
 .hero-bg {
   position:absolute; inset:0;
@@ -459,7 +481,8 @@ body {
 }
 .hero-copy {
   position: relative;
-  z-index: 2;
+  /* Above `.hero-calc` in the same grid — later siblings paint later and can steal taps on touch UIs. */
+  z-index: 4;
   max-width: 640px;
   isolation: isolate;
 }
@@ -537,6 +560,8 @@ h1.hero-title em:not(.hero-title-accent) {
 }
 .hero-actions {
   display:flex; gap:1rem; flex-wrap:wrap;
+  position: relative;
+  z-index: 2;
 }
 .btn-primary {
   background-color: var(--blue);
@@ -558,6 +583,7 @@ h1.hero-title em:not(.hero-title-accent) {
   background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15));
   transform: translateX(-100%);
   transition: transform 0.4s ease;
+  pointer-events: none;
 }
 .btn-primary:hover::before { transform: translateX(100%); }
 .btn-primary:hover {
@@ -1044,6 +1070,7 @@ h2.section-title em { font-style:italic; color:var(--blue-light); }
   background: var(--media-bottom-scrim);
   opacity:0; transition: opacity 0.3s;
   display:flex; align-items:flex-end; padding:1.25rem;
+  pointer-events: none;
 }
 .product-card:hover .product-overlay { opacity:1; }
 .product-overlay-btn {
@@ -1609,8 +1636,13 @@ footer {
     opacity 0.75s cubic-bezier(0.16, 1, 0.35, 1),
     transform 0.75s cubic-bezier(0.16, 1, 0.35, 1);
 }
+/* Invisible-but-mounted `.reveal` still participates in hit-testing unless opted out. */
+.reveal:not(.visible) {
+  pointer-events: none;
+}
 .reveal.visible {
   opacity:1; transform:translateY(0);
+  pointer-events: auto;
 }
 .reveal-delay-1 { transition-delay:0.1s; }
 .reveal-delay-2 { transition-delay:0.18s; }
@@ -1700,7 +1732,11 @@ footer {
   width: 100%;
   max-width: var(--section-max);
   margin: 0 auto;
-  padding: calc(6.5rem + var(--nav-stack-extra)) var(--section-pad-inline-end-lg) 0
+  padding: calc(
+      6.5rem + var(--nav-stack-extra) + env(safe-area-inset-top, 0px)
+    )
+    var(--section-pad-inline-end-lg)
+    0
     var(--section-px-lg);
   box-sizing: border-box;
 }
@@ -1711,6 +1747,13 @@ footer {
   gap: 2rem;
   align-items: start;
   width: 100%;
+  position: relative;
+}
+
+/* Stack below copy so overlaps (animation, rounding, zoom) never eat hero taps. */
+#hero .hero-calc {
+  position: relative;
+  z-index: 2;
 }
 
 #hero .hero-bottom {
@@ -1845,6 +1888,14 @@ footer {
     backdrop-filter 0.3s ease;
 }
 .cart-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+/*
+ * Dismissed overlays keep `pointer-events: none` on the root only; descendants
+ * still default to `auto` and can steal taps on touch devices.
+ */
+.cart-drawer-overlay:not(.open),
+.cart-drawer-overlay:not(.open) * {
+  pointer-events: none !important;
+}
 .cart-drawer {
   position: fixed;
   top: 0;
@@ -2299,24 +2350,25 @@ footer {
   box-shadow:
     0 16px 48px color-mix(in srgb, var(--black), transparent 55%),
     0 0 0 1px color-mix(in srgb, var(--gold-mid), transparent 88%);
-  display: flex;
+  /* Closed panel must not reserve layout — invisible chat subtree sized like an open panel
+     overlapped the page mid‑viewport on mobile and swallowed taps. */
+  display: none;
   flex-direction: column;
   overflow: hidden;
   opacity: 0;
   transform: translateY(12px) scale(0.97);
   transform-origin: bottom right;
   pointer-events: none;
-  visibility: hidden;
-  transition:
-    opacity 0.34s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.34s cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0.34s;
 }
 .help-panel.open {
+  display: flex;
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
   visibility: visible;
+  transition:
+    opacity 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .help-panel-head {
   padding: 0.85rem 1rem;
@@ -2402,6 +2454,10 @@ footer {
     padding-inline: var(--section-px) var(--section-pad-inline-end-sm);
   }
 
+  #hero .hero-main {
+    gap: clamp(2rem, 5vw, 2.75rem);
+  }
+
   .section-inner {
     padding-inline: var(--section-px) var(--section-pad-inline-end-sm);
   }
@@ -2467,6 +2523,10 @@ footer {
     pointer-events: auto;
     transform: translateY(0);
   }
+  .nav-links:not(.nav-links-open),
+  .nav-links:not(.nav-links-open) * {
+    pointer-events: none !important;
+  }
   .nav-links li {
     width: 100%;
   }
@@ -2485,6 +2545,7 @@ footer {
     transform: none !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
+    pointer-events: auto !important;
   }
   .diff-scroll {
     animation: none !important;
@@ -2597,6 +2658,7 @@ footer {
   opacity: 1;
   transform: none;
   transition: none;
+  pointer-events: auto;
 }
 
 .checkout-section-inner {
