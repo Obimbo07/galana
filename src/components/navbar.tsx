@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { NavSocialLinks } from "@/components/nav-social";
 import { SiteLogo } from "@/components/site-logo";
+import { SITE_LOGO_NAME_SRC } from "@/lib/site-brand";
 import { useGalana } from "@/providers/galana-provider";
 
 export function Navbar() {
@@ -34,7 +36,16 @@ export function Navbar() {
       </div>
       <nav id="navbar">
         <Link href="/" className="nav-logo bg-transparent" onClick={() => setOpen(false)}>
-          <SiteLogo priority heightPx={52} />
+          <SiteLogo priority heightPx={52} className="nav-logo-mark" />
+          <Image
+            src={SITE_LOGO_NAME_SRC}
+            alt=""
+            width={320}
+            height={96}
+            className="nav-logo-name-img"
+            priority
+            aria-hidden
+          />
         </Link>
         <button
           type="button"

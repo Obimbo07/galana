@@ -25,7 +25,7 @@
       "href": "/products"
     },
     "secondaryCta": {
-      "label": "⚡ Materials Calculator",
+      "label": "\u26a1 Materials Calculator",
       "href": "/calculator"
     },
     "stats": [
@@ -57,39 +57,39 @@
   "services": [
     {
       "num": "01",
-      "icon": "🏗️",
+      "icon": "\ud83c\udfd7\ufe0f",
       "name": "Precast Concrete Products",
-      "desc": "Pipes, wall panels, roof tiles, paving blocks, drainage systems and 40+ custom elements — manufactured to KEBS standards with precision vibration technology.",
+      "desc": "Pipes, wall panels, roof tiles, paving blocks, drainage systems and 40+ custom elements \u2014 manufactured to KEBS standards with precision vibration technology.",
       "tag": "Core Service",
       "image": "/images/wallpapers/concrete-pipes.png"
     },
     {
       "num": "02",
-      "icon": "📐",
+      "icon": "\ud83d\udcd0",
       "name": "Custom Design & Engineering",
-      "desc": "Our engineers work with architects and developers to design bespoke precast elements — beyond catalogue products. Submit your drawings, we manufacture to spec.",
+      "desc": "Our engineers work with architects and developers to design bespoke precast elements \u2014 beyond catalogue products. Submit your drawings, we manufacture to spec.",
       "tag": "Differentiator",
       "image": "/images/wallpapers/custom-designs.png"
     },
     {
       "num": "03",
-      "icon": "🔍",
+      "icon": "\ud83d\udd0d",
       "name": "Site Assessment & Consultation",
-      "desc": "We send qualified technicians to your site to assess drainage needs, recommend pipe sizes, calculate quantities and advise on the right products — free for qualifying projects.",
+      "desc": "We send qualified technicians to your site to assess drainage needs, recommend pipe sizes, calculate quantities and advise on the right products \u2014 free for qualifying projects.",
       "tag": "Differentiator",
       "image": "/images/wallpapers/site-assesment.jpeg"
     },
     {
       "num": "04",
-      "icon": "🚛",
+      "icon": "\ud83d\ude9b",
       "name": "Tracked Delivery & Logistics",
-      "desc": "Real-time order tracking with WhatsApp & SMS notifications. Construction timelines are tight — we respect yours. Available across Kenya and East Africa.",
+      "desc": "Real-time order tracking with WhatsApp & SMS notifications. Construction timelines are tight \u2014 we respect yours. Available across Kenya and East Africa.",
       "tag": "Differentiator",
       "image": "/images/wallpapers/tracked-delievery.jpeg"
     },
     {
       "num": "05",
-      "icon": "🏢",
+      "icon": "\ud83c\udfe2",
       "name": "Contractor & Bulk Accounts",
       "desc": "Dedicated portal for developers, county governments and NGOs. Access order history, invoices, preferred pricing and priority stock allocation in one dashboard.",
       "tag": "Differentiator",
@@ -97,9 +97,9 @@
     },
     {
       "num": "06",
-      "icon": "🔧",
+      "icon": "\ud83d\udd27",
       "name": "Installation Referral Network",
-      "desc": "Need laying or installation help? We connect you to our vetted contractor network — certified professionals who work with our products daily.",
+      "desc": "Need laying or installation help? We connect you to our vetted contractor network \u2014 certified professionals who work with our products daily.",
       "tag": "Added Value",
       "image": "/images/wallpapers/connector-network.jpeg"
     }
@@ -109,27 +109,27 @@
     "title": "The Galana Difference",
     "items": [
       {
-        "icon": "📊",
+        "icon": "\ud83d\udcca",
         "title": "Instant Pricing Estimates",
-        "body": "Unlike competitors, we give you indicative price ranges and quantity estimates online — no waiting days for a quote just to budget."
+        "body": "Unlike competitors, we give you indicative price ranges and quantity estimates online \u2014 no waiting days for a quote just to budget."
       },
       {
-        "icon": "🛰️",
+        "icon": "\ud83d\udef0\ufe0f",
         "title": "Real-Time Delivery Tracking",
         "body": "Every order dispatched is trackable. Receive WhatsApp + SMS alerts at dispatch, en route, and at delivery. Zero surprises."
       },
       {
-        "icon": "🌍",
+        "icon": "\ud83c\udf0d",
         "title": "East African Reach",
-        "body": "Supply and logistics across Kenya, Uganda, Tanzania and beyond — with one point of contact and consistent quality standards."
+        "body": "Supply and logistics across Kenya, Uganda, Tanzania and beyond \u2014 with one point of contact and consistent quality standards."
       },
       {
-        "icon": "🏛️",
+        "icon": "\ud83c\udfdb\ufe0f",
         "title": "KEBS & Standards Certified",
         "body": "Every product manufactured in compliance with Kenya Bureau of Standards. Documentation provided with every order for project records."
       },
       {
-        "icon": "♻️",
+        "icon": "\u267b\ufe0f",
         "title": "Sustainability Reporting",
         "body": "We provide carbon footprint data, recycled content percentages and water management benefits for green building certifications."
       }
@@ -166,9 +166,9 @@
   "careers": {
     "heading": "Build Your Career With Us",
     "sub": "We're growing. We're ambitious. And we invest in people who share our drive to deliver extraordinary things.",
-    "openApplicationCta": "Submit Open Application →",
+    "openApplicationCta": "Submit Open Application \u2192",
     "featuredJobSlug": "civil-structural-engineer",
-    "featuredSummary": "Lead structural design and calculations for precast concrete, drainage and roofing scope—from drawings through site coordination—with Kenya/EAC codes and manufacturing realities in mind.",
+    "featuredSummary": "Lead structural design and calculations for precast concrete, drainage and roofing scope\u2014from drawings through site coordination\u2014with Kenya/EAC codes and manufacturing realities in mind.",
     "viewAllRolesCta": "View all roles",
     "jobs": [
       {
@@ -183,7 +183,7 @@
       },
       {
         "slug": "sales-executive-construction",
-        "title": "Sales Executive – Construction Materials",
+        "title": "Sales Executive \u2013 Construction Materials",
         "tags": [
           "Nairobi / Field",
           "Full-Time",
@@ -193,7 +193,7 @@
       },
       {
         "slug": "production-supervisor-precast",
-        "title": "Production Supervisor – Precast Plant",
+        "title": "Production Supervisor \u2013 Precast Plant",
         "tags": [
           "Nairobi",
           "Full-Time",
@@ -236,7 +236,7 @@
   "footer": {
     "tagline": "At Galana Group",
     "about": "Kenya's trusted partner for precast concrete, drainage, roofing and paving solutions since the 1960s.",
-    "copyright": "© 2026 Galana Group. All Rights Reserved."
+    "copyright": "\u00a9 2026 Galana Group. All Rights Reserved."
   },
   "contact": {
     "quoteEmail": "quotes@galanagroup.co.ke",
@@ -249,10 +249,10 @@
     "whatsappDigits": "254713490752",
     "location": "Near old Malindi Road, Nairobi, Kenya",
     "locationUrl": "https://www.google.com/maps?q=-3.9790476,39.7170752",
-    "operatingHours": "Mon–Fri: 08:00–17:00 · Sat: 08:00–13:00"
+    "operatingHours": "Mon\u2013Fri: 08:00\u201317:00 \u00b7 Sat: 08:00\u201313:00"
   },
   "help": {
-    "whatsappPrefill": "Hello Galana Group — I have a question about materials / delivery."
+    "whatsappPrefill": "Hello Galana Group \u2014 I have a question about materials / delivery."
   },
   "calculator": {
     "paving": {
@@ -260,22 +260,22 @@
       "blocksPerM2Options": [
         {
           "id": "uni",
-          "label": "Uni Block (40/m²)",
+          "label": "Uni Block (40/m\u00b2)",
           "blocksPerM2": 40
         },
         {
           "id": "hex",
-          "label": "Hexagon Block (35/m²)",
+          "label": "Hexagon Block (35/m\u00b2)",
           "blocksPerM2": 35
         },
         {
           "id": "quad",
-          "label": "Quad Block (38/m²)",
+          "label": "Quad Block (38/m\u00b2)",
           "blocksPerM2": 38
         },
         {
           "id": "shell",
-          "label": "Shell Block (44/m²)",
+          "label": "Shell Block (44/m\u00b2)",
           "blocksPerM2": 44
         }
       ]
@@ -310,12 +310,12 @@
       "tileTypes": [
         {
           "id": "roman",
-          "label": "Double Roman (12/m²)",
+          "label": "Double Roman (12/m\u00b2)",
           "tilesPerM2": 12
         },
         {
           "id": "venician",
-          "label": "Venician (14/m²)",
+          "label": "Venician (14/m\u00b2)",
           "tilesPerM2": 14
         }
       ]
@@ -328,7 +328,8 @@
       "catLabel": "Concrete Pipes",
       "name": "Ogee Joint Concrete Pipes",
       "use": "Land surface water drainage systems",
-      "image": "/images/products/pipe-ogee.jpg"
+      "image": "/images/products/pipe-ogee.jpg",
+      "price": 850
     },
     {
       "id": "pipe-half",
@@ -336,23 +337,26 @@
       "catLabel": "Concrete Pipes",
       "name": "Half Round Ogee Concrete Pipes",
       "use": "Open storm water drainage systems",
-      "image": "/images/products/pipe-half.jpg"
+      "image": "/images/products/pipe-half.jpg",
+      "price": 750
     },
     {
       "id": "pipe-flex",
       "cat": "pipes",
       "catLabel": "Concrete Pipes",
-      "name": "Spigot & Socket – Flexible Jointed",
+      "name": "Spigot & Socket \u2013 Flexible Jointed",
       "use": "Sewerage systems",
-      "image": "/images/products/pipe-flex.jpg"
+      "image": "/images/products/pipe-flex.jpg",
+      "price": 950
     },
     {
       "id": "pipe-rigid",
       "cat": "pipes",
       "catLabel": "Concrete Pipes",
-      "name": "Spigot & Socket – Rigid Jointed",
+      "name": "Spigot & Socket \u2013 Rigid Jointed",
       "use": "Storm water & sewerage systems",
-      "image": "/images/products/pipe-rigid.jpg"
+      "image": "/images/products/pipe-rigid.jpg",
+      "price": 900
     },
     {
       "id": "pipe-manhole",
@@ -360,7 +364,8 @@
       "catLabel": "Concrete Pipes",
       "name": "Manhole Rings",
       "use": "Access points for drainage maintenance",
-      "image": "/images/products/pipe-manhole.jpg"
+      "image": "/images/products/pipe-manhole.jpg",
+      "price": 3500
     },
     {
       "id": "pipe-porous",
@@ -368,7 +373,8 @@
       "catLabel": "Concrete Pipes",
       "name": "Porous Concrete Pipes",
       "use": "Kenya's only porous pipe manufacturer",
-      "image": "/images/products/pipe-porous.jpg"
+      "image": "/images/products/pipe-porous.jpg",
+      "price": 1200
     },
     {
       "id": "pipe-bend",
@@ -376,7 +382,8 @@
       "catLabel": "Concrete Pipes",
       "name": "Concrete Pipe Bends",
       "use": "Changes of direction in buried drainage and sewer runs",
-      "image": "/images/products/pipe-bend.jpg"
+      "image": "/images/products/pipe-bend.jpg",
+      "price": 1200
     },
     {
       "id": "pipe-saddle",
@@ -384,7 +391,8 @@
       "catLabel": "Concrete Pipes",
       "name": "Concrete Pipe Saddle",
       "use": "Branch connections onto main drainage lines",
-      "image": "/images/products/pipe-saddle.jpg"
+      "image": "/images/products/pipe-saddle.jpg",
+      "price": 1200
     },
     {
       "id": "pipe-backdrop",
@@ -392,7 +400,8 @@
       "catLabel": "Concrete Pipes",
       "name": "Concrete Backdrops & Junction Pipes",
       "use": "Junctions and backdrop fittings for drainage networks",
-      "image": "/images/products/pipe-backdrop.png"
+      "image": "/images/products/pipe-backdrop.png",
+      "price": 1200
     },
     {
       "id": "pav-quad",
@@ -400,7 +409,8 @@
       "catLabel": "Paving Blocks",
       "name": "Quad Paving Block",
       "use": "Driveways & public spaces",
-      "image": "/images/products/pav-quad.jpg"
+      "image": "/images/products/pav-quad.jpg",
+      "price": 1200
     },
     {
       "id": "pav-hex",
@@ -408,7 +418,8 @@
       "catLabel": "Paving Blocks",
       "name": "Hexagon Paving Block",
       "use": "Decorative honeycomb surfaces",
-      "image": "/images/products/pav-hex.jpg"
+      "image": "/images/products/pav-hex.jpg",
+      "price": 1200
     },
     {
       "id": "pav-uni",
@@ -416,7 +427,8 @@
       "catLabel": "Paving Blocks",
       "name": "Uni Paving Block",
       "use": "Versatile all-surface solution",
-      "image": "/images/products/pav-uni.jpg"
+      "image": "/images/products/pav-uni.jpg",
+      "price": 1200
     },
     {
       "id": "pav-shell",
@@ -424,7 +436,8 @@
       "catLabel": "Paving Blocks",
       "name": "Shell Paving Block",
       "use": "Curved / scalloped profile for pavements and plazas",
-      "image": "/images/products/pav-shell.jpg"
+      "image": "/images/products/pav-shell.jpg",
+      "price": 1200
     },
     {
       "id": "pav-eclipse",
@@ -432,7 +445,8 @@
       "catLabel": "Paving Blocks",
       "name": "Eclipse Blocks",
       "use": "Decorative paving patterns",
-      "image": "/images/products/pav-eclipse.jpg"
+      "image": "/images/products/pav-eclipse.jpg",
+      "price": 1500
     },
     {
       "id": "pre-wall",
@@ -440,7 +454,8 @@
       "catLabel": "Precast",
       "name": "Wall Panel, Post & Base",
       "use": "Complete precast boundary wall system",
-      "image": "/images/products/pre-wall.jpg"
+      "image": "/images/products/pre-wall.jpg",
+      "price": 2500
     },
     {
       "id": "pre-bal",
@@ -448,7 +463,8 @@
       "catLabel": "Precast",
       "name": "Balustrade & Balustrade Copping",
       "use": "Staircases & balconies",
-      "image": "/images/products/pre-bal.jpg"
+      "image": "/images/products/pre-bal.jpg",
+      "price": 3500
     },
     {
       "id": "pre-garden",
@@ -456,7 +472,8 @@
       "catLabel": "Precast",
       "name": "Garden Chair & Safety Barrier",
       "use": "Public spaces & landscaping",
-      "image": "/images/products/pre-garden.jpg"
+      "image": "/images/products/pre-garden.jpg",
+      "price": 4500
     },
     {
       "id": "pre-shallow-drain",
@@ -464,7 +481,8 @@
       "catLabel": "Precast",
       "name": "Shallow Block Drain",
       "use": "Drains surface water into drainage pipes",
-      "image": "/images/products/pre-shallow-drain.jpg"
+      "image": "/images/products/pre-shallow-drain.jpg",
+      "price": 1800
     },
     {
       "id": "pre-side-slab",
@@ -472,7 +490,8 @@
       "catLabel": "Precast",
       "name": "Side Slab",
       "use": "Channel sides and structural precast elements",
-      "image": "/images/products/pre-side-slab.jpg"
+      "image": "/images/products/pre-side-slab.jpg",
+      "price": 2200
     },
     {
       "id": "pre-interlock-tiles",
@@ -480,7 +499,8 @@
       "catLabel": "Precast",
       "name": "Interlocking Floor & Wall Tiles",
       "use": "Industrial and utility flooring and wall finishes",
-      "image": "/images/products/pre-interlock-tiles.jpg"
+      "image": "/images/products/pre-interlock-tiles.jpg",
+      "price": 1800
     },
     {
       "id": "pre-dhobi-sink",
@@ -488,7 +508,8 @@
       "catLabel": "Precast",
       "name": "Dhobi Sink",
       "use": "Wash areas and service yards",
-      "image": "/images/products/pre-dhobi-sink.jpg"
+      "image": "/images/products/pre-dhobi-sink.jpg",
+      "price": 2800
     },
     {
       "id": "pre-road-channel",
@@ -496,7 +517,8 @@
       "catLabel": "Precast",
       "name": "Road Channel",
       "use": "Roadside and pavement surface water collection",
-      "image": "/images/products/pre-road-channel.jpg"
+      "image": "/images/products/pre-road-channel.jpg",
+      "price": 2000
     },
     {
       "id": "pre-invert-drain",
@@ -504,7 +526,8 @@
       "catLabel": "Precast",
       "name": "Invert Block Drain",
       "use": "Low-profile drainage inverts",
-      "image": "/images/products/pre-invert-drain.png"
+      "image": "/images/products/pre-invert-drain.png",
+      "price": 1600
     },
     {
       "id": "pre-rect-invert",
@@ -512,7 +535,8 @@
       "catLabel": "Precast",
       "name": "Rectangular Invert Block Drain",
       "use": "Rectangular invert channels for storm water",
-      "image": "/images/products/pre-rect-invert.jpg"
+      "image": "/images/products/pre-rect-invert.jpg",
+      "price": 1600
     },
     {
       "id": "pre-kerb",
@@ -520,7 +544,8 @@
       "catLabel": "Precast",
       "name": "Road Kerbs & Garden Kerbs",
       "use": "Edge restraint for roads, parking and landscaping",
-      "image": "/images/products/pre-kerb.jpg"
+      "image": "/images/products/pre-kerb.jpg",
+      "price": 950
     },
     {
       "id": "pre-pcc-markers",
@@ -528,7 +553,8 @@
       "catLabel": "Precast",
       "name": "PCC Marker Posts, Earth Box & Stay Blocks",
       "use": "Utilities markers and stay blocks for infrastructure",
-      "image": "/images/products/pre-pcc-markers.jpg"
+      "image": "/images/products/pre-pcc-markers.jpg",
+      "price": 450
     },
     {
       "id": "pre-quadrant",
@@ -536,7 +562,8 @@
       "catLabel": "Precast",
       "name": "Quadrant",
       "use": "Precast quadrant fittings for drainage transitions",
-      "image": "/images/products/pre-quadrant.jpg"
+      "image": "/images/products/pre-quadrant.jpg",
+      "price": 750
     },
     {
       "id": "pre-flowerpot",
@@ -544,7 +571,8 @@
       "catLabel": "Precast",
       "name": "Flowerpots",
       "use": "Landscaping and street furniture",
-      "image": "/images/products/pre-flowerpot.jpg"
+      "image": "/images/products/pre-flowerpot.jpg",
+      "price": 650
     },
     {
       "id": "roof-roman",
@@ -552,7 +580,8 @@
       "catLabel": "Concrete Roof Tiles",
       "name": "Double Roman",
       "use": "Residential roofing",
-      "image": "/images/products/roof-roman.jpg"
+      "image": "/images/products/roof-roman.jpg",
+      "price": 850
     },
     {
       "id": "roof-ven",
@@ -560,7 +589,8 @@
       "catLabel": "Concrete Roof Tiles",
       "name": "Venician",
       "use": "Classic profile roof tile",
-      "image": "/images/products/roof-ven.jpg"
+      "image": "/images/products/roof-ven.jpg",
+      "price": 950
     },
     {
       "id": "roof-hatari",
@@ -568,7 +598,8 @@
       "catLabel": "Concrete Roof Tiles",
       "name": "Hatari Tiles",
       "use": "Profiled concrete roof tile range",
-      "image": "/images/products/roof-hatari.jpg"
+      "image": "/images/products/roof-hatari.jpg",
+      "price": 1100
     }
   ],
   "faq": [
@@ -579,7 +610,7 @@
         "logistics",
         "lead"
       ],
-      "answer": "We dispatch across Kenya and can coordinate East Africa deliveries. Typical lead times depend on product and plant load — share your site location in a quote request for a concrete timeline."
+      "answer": "We dispatch across Kenya and can coordinate East Africa deliveries. Typical lead times depend on product and plant load \u2014 share your site location in a quote request for a concrete timeline."
     },
     {
       "keywords": [
@@ -603,7 +634,7 @@
         "block",
         "driveway"
       ],
-      "answer": "Paving estimates use m² × blocks per m² plus a wastage buffer for cuts. Patterns and edge restraints may add margin — the calculator is a solid first pass."
+      "answer": "Paving estimates use m\u00b2 \u00d7 blocks per m\u00b2 plus a wastage buffer for cuts. Patterns and edge restraints may add margin \u2014 the calculator is a solid first pass."
     },
     {
       "keywords": [
@@ -619,7 +650,7 @@
         "price",
         "cost"
       ],
-      "answer": "Indicative pricing is confirmed per project. Use “Request quote” with your calculator + cart — we respond with formal pricing."
+      "answer": "Indicative pricing is confirmed per project. Use \u201cRequest quote\u201d with your calculator + cart \u2014 we respond with formal pricing."
     },
     {
       "keywords": [

@@ -141,6 +141,26 @@
   color: var(--adm-muted);
 }
 
+.badge-pay-pending {
+  background: rgba(233, 207, 110, 0.2);
+  color: var(--adm-warn);
+}
+
+.badge-pay-paid {
+  background: rgba(62, 207, 142, 0.2);
+  color: var(--adm-ok);
+}
+
+.badge-pay-failed {
+  background: rgba(230, 100, 100, 0.18);
+  color: #f0a8a8;
+}
+
+.badge-pay-empty {
+  background: rgba(139, 155, 171, 0.15);
+  color: var(--adm-muted);
+}
+
 .admin-form label {
   display: block;
   font-size: 0.8rem;

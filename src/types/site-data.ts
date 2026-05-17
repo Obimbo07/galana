@@ -93,13 +93,15 @@ export interface SiteData {
       tileTypes: Array<{ id: string; label: string; tilesPerM2: number }>;
     };
   };
-  products: Array<{
-    id: string;
-    cat: string;
-    catLabel: string;
-    name: string;
-    use: string;
-    image: string;
-  }>;
+   products: Array<{
+     id: string;
+     cat: string;
+     catLabel: string;
+     name: string;
+     use: string;
+     image: string;
+     /** Price in KES (optional for admin) */
+     price?: number;
+   }>;
   faq: Array<{ keywords: string[]; answer: string }>;
 }

@@ -79,10 +79,16 @@ export async function POST(req: Request) {
   const kind: QuoteRequestKind =
     body.kind === "order" ? "order" : "quote";
 
+  // Extract totalPrice from body, if present and is a number
+  const totalPrice =
+    typeof body.totalPrice === "number" && !isNaN(body.totalPrice)
+      ? body.totalPrice
+      : undefined;
+
   let firestoreId: string | null = null;
   if (firebaseConfigured) {
     try {
-      firestoreId = await createQuoteRequestDoc({ payload, kind });
+      firestoreId = await createQuoteRequestDoc({ payload, kind, totalPrice });
     } catch (e) {
       console.error("[api/quote] Firestore save failed:", e);
       const detail =

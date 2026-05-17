@@ -5,6 +5,19 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useGalana } from "@/providers/galana-provider";
 
+function formatPriceKes(n: number): string {
+  return new Intl.NumberFormat("en-KE", {
+    style: "currency",
+    currency: "KES",
+    minimumFractionDigits: Number.isInteger(n) ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(n);
+}
+
+function hasListedPrice(price: unknown): price is number {
+  return typeof price === "number" && Number.isFinite(price) && price >= 0;
+}
+
 const FILTERS: Array<[string, string]> = [
   ["all", "All Products"],
   ["pipes", "Concrete Pipes"],
@@ -83,6 +96,13 @@ export function ProductsSection() {
               <div className="product-info">
                 <div className="product-cat-badge">{p.catLabel}</div>
                 <div className="product-name">{p.name}</div>
+                {hasListedPrice(p.price) ? (
+                  <div className="product-price">{formatPriceKes(p.price)}</div>
+                ) : (
+                  <div className="product-price product-price-muted">
+                    Price on request
+                  </div>
+                )}
                 <div className="product-use">{p.use}</div>
               </div>
               <div className="product-add-wrap">

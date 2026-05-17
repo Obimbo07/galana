@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export function SiteEffects() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const onScroll = () => {
       document
@@ -20,13 +23,15 @@ export function SiteEffects() {
       },
       { threshold: 0.1 }
     );
+
+    /** Re-scan on pathname change — client-rendered `.reveal` blocks would otherwise stay opacity:0 forever. */
     document.querySelectorAll(".reveal").forEach((el) => observe.observe(el));
 
     return () => {
       window.removeEventListener("scroll", onScroll);
       observe.disconnect();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

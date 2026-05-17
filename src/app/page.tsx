@@ -2,6 +2,7 @@ import { ApplyModal } from "@/components/apply-modal";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ContactFooter } from "@/components/contact-footer";
 import { Hero } from "@/components/hero";
+import { ProductsSection } from "@/components/products-section";
 import { Navbar } from "@/components/navbar";
 import { SiteEffects } from "@/components/site-effects";
 import { SupportWidget } from "@/components/support-widget";
@@ -16,6 +17,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <ProductsSection />
         <ContactFooter />
       </main>
       <CartDrawer />

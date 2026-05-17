@@ -14,6 +14,7 @@ export async function GET() {
         catLabel: p.catLabel,
         use: p.use,
         image: p.image,
+        price: p.price,
       })),
     },
     {

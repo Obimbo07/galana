@@ -15,6 +15,8 @@ export function AdminNav(props: {
       </Link>
       <nav className="admin-nav-links" aria-label="Admin">
         <Link href="/admin">Requests</Link>
+        <Link href="/admin/products">Products</Link>
+        <Link href="/admin/calculator">Calculator</Link>
         <Link href="/admin/profile">Profile</Link>
         <span className="admin-muted" style={{ fontSize: "0.8rem" }}>
           {props.email}

@@ -63,6 +63,12 @@ export interface QuoteRequest {
   payload: SiteQuotePayload;
   internalNote?: string;
   lastUpdatedBy?: string;
+  /** Total price in KES (optional until quoted). */
+  totalPrice?: number;
+  /** Payment status: pending, paid, failed. */
+  paymentStatus?: 'pending' | 'paid' | 'failed';
+  /** Paystack payment reference (if any). */
+  paymentReference?: string;
   createdAt: string;
   updatedAt: string;
 }

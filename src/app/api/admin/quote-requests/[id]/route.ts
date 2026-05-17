@@ -1,10 +1,9 @@
-import { FieldValue, type DocumentData } from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 import { NextResponse } from "next/server";
 import { AdminApiError, requireAdminStaff } from "@/lib/admin-api-auth";
 import { getGalanaAdminDb } from "@/lib/galana-firebase-admin";
-import { timestampToIso } from "@/lib/firestore-serialize";
+import { quoteRequestFromDoc } from "@/lib/quote-request-document";
 import { QUOTE_REQUESTS_COLLECTION } from "@/lib/quote-request-firestore";
-import type { QuoteRequest, QuoteRequestStatus } from "@/types/galana-firestore";
 
 const STATUSES: Set<string> = new Set([
   "processing",
@@ -14,35 +13,9 @@ const STATUSES: Set<string> = new Set([
   "archived",
 ]);
 
-function toQuote(id: string, d: DocumentData): QuoteRequest {
-  const statusRaw = d.status;
-  const status: QuoteRequestStatus = STATUSES.has(statusRaw)
-    ? (statusRaw as QuoteRequestStatus)
-    : "processing";
-  const payload = (d.payload ?? {}) as QuoteRequest["payload"];
-  const fromPhoneRaw = d.fromPhone ?? payload.fromPhone;
-  const locRaw = d.customerLocation ?? payload.location;
-  return {
-    id,
-    kind: d.kind === "order" ? "order" : "quote",
-    status,
-    fromEmail: String(d.fromEmail ?? ""),
-    fromPhone:
-      typeof fromPhoneRaw === "string" && fromPhoneRaw.trim()
-        ? fromPhoneRaw.trim()
-        : undefined,
-    customerLocation:
-      typeof locRaw === "string" && locRaw.trim() ? locRaw.trim() : undefined,
-    pageUrl: String(d.pageUrl ?? ""),
-    payload,
-    internalNote:
-      typeof d.internalNote === "string" ? d.internalNote : undefined,
-    lastUpdatedBy:
-      typeof d.lastUpdatedBy === "string" ? d.lastUpdatedBy : undefined,
-    createdAt: timestampToIso(d.createdAt),
-    updatedAt: timestampToIso(d.updatedAt),
-  };
-}
+const PAYMENT_STATUSES = new Set(["pending", "paid", "failed"]);
+
+export const toQuote = quoteRequestFromDoc;
 
 export async function GET(
   req: Request,
@@ -60,7 +33,7 @@ export async function GET(
     }
     return NextResponse.json({
       ok: true,
-      item: toQuote(snap.id, snap.data()!),
+      item: quoteRequestFromDoc(snap.id, snap.data()!),
     });
   } catch (e) {
     if (e instanceof AdminApiError) {
@@ -93,33 +66,74 @@ export async function PATCH(
       });
     }
     const b = body as Record<string, unknown>;
-    const patch: Record<string, unknown> = {
-      updatedAt: FieldValue.serverTimestamp(),
-      lastUpdatedBy: user.uid,
-    };
     const hasStatus = typeof b.status === "string";
     const hasNote = typeof b.internalNote === "string";
-    if (!hasStatus && !hasNote) {
+    const hasTotal = "totalPrice" in b;
+    const hasPayment = "paymentStatus" in b;
+
+    if (!hasStatus && !hasNote && !hasTotal && !hasPayment) {
       return NextResponse.json(
         {
           ok: false,
-          message: "Send status and/or internalNote to update.",
+          message:
+            "Send at least one field: status, internalNote, totalPrice, paymentStatus.",
         },
         { status: 400 }
       );
     }
-    const statusVal = hasStatus ? String(b.status) : "";
-    if (hasStatus && !STATUSES.has(statusVal)) {
-      return NextResponse.json(
-        { ok: false, message: "Invalid status value." },
-        { status: 400 }
-      );
-    }
+
+    const patch: Record<string, unknown> = {
+      updatedAt: FieldValue.serverTimestamp(),
+      lastUpdatedBy: user.uid,
+    };
+
     if (hasStatus) {
+      const statusVal = String(b.status);
+      if (!STATUSES.has(statusVal)) {
+        return NextResponse.json(
+          { ok: false, message: "Invalid status value." },
+          { status: 400 }
+        );
+      }
       patch.status = statusVal;
     }
     if (hasNote) {
       patch.internalNote = b.internalNote;
+    }
+
+    if (hasTotal) {
+      const tp = b.totalPrice;
+      if (tp === null || tp === "") {
+        patch.totalPrice = FieldValue.delete();
+      } else if (
+        typeof tp === "number" &&
+        Number.isFinite(tp) &&
+        tp >= 0
+      ) {
+        patch.totalPrice = tp;
+      } else {
+        return NextResponse.json(
+          { ok: false, message: "totalPrice must be a non‑negative number or null." },
+          { status: 400 }
+        );
+      }
+    }
+
+    if (hasPayment) {
+      const ps = b.paymentStatus;
+      if (ps === null || ps === "") {
+        patch.paymentStatus = FieldValue.delete();
+      } else if (typeof ps === "string" && PAYMENT_STATUSES.has(ps)) {
+        patch.paymentStatus = ps;
+      } else {
+        return NextResponse.json(
+          {
+            ok: false,
+            message: "paymentStatus must be pending, paid, failed, or null.",
+          },
+          { status: 400 }
+        );
+      }
     }
 
     const db = getGalanaAdminDb();
@@ -134,7 +148,7 @@ export async function PATCH(
     const next = await ref.get();
     return NextResponse.json({
       ok: true,
-      item: toQuote(next.id, next.data()!),
+      item: quoteRequestFromDoc(next.id, next.data()!),
     });
   } catch (e) {
     if (e instanceof AdminApiError) {

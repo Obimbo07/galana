@@ -411,7 +411,7 @@ export function ContactFooter() {
                   <Link href="/">Contact Us</Link>
                 </li>
                 <li>
-                  <Link href="/">Get a Quote</Link>
+                  <Link href="/track-quote">Quote status</Link>
                 </li>
               </ul>
             </div>

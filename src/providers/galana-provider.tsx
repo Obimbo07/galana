@@ -20,6 +20,7 @@ import {
   type CartPayloadLine,
 } from "@/lib/quote-body";
 import type { SiteQuotePayload } from "@/types/galana-firestore";
+import { useRouter } from "next/navigation";
 
 const LS_EMAILS = "galana_quote_emails";
 const LS_QUOTE_CONTACT = "galana_quote_contact_v1";
@@ -159,6 +160,7 @@ export function GalanaProvider({
   const [quotePanelOpen, setQuotePanelOpen] = useState(false);
   const [recentEmails, setRecentEmails] = useState<string[]>([]);
   const [applyModalTitle, setApplyModalTitle] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -311,6 +313,71 @@ export function GalanaProvider({
       const location = (extras?.location ?? quoteLocation).trim();
       persistQuoteContact(phone, location);
 
+      // Calculate total price from calculator results and cart
+      let totalPrice = 0;
+
+      // Paving
+      if (pavingResult) {
+        const pavingOption = data.calculator.paving.blocksPerM2Options.find(
+          (o) => o.blocksPerM2 === calc.pavingBlocksPerM2
+        );
+        if (pavingOption) {
+          const productId = `pav-${pavingOption.id}`;
+          const product = data.products.find((p) => p.id === productId);
+          if (product && product.price !== undefined) {
+            const quantityMatch = pavingResult.value.match(/^([\d,]+)/);
+            if (quantityMatch) {
+              const quantity = parseInt(quantityMatch[1].replace(/,/g, ''), 10);
+              totalPrice += quantity * product.price;
+            }
+          }
+        }
+      }
+
+      // Pipes
+      if (pipeResult) {
+        const pipeOption = data.calculator.pipes.pipeTypes.find(
+          (o) => o.sectionM === calc.pipeSectionM
+        );
+        if (pipeOption) {
+          const productId = `pipe-${pipeOption.id}`;
+          const product = data.products.find((p) => p.id === productId);
+          if (product && product.price !== undefined) {
+            const quantityMatch = pipeResult.value.match(/^([\d,]+)/);
+            if (quantityMatch) {
+              const quantity = parseInt(quantityMatch[1].replace(/,/g, ''), 10);
+              totalPrice += quantity * product.price;
+            }
+          }
+        }
+      }
+
+      // Roofing
+      if (roofResult) {
+        const roofingOption = data.calculator.roofing.tileTypes.find(
+          (o) => o.tilesPerM2 === calc.roofTilesPerM2
+        );
+        if (roofingOption) {
+          const productId = `roof-${roofingOption.id}`;
+          const product = data.products.find((p) => p.id === productId);
+          if (product && product.price !== undefined) {
+            const quantityMatch = roofResult.value.match(/^([\d,]+)/);
+            if (quantityMatch) {
+              const quantity = parseInt(quantityMatch[1].replace(/,/g, ''), 10);
+              totalPrice += quantity * product.price;
+            }
+          }
+        }
+      }
+
+      // Cart items
+      for (const cartLine of cartPayload) {
+        const product = data.products.find((p) => p.id === cartLine.productId);
+        if (product && product.price !== undefined) {
+          totalPrice += cartLine.qty * product.price;
+        }
+      }
+
       const payload: SiteQuotePayload = {
         fromEmail: email,
         fromPhone: phone || undefined,
@@ -341,7 +408,7 @@ export function GalanaProvider({
         const r = await fetch("/api/quote", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({ payload, totalPrice }),
         });
         const j = await r.json().catch(() => ({}));
         if (!r.ok) {
@@ -354,6 +421,31 @@ export function GalanaProvider({
         }
         const id =
           j && typeof j === "object" && j.id != null ? String(j.id) : null;
+        
+        // If we have a quote ID, redirect to payment page after PDF download
+        if (id) {
+          try {
+            await downloadQuotePdf(id);
+            window.alert(
+              `Quote saved (reference ${id}). Your PDF download should start.`
+            );
+            // Redirect to payment page
+            router.push(`/pay/${id}`);
+          } catch (e) {
+            window.alert(
+              e instanceof Error
+                ? e.message
+                : "PDF download failed. The quote is still saved."
+            );
+            // Still redirect to payment page even if PDF download fails
+            router.push(`/pay/${id}`);
+          }
+        } else {
+          window.alert(
+            "Quote was accepted but not stored — add FIREBASE_SERVICE_ACCOUNT_JSON in .env so we can save an ID and build your PDF."
+          );
+        }
+        
         return { ok: true, id };
       } catch {
         return {
@@ -374,6 +466,9 @@ export function GalanaProvider({
       roofResult,
       mainTab,
       cartPayload,
+      data, // Need to add data to dependencies
+      calc, // Need to add calc to dependencies
+      router // Add router to dependencies
     ]
   );
 

@@ -12,6 +12,20 @@ function statusClass(s: string) {
   return `badge badge-${s.replace(/[^a-z]/g, "") || "processing"}`;
 }
 
+function paymentStatusClass(ps: string | undefined) {
+  const k = typeof ps === "string" ? ps.trim().replace(/[^a-z]/gi, "").toLowerCase() : "";
+  if (!k) return "badge badge-pay-empty";
+  if (k === "pending" || k === "paid" || k === "failed") {
+    return `badge badge-pay-${k}`;
+  }
+  return "badge badge-pay-empty";
+}
+
+function paymentLabel(ps: string | undefined) {
+  if (!ps) return "Unset";
+  return ps;
+}
+
 export default function AdminHomePage() {
   const router = useRouter();
   const clientConfigured = isGalanaFirebaseClientConfigured();
@@ -109,6 +123,8 @@ export default function AdminHomePage() {
                   <th>Received</th>
                   <th>Type</th>
                   <th>Status</th>
+                  <th>Payment</th>
+                  <th>KES total</th>
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Page</th>
@@ -127,6 +143,23 @@ export default function AdminHomePage() {
                     <td>{q.kind}</td>
                     <td>
                       <span className={statusClass(q.status)}>{q.status}</span>
+                    </td>
+                    <td>
+                      <span
+                        title={q.paymentReference ? `Paystack ref: ${q.paymentReference}` : undefined}
+                      >
+                        <span className={paymentStatusClass(q.paymentStatus)}>
+                          {paymentLabel(q.paymentStatus)}
+                        </span>
+                      </span>
+                    </td>
+                    <td style={{ whiteSpace: "nowrap" }}>
+                      {q.totalPrice != null && Number.isFinite(Number(q.totalPrice))
+                        ? Number(q.totalPrice).toLocaleString(undefined, {
+                            maximumFractionDigits: 2,
+                            minimumFractionDigits: 0,
+                          })
+                        : "—"}
                     </td>
                     <td>{q.fromEmail || "—"}</td>
                     <td>{q.fromPhone || "—"}</td>

@@ -3,6 +3,9 @@ export const SITE_LOGO_ALT = "Galana Group";
 
 export const SITE_LOGO_SRC = "/images/logo2.png" as const;
 
+/** Horizontal wordmark — `public/logo-name.png` */
+export const SITE_LOGO_NAME_SRC = "/logo-name.png" as const;
+
 /** Filename under `public/images/` for server-side loading (e.g. quote PDF). */
 export const SITE_LOGO_LOCAL_BASENAME = "logo2.png" as const;
 
