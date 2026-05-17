@@ -35,13 +35,18 @@ export function Navbar() {
         </div>
       </div>
       <nav id="navbar">
-        <Link href="/" className="nav-logo bg-transparent" onClick={() => setOpen(false)}>
+        <Link
+          href="/"
+          className="nav-logo bg-transparent"
+          aria-label="Galana Group home"
+          onClick={() => setOpen(false)}
+        >
           <SiteLogo priority heightPx={52} className="nav-logo-mark" />
           <Image
             src={SITE_LOGO_NAME_SRC}
             alt=""
-            width={320}
-            height={96}
+            width={696}
+            height={108}
             className="nav-logo-name-img"
             priority
             aria-hidden

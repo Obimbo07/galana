@@ -32,6 +32,7 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
+          quality={92}
           className="hero-photo-img"
         />
       </div>

@@ -14,8 +14,8 @@ export function SiteLogo({ priority, heightPx, className }: SiteLogoProps) {
     <Image
       src={SITE_LOGO_SRC}
       alt={SITE_LOGO_ALT}
-      width={180}
-      height={180}
+      width={150}
+      height={150}
       className={className}
       priority={priority}
       style={{ height: heightPx, width: "auto" }}
