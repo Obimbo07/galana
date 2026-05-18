@@ -23,7 +23,6 @@ export function Hero() {
         />
       </div>
       <div className="hero-bg" aria-hidden />
-      <div className="hero-grid" aria-hidden />
       <div className="hero-shell">
         <div className="hero-main">
           <div className="hero-copy">
@@ -53,12 +52,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="scroll-indicator">
-          <div className="scroll-line" />
-          <span>Scroll to explore</span>
-        </div>
-
-        <div className="hero-bottom">
+        {/* <div className="hero-bottom">
           <div className="hero-stats">
             {h.stats.map((s, i) => (
               <div className="stat" key={i}>
@@ -77,7 +71,7 @@ export function Hero() {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

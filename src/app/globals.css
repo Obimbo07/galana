@@ -435,9 +435,7 @@ a {
     transparent 68%
   );
 }
-.hero-grid {
-  display: none;
-}
+
 .hero-copy {
   position: relative;
   z-index: 4;
@@ -490,7 +488,8 @@ h1.hero-title {
   font-family: var(--font-cormorant), serif;
   font-size: clamp(3.0rem, 6vw, 6.0rem);
   font-weight: 400; line-height: 1.05;
-  color: var(--white);
+  /* On-photo headline: use real white — `--white` is dark ink elsewhere in this theme */
+  color: #ffffff;
   margin-bottom: 1.5rem;
   filter: drop-shadow(0 3px 28px rgba(0, 0, 0, 0.55));
 }
@@ -1584,16 +1583,6 @@ footer {
   from { opacity:0; }
   to { opacity:1; }
 }
-@keyframes heroPhotoGlow {
-  0% {
-    opacity: 0.85;
-    transform: scale(1) translate(0%, 0%);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.03) translate(1.25%, -1%);
-  }
-}
 
 /* REVEAL */
 .reveal {
@@ -1687,12 +1676,6 @@ footer {
   align-items: start;
   width: 100%;
   position: relative;
-}
-
-/* Stack below copy so overlaps (animation, rounding, zoom) never eat hero taps. */
-#hero .hero-calc {
-  position: relative;
-  z-index: 2;
 }
 
 #hero .hero-bottom {
@@ -2373,8 +2356,6 @@ footer {
 }
 
 @media (max-width: 1023px) {
-  .hero-calc { max-width: 100%; }
-
   #hero .hero-shell {
     padding-inline: var(--section-px) var(--section-pad-inline-end-sm);
   }
@@ -2481,9 +2462,6 @@ footer {
   }
   .nav-cart-count.nav-cart-count-bump {
     animation: none !important;
-  }
-  .hero-photo::after {
-    display: none !important;
   }
   .service-card:hover,
   .service-card:active,
