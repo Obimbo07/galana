@@ -27,7 +27,7 @@ export function Hero() {
     <section id="hero">
       <div className="hero-photo">
         <Image
-          src="/wallpaper/combined.jpeg"
+          src="/wallpaper/combines.png"
           alt="Galana concrete pipes, paving, roof tiles and precast products"
           fill
           priority

@@ -20,7 +20,6 @@ import {
   type CartPayloadLine,
 } from "@/lib/quote-body";
 import type { SiteQuotePayload } from "@/types/galana-firestore";
-import { useRouter } from "next/navigation";
 
 const LS_EMAILS = "galana_quote_emails";
 const LS_QUOTE_CONTACT = "galana_quote_contact_v1";
@@ -160,7 +159,6 @@ export function GalanaProvider({
   const [quotePanelOpen, setQuotePanelOpen] = useState(false);
   const [recentEmails, setRecentEmails] = useState<string[]>([]);
   const [applyModalTitle, setApplyModalTitle] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -421,31 +419,6 @@ export function GalanaProvider({
         }
         const id =
           j && typeof j === "object" && j.id != null ? String(j.id) : null;
-        
-        // If we have a quote ID, redirect to payment page after PDF download
-        if (id) {
-          try {
-            await downloadQuotePdf(id);
-            window.alert(
-              `Quote saved (reference ${id}). Your PDF download should start.`
-            );
-            // Redirect to payment page
-            router.push(`/pay/${id}`);
-          } catch (e) {
-            window.alert(
-              e instanceof Error
-                ? e.message
-                : "PDF download failed. The quote is still saved."
-            );
-            // Still redirect to payment page even if PDF download fails
-            router.push(`/pay/${id}`);
-          }
-        } else {
-          window.alert(
-            "Quote was accepted but not stored — add FIREBASE_SERVICE_ACCOUNT_JSON in .env so we can save an ID and build your PDF."
-          );
-        }
-        
         return { ok: true, id };
       } catch {
         return {
@@ -466,9 +439,8 @@ export function GalanaProvider({
       roofResult,
       mainTab,
       cartPayload,
-      data, // Need to add data to dependencies
-      calc, // Need to add calc to dependencies
-      router // Add router to dependencies
+      data,
+      calc,
     ]
   );
 

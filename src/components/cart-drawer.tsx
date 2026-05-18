@@ -1,6 +1,8 @@
 "use client";
 
 import { useGalana } from "@/providers/galana-provider";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function CartDrawer() {
   const {
@@ -20,6 +22,8 @@ export function CartDrawer() {
     postQuoteApi,
     downloadQuotePdf,
   } = useGalana();
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
 
   return (
     <div
@@ -126,34 +130,41 @@ export function CartDrawer() {
             type="button"
             className="btn-primary"
             style={{ width: "100%", justifyContent: "center" }}
+            disabled={busy}
             onClick={async () => {
-              const res = await postQuoteApi({ source: "cart" });
-              if (!res.ok) {
-                window.alert(res.message);
-                return;
-              }
-              if (res.id) {
-                try {
-                  await downloadQuotePdf(res.id);
+              setBusy(true);
+              try {
+                const res = await postQuoteApi({ source: "cart" });
+                if (!res.ok) {
+                  window.alert(res.message);
+                  return;
+                }
+                if (res.id) {
+                  try {
+                    await downloadQuotePdf(res.id);
+                    window.alert(
+                      `Quote saved (reference ${res.id}). Your PDF download should start.`
+                    );
+                    router.push(`/pay/${res.id}`);
+                  } catch (e) {
+                    window.alert(
+                      e instanceof Error
+                        ? e.message
+                        : "PDF download failed. The quote is still saved."
+                    );
+                    router.push(`/pay/${res.id}`);
+                  }
+                } else {
                   window.alert(
-                    `Quote saved (reference ${res.id}). Your PDF download should start.`
-                  );
-                  setCartOpen(false);
-                } catch (e) {
-                  window.alert(
-                    e instanceof Error
-                      ? e.message
-                      : "PDF download failed. The quote is still saved."
+                    "Could not save a quote copy. Configure FIREBASE_SERVICE_ACCOUNT_JSON to enable saving and PDF."
                   );
                 }
-              } else {
-                window.alert(
-                  "Could not save a quote copy. Configure FIREBASE_SERVICE_ACCOUNT_JSON to enable saving and PDF."
-                );
+              } finally {
+                setBusy(false);
               }
             }}
           >
-            Save quote &amp; download PDF
+            {busy ? "Saving…" : "Save quote & download PDF"}
           </button>
           <button
             type="button"
