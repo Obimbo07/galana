@@ -7,11 +7,15 @@ import { NavSocialLinks } from "@/components/nav-social";
 import { SiteLogo } from "@/components/site-logo";
 import { SITE_LOGO_NAME_SRC } from "@/lib/site-brand";
 import { useGalana } from "@/providers/galana-provider";
+import { useAuth } from "@/providers/auth-provider";
+import { AuthModal } from "@/components/auth-modal";
 
 export function Navbar() {
   const { cartCount, setCartOpen, data } = useGalana();
+  const { user, loading, isAuthenticated, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [cartBump, setCartBump] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const prevCart = useRef(cartCount);
 
   useEffect(() => {
@@ -120,8 +124,46 @@ export function Navbar() {
               Get a Quote
             </Link>
           </li>
+          <li className="nav-auth-slot">
+            {loading ? (
+              <span className="nav-auth-loading" aria-busy aria-live="polite" title="Checking sign-in">
+                …
+              </span>
+            ) : isAuthenticated ? (
+              <>
+                <Link
+                  href="/profile"
+                  className="nav-profile-btn"
+                  onClick={() => setOpen(false)}
+                  title={user?.email ? `Signed in as ${user.email}` : "Your profile"}
+                >
+                  Profile
+                </Link>
+                <button
+                  type="button"
+                  className="nav-signout-btn nav-signout-text"
+                  onClick={() => {
+                    signOut();
+                    setOpen(false);
+                  }}
+                  title="Sign out"
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                className="nav-auth-btn"
+                onClick={() => setAuthModalOpen(true)}
+              >
+                Sign In
+              </button>
+            )}
+          </li>
         </ul>
       </nav>
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </header>
   );
 }

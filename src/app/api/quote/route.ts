@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { isGalanaFirebaseAdminConfigured } from "@/lib/galana-firebase-admin";
+import { isGalanaFirebaseAdminConfigured, getGalanaAdminAuth } from "@/lib/galana-firebase-admin";
 import { createQuoteRequestDoc } from "@/lib/quote-request-firestore";
 import type { QuoteRequestKind, SiteQuotePayload } from "@/types/galana-firestore";
 
@@ -79,16 +79,28 @@ export async function POST(req: Request) {
   const kind: QuoteRequestKind =
     body.kind === "order" ? "order" : "quote";
 
-  // Extract totalPrice from body, if present and is a number
   const totalPrice =
     typeof body.totalPrice === "number" && !isNaN(body.totalPrice)
       ? body.totalPrice
       : undefined;
 
   let firestoreId: string | null = null;
-  if (firebaseConfigured) {
+  let userId: string | null = null;
+
+if (firebaseConfigured) {
     try {
-      firestoreId = await createQuoteRequestDoc({ payload, kind, totalPrice });
+      const authHeader = req.headers.get("authorization");
+      if (authHeader?.startsWith("Bearer ")) {
+        try {
+          const auth = getGalanaAdminAuth();
+          const decoded = await auth.verifyIdToken(authHeader.split("Bearer ")[1]);
+          userId = decoded.uid;
+        } catch {
+          // Token verification failed, continue without userId
+        }
+      }
+
+      firestoreId = await createQuoteRequestDoc({ payload, kind, totalPrice, userId: userId ?? undefined });
     } catch (e) {
       console.error("[api/quote] Firestore save failed:", e);
       const detail =

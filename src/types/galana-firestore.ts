@@ -69,6 +69,8 @@ export interface QuoteRequest {
   paymentStatus?: 'pending' | 'paid' | 'failed';
   /** Paystack payment reference (if any). */
   paymentReference?: string;
+  /** Firebase Auth user ID (if authenticated user submitted). */
+  userId?: string;
   createdAt: string;
   updatedAt: string;
 }

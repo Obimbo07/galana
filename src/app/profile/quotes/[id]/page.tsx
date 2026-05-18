@@ -7,6 +7,7 @@ import {
   QuoteStatusBreadcrumbs,
   QuoteStatusDetail,
 } from "@/components/quote-status-display";
+import { useAuth } from "@/providers/auth-provider";
 import type { QuoteTrackResponse } from "@/types/quote-tracking";
 
 function routeSegmentParam(param: unknown): string | null {
@@ -27,22 +28,31 @@ function routeSegmentParam(param: unknown): string | null {
   return null;
 }
 
-export default function TrackQuoteDetailPage() {
+export default function ProfileQuoteDetailPage() {
   const routeParams = useParams();
   const quoteId = routeSegmentParam(routeParams.id) ?? null;
+  const { user, loading: authLoading } = useAuth();
 
   const [detail, setDetail] = useState<QuoteTrackResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (authLoading) return;
+
     let cancelled = false;
+
     async function run() {
+      if (!user) {
+        setDetail(null);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+
       if (!quoteId?.trim()) {
         setDetail(null);
-        setError(
-          "Add a quote reference to the URL, or paste your ID on the tracking page."
-        );
+        setError("Missing quote reference.");
         setLoading(false);
         return;
       }
@@ -50,7 +60,10 @@ export default function TrackQuoteDetailPage() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`/api/track/quote/${encodeURIComponent(quoteId)}`);
+        const token = await user.getIdToken();
+        const res = await fetch(`/api/user/quotes/${encodeURIComponent(quoteId)}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const raw = (await res.json().catch(() => ({}))) as { error?: string };
         if (!res.ok) {
           throw new Error(
@@ -64,22 +77,41 @@ export default function TrackQuoteDetailPage() {
         if (!cancelled) setLoading(false);
       }
     }
-    run();
+
+    void run();
     return () => {
       cancelled = true;
     };
-  }, [quoteId]);
+  }, [quoteId, user, authLoading]);
 
-  if (loading) {
+  if (!authLoading && !user) {
+    return (
+      <div className="checkout-section-inner">
+        <QuoteStatusBreadcrumbs
+          crumbs={[
+            { href: "/", label: "Home" },
+            { href: "/profile", label: "Profile" },
+            { label: "Quote" },
+          ]}
+        />
+        <div className="checkout-result-center">
+          <div className="checkout-alert">Sign in to view quotes linked to your account.</div>
+          <Link href="/profile" className="btn-primary">
+            Back to profile
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading || authLoading) {
     return (
       <div className="checkout-section-inner checkout-loading">
         <div className="checkout-spinner" aria-hidden />
         <p className="section-tag" style={{ justifyContent: "center", marginBottom: "0.5rem" }}>
           Quote status
         </p>
-        <p style={{ margin: 0, color: "var(--muted)" }}>
-          Connecting to fulfilment telemetry…
-        </p>
+        <p style={{ margin: 0, color: "var(--muted)" }}>Loading your quote…</p>
       </div>
     );
   }
@@ -90,15 +122,15 @@ export default function TrackQuoteDetailPage() {
         <QuoteStatusBreadcrumbs
           crumbs={[
             { href: "/", label: "Home" },
-            { href: "/track-quote", label: "Quote status" },
+            { href: "/profile", label: "Profile" },
             { label: "Error" },
           ]}
         />
         <div className="checkout-result-center">
           <div className="checkout-alert">{error}</div>
           <div className="checkout-result-actions">
-            <Link href="/track-quote" className="btn-outline">
-              Try another reference
+            <Link href="/profile" className="btn-outline">
+              Back to quotes
             </Link>
             <Link href="/" className="btn-primary">
               Home
@@ -115,33 +147,35 @@ export default function TrackQuoteDetailPage() {
         <QuoteStatusBreadcrumbs
           crumbs={[
             { href: "/", label: "Home" },
-            { href: "/track-quote", label: "Quote status" },
+            { href: "/profile", label: "Profile" },
+            { label: "Quote" },
           ]}
         />
         <div className="checkout-result-center">
-          <div className="checkout-alert">
-            We couldn&apos;t load details for this reference. Reload the page or verify the ID matches your email.
-          </div>
-          <div className="checkout-result-actions">
-            <Link href="/track-quote" className="btn-primary">
-              Back to tracking
-            </Link>
-          </div>
+          <div className="checkout-alert">We couldn&apos;t load this quote.</div>
+          <Link href="/profile" className="btn-primary">
+            Back to quotes
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="checkout-section-inner">
+    <div className="checkout-section-inner profile-page-inner">
       <QuoteStatusBreadcrumbs
         crumbs={[
           { href: "/", label: "Home" },
-          { href: "/track-quote", label: "Quote status" },
-          { label: detail.id },
+          { href: "/profile", label: "Profile" },
+          { label: detail.id.slice(0, 12) + "…" },
         ]}
       />
       <QuoteStatusDetail detail={detail} />
+      <p className="profile-quote-detail-footer">
+        <Link href="/profile" className="checkout-muted-link">
+          ← All quotes
+        </Link>
+      </p>
     </div>
   );
 }

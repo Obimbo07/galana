@@ -20,6 +20,7 @@ import {
   type CartPayloadLine,
 } from "@/lib/quote-body";
 import type { SiteQuotePayload } from "@/types/galana-firestore";
+import { useAuth } from "@/providers/auth-provider";
 
 const LS_EMAILS = "galana_quote_emails";
 const LS_QUOTE_CONTACT = "galana_quote_contact_v1";
@@ -107,8 +108,6 @@ interface GalanaCtx {
 
   calc: CalcFields;
   setCalc: (patch: Partial<CalcFields>) => void;
-  heroTab: CalcTab;
-  setHeroTab: (t: CalcTab) => void;
   mainTab: CalcTab;
   setMainTab: (t: CalcTab) => void;
 
@@ -148,10 +147,10 @@ export function GalanaProvider({
   data: SiteData;
   children: React.ReactNode;
 }) {
+  const { user } = useAuth();
   const [cartLines, setCartLines] = useState<CartLine[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [calc, setCalcState] = useState(() => initialCalc(data));
-  const [heroTab, setHeroTab] = useState<CalcTab>("paving");
   const [mainTab, setMainTab] = useState<CalcTab>("paving");
   const [quoteEmail, setQuoteEmail] = useState("");
   const [quotePhone, setQuotePhone] = useState("");
@@ -403,10 +402,20 @@ export function GalanaProvider({
       };
 
       try {
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (user) {
+          try {
+            const token = await user.getIdToken();
+            headers["Authorization"] = `Bearer ${token}`;
+          } catch {
+            // Token fetch failed, continue without auth
+          }
+        }
         const r = await fetch("/api/quote", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ payload, totalPrice }),
+          headers,
+          // POST /api/quote expects flat fields (fromEmail, calculator, cart, …), not { payload }.
+          body: JSON.stringify({ ...payload, totalPrice }),
         });
         const j = await r.json().catch(() => ({}));
         if (!r.ok) {
@@ -441,6 +450,7 @@ export function GalanaProvider({
       cartPayload,
       data,
       calc,
+      user,
     ]
   );
 
@@ -475,8 +485,6 @@ export function GalanaProvider({
     cartCount,
     calc,
     setCalc,
-    heroTab,
-    setHeroTab,
     mainTab,
     setMainTab,
     pavingResult,

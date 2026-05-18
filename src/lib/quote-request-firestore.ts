@@ -13,6 +13,7 @@ export async function createQuoteRequestDoc(params: {
   payload: SiteQuotePayload;
   kind?: QuoteRequestKind;
   totalPrice?: number;
+  userId?: string;
 }): Promise<string> {
   const db = getGalanaAdminDb();
   const kind: QuoteRequestKind = params.kind ?? "quote";
@@ -36,7 +37,7 @@ export async function createQuoteRequestDoc(params: {
 
   const cleanPayload = stripUndefinedDeep(params.payload);
 
-  const docData: any = {
+  const docData: Record<string, unknown> = {
     kind,
     status,
     fromEmail,
@@ -47,6 +48,11 @@ export async function createQuoteRequestDoc(params: {
     createdAt: FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),
   };
+
+  // Add userId if provided (for authenticated users)
+  if (params.userId) {
+    docData.userId = params.userId;
+  }
 
   // Only add totalPrice if it's defined
   if (params.totalPrice !== undefined) {
