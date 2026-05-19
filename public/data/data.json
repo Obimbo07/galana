@@ -25,7 +25,7 @@
       "href": "/products"
     },
     "secondaryCta": {
-      "label": "\u26a1 Materials Calculator",
+      "label": "⚡ Materials Calculator",
       "href": "/calculator"
     },
     "stats": [
@@ -57,39 +57,39 @@
   "services": [
     {
       "num": "01",
-      "icon": "\ud83c\udfd7\ufe0f",
+      "icon": "🏗️",
       "name": "Precast Concrete Products",
-      "desc": "Pipes, wall panels, roof tiles, paving blocks, drainage systems and 40+ custom elements \u2014 manufactured to KEBS standards with precision vibration technology.",
+      "desc": "Pipes, wall panels, roof tiles, paving blocks, drainage systems and 40+ custom elements — manufactured to KEBS standards with precision vibration technology.",
       "tag": "Core Service",
       "image": "/images/wallpapers/concrete-pipes.png"
     },
     {
       "num": "02",
-      "icon": "\ud83d\udcd0",
+      "icon": "📐",
       "name": "Custom Design & Engineering",
-      "desc": "Our engineers work with architects and developers to design bespoke precast elements \u2014 beyond catalogue products. Submit your drawings, we manufacture to spec.",
+      "desc": "Our engineers work with architects and developers to design bespoke precast elements — beyond catalogue products. Submit your drawings, we manufacture to spec.",
       "tag": "Differentiator",
       "image": "/images/wallpapers/custom-designs.png"
     },
     {
       "num": "03",
-      "icon": "\ud83d\udd0d",
+      "icon": "🔍",
       "name": "Site Assessment & Consultation",
-      "desc": "We send qualified technicians to your site to assess drainage needs, recommend pipe sizes, calculate quantities and advise on the right products \u2014 free for qualifying projects.",
+      "desc": "We send qualified technicians to your site to assess drainage needs, recommend pipe sizes, calculate quantities and advise on the right products — free for qualifying projects.",
       "tag": "Differentiator",
       "image": "/images/wallpapers/site-assesment.jpeg"
     },
     {
       "num": "04",
-      "icon": "\ud83d\ude9b",
+      "icon": "🚛",
       "name": "Tracked Delivery & Logistics",
-      "desc": "Real-time order tracking with WhatsApp & SMS notifications. Construction timelines are tight \u2014 we respect yours. Available across Kenya and East Africa.",
+      "desc": "Real-time order tracking with WhatsApp & SMS notifications. Construction timelines are tight — we respect yours. Available across Kenya and East Africa.",
       "tag": "Differentiator",
       "image": "/images/wallpapers/tracked-delievery.jpeg"
     },
     {
       "num": "05",
-      "icon": "\ud83c\udfe2",
+      "icon": "🏢",
       "name": "Contractor & Bulk Accounts",
       "desc": "Dedicated portal for developers, county governments and NGOs. Access order history, invoices, preferred pricing and priority stock allocation in one dashboard.",
       "tag": "Differentiator",
@@ -97,9 +97,9 @@
     },
     {
       "num": "06",
-      "icon": "\ud83d\udd27",
+      "icon": "🔧",
       "name": "Installation Referral Network",
-      "desc": "Need laying or installation help? We connect you to our vetted contractor network \u2014 certified professionals who work with our products daily.",
+      "desc": "Need laying or installation help? We connect you to our vetted contractor network — certified professionals who work with our products daily.",
       "tag": "Added Value",
       "image": "/images/wallpapers/connector-network.jpeg"
     }
@@ -109,27 +109,27 @@
     "title": "The Galana Difference",
     "items": [
       {
-        "icon": "\ud83d\udcca",
+        "icon": "📊",
         "title": "Instant Pricing Estimates",
-        "body": "Unlike competitors, we give you indicative price ranges and quantity estimates online \u2014 no waiting days for a quote just to budget."
+        "body": "Unlike competitors, we give you indicative price ranges and quantity estimates online — no waiting days for a quote just to budget."
       },
       {
-        "icon": "\ud83d\udef0\ufe0f",
+        "icon": "🛰️",
         "title": "Real-Time Delivery Tracking",
         "body": "Every order dispatched is trackable. Receive WhatsApp + SMS alerts at dispatch, en route, and at delivery. Zero surprises."
       },
       {
-        "icon": "\ud83c\udf0d",
+        "icon": "🌍",
         "title": "East African Reach",
-        "body": "Supply and logistics across Kenya, Uganda, Tanzania and beyond \u2014 with one point of contact and consistent quality standards."
+        "body": "Supply and logistics across Kenya, Uganda, Tanzania and beyond — with one point of contact and consistent quality standards."
       },
       {
-        "icon": "\ud83c\udfdb\ufe0f",
+        "icon": "🏛️",
         "title": "KEBS & Standards Certified",
         "body": "Every product manufactured in compliance with Kenya Bureau of Standards. Documentation provided with every order for project records."
       },
       {
-        "icon": "\u267b\ufe0f",
+        "icon": "♻️",
         "title": "Sustainability Reporting",
         "body": "We provide carbon footprint data, recycled content percentages and water management benefits for green building certifications."
       }
@@ -166,9 +166,9 @@
   "careers": {
     "heading": "Build Your Career With Us",
     "sub": "We're growing. We're ambitious. And we invest in people who share our drive to deliver extraordinary things.",
-    "openApplicationCta": "Submit Open Application \u2192",
+    "openApplicationCta": "Submit Open Application →",
     "featuredJobSlug": "civil-structural-engineer",
-    "featuredSummary": "Lead structural design and calculations for precast concrete, drainage and roofing scope\u2014from drawings through site coordination\u2014with Kenya/EAC codes and manufacturing realities in mind.",
+    "featuredSummary": "Lead structural design and calculations for precast concrete, drainage and roofing scope—from drawings through site coordination—with Kenya/EAC codes and manufacturing realities in mind.",
     "viewAllRolesCta": "View all roles",
     "jobs": [
       {
@@ -183,7 +183,7 @@
       },
       {
         "slug": "sales-executive-construction",
-        "title": "Sales Executive \u2013 Construction Materials",
+        "title": "Sales Executive – Construction Materials",
         "tags": [
           "Nairobi / Field",
           "Full-Time",
@@ -193,7 +193,7 @@
       },
       {
         "slug": "production-supervisor-precast",
-        "title": "Production Supervisor \u2013 Precast Plant",
+        "title": "Production Supervisor – Precast Plant",
         "tags": [
           "Nairobi",
           "Full-Time",
@@ -236,7 +236,7 @@
   "footer": {
     "tagline": "At Galana Group",
     "about": "Kenya's trusted partner for precast concrete, drainage, roofing and paving solutions since the 1960s.",
-    "copyright": "\u00a9 2026 Galana Group. All Rights Reserved."
+    "copyright": "© 2026 Galana Group. All Rights Reserved."
   },
   "contact": {
     "quoteEmail": "quotes@galanagroup.co.ke",
@@ -249,10 +249,10 @@
     "whatsappDigits": "254713490752",
     "location": "Near old Malindi Road, Nairobi, Kenya",
     "locationUrl": "https://www.google.com/maps?q=-3.9790476,39.7170752",
-    "operatingHours": "Mon\u2013Fri: 08:00\u201317:00 \u00b7 Sat: 08:00\u201313:00"
+    "operatingHours": "Mon–Fri: 08:00–17:00 · Sat: 08:00–13:00"
   },
   "help": {
-    "whatsappPrefill": "Hello Galana Group \u2014 I have a question about materials / delivery."
+    "whatsappPrefill": "Hello Galana Group — I have a question about materials / delivery."
   },
   "calculator": {
     "paving": {
@@ -260,22 +260,22 @@
       "blocksPerM2Options": [
         {
           "id": "uni",
-          "label": "Uni Block (40/m\u00b2)",
+          "label": "Uni Block (40/m²)",
           "blocksPerM2": 40
         },
         {
           "id": "hex",
-          "label": "Hexagon Block (35/m\u00b2)",
+          "label": "Hexagon Block (35/m²)",
           "blocksPerM2": 35
         },
         {
           "id": "quad",
-          "label": "Quad Block (38/m\u00b2)",
+          "label": "Quad Block (38/m²)",
           "blocksPerM2": 38
         },
         {
           "id": "shell",
-          "label": "Shell Block (44/m\u00b2)",
+          "label": "Shell Block (44/m²)",
           "blocksPerM2": 44
         }
       ]
@@ -310,12 +310,12 @@
       "tileTypes": [
         {
           "id": "roman",
-          "label": "Double Roman (12/m\u00b2)",
+          "label": "Double Roman (12/m²)",
           "tilesPerM2": 12
         },
         {
           "id": "venician",
-          "label": "Venician (14/m\u00b2)",
+          "label": "Venician (14/m²)",
           "tilesPerM2": 14
         }
       ]
@@ -344,7 +344,7 @@
       "id": "pipe-flex",
       "cat": "pipes",
       "catLabel": "Concrete Pipes",
-      "name": "Spigot & Socket \u2013 Flexible Jointed",
+      "name": "Spigot & Socket – Flexible Jointed",
       "use": "Sewerage systems",
       "image": "/images/products/pipe-flex.jpg",
       "price": 950
@@ -353,7 +353,7 @@
       "id": "pipe-rigid",
       "cat": "pipes",
       "catLabel": "Concrete Pipes",
-      "name": "Spigot & Socket \u2013 Rigid Jointed",
+      "name": "Spigot & Socket – Rigid Jointed",
       "use": "Storm water & sewerage systems",
       "image": "/images/products/pipe-rigid.jpg",
       "price": 900
@@ -600,6 +600,390 @@
       "use": "Profiled concrete roof tile range",
       "image": "/images/products/roof-hatari.jpg",
       "price": 1100
+    },
+    {
+      "id": "ccb-3d-coloured-cabro",
+      "cat": "paving",
+      "catLabel": "Paving · 3D coloured",
+      "name": "3D Coloured Cabro Blocks",
+      "use": "Driveway paving with multi-tone / 3D coloured finish.",
+      "image": "/images/products/ccb-3d-coloured-cabro.jpg",
+      "price": 1500,
+      "compareAtPrice": 1750,
+      "referenceUrl": "https://concrete.co.ke/product/3d-coloured-cabro-blocks-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "new"
+    },
+    {
+      "id": "ccb-hexagon-cabro-ke",
+      "cat": "paving",
+      "catLabel": "Paving · Ordinary",
+      "name": "Hexagon Cabro Blocks",
+      "use": "Hexagonal interlocking paving for driveways and yards.",
+      "image": "/images/products/ccb-hexagon-cabro-ke.png",
+      "price": 1300,
+      "compareAtPrice": 1500,
+      "referenceUrl": "https://concrete.co.ke/product/hexagon-cabro-blocks-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-grass-pavers-lattice",
+      "cat": "paving",
+      "catLabel": "Paving · Grass / lattice",
+      "name": "Grass Pavers (Concrete Lattice Blocks)",
+      "use": "Driveways and parking where vegetation can grow through.",
+      "image": "/images/products/ccb-grass-pavers-lattice.png",
+      "price": 450,
+      "referenceUrl": "https://concrete.co.ke/product/grass-pavers-in-kenya-concrete-lattice-blocks/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-cobblestone-driveway",
+      "cat": "paving",
+      "catLabel": "Cobble stones",
+      "name": "Cobblestone Driveway Design",
+      "use": "Decorative cobble-style paving for premium driveways.",
+      "image": "/images/products/ccb-cobblestone-driveway.jpg",
+      "price": 2000,
+      "compareAtPrice": 2500,
+      "referenceUrl": "https://concrete.co.ke/product/cobblestone-driveway-design-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-paving-slab-2x3ft",
+      "cat": "precast",
+      "catLabel": "Paving slabs",
+      "name": "2ft × 3ft Paving Slabs",
+      "use": "Large-format slabs for walkways, patios and hard standings.",
+      "image": "/images/products/ccb-paving-slab-2x3ft.jpg",
+      "price": 1250,
+      "compareAtPrice": 1500,
+      "referenceUrl": "https://concrete.co.ke/product/2ft-by-3ft-paving-slabs-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-unipaver-50mm-domestic",
+      "cat": "paving",
+      "catLabel": "Paving · 50mm domestic",
+      "name": "50mm UniPaver Domestic Cabros",
+      "use": "Standard domestic driveway and yard paving.",
+      "image": "/images/products/ccb-unipaver-50mm-domestic.jpg",
+      "price": 800,
+      "referenceUrl": "https://concrete.co.ke/product/50mm-unipaver-domestic-cabros/",
+      "listingNote": "Reference image may differ — confirm profile with Galana."
+    },
+    {
+      "id": "ccb-unipaver-60mm-ordinary",
+      "cat": "paving",
+      "catLabel": "Paving · 60mm ordinary",
+      "name": "UniPaver 60mm Ordinary Cabros",
+      "use": "Heavier-duty paving for commercial traffic areas.",
+      "image": "/images/products/pav-uni.jpg",
+      "price": 900,
+      "referenceUrl": "https://concrete.co.ke/product/unipaver-60mm-ordinary-cabros/",
+      "listingNote": "Photo pending — interim Galana Uni reference image."
+    },
+    {
+      "id": "ccb-red-brick-paving",
+      "cat": "paving",
+      "catLabel": "Paving · Red brick",
+      "name": "Red Brick Paving Blocks",
+      "use": "Decorative red-brick aesthetic for residential paving.",
+      "image": "/images/products/ccb-red-brick-paving.jpg",
+      "price": 1500,
+      "referenceUrl": "https://concrete.co.ke/product-category/paving-blocks-cabros/red-brick-paving-blocks/",
+      "listingNote": "Reference category listing — Galana specification & stock may differ.",
+      "badge": "featured"
+    },
+    {
+      "id": "ccb-lamp-vent-200",
+      "cat": "vent",
+      "catLabel": "Vent & breeze · 3D",
+      "name": "Lamp Vent Block 200×200×60mm",
+      "use": "Decorative lamp-pattern ventilation block for façades.",
+      "image": "/images/products/ccb-lamp-vent-200.png",
+      "price": 200,
+      "referenceUrl": "https://concrete.co.ke/product/lamp-vent-block-kenya-decorative-breeze-blocks/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "new"
+    },
+    {
+      "id": "ccb-modern-facade-vent",
+      "cat": "vent",
+      "catLabel": "Vent & breeze · 3D",
+      "name": "Modern Decorative Vent Blocks",
+      "use": "Flower / star-style breeze blocks for contemporary walls.",
+      "image": "/images/products/ccb-modern-facade-vent.png",
+      "price": 300,
+      "referenceUrl": "https://concrete.co.ke/product/decorative-vent-blocks-kenya-modern-breeze-blocks-for-facades-walls/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-star-vent-250",
+      "cat": "vent",
+      "catLabel": "Vent & breeze · 3D",
+      "name": "Star Vent Block 250×250×70mm",
+      "use": "Star-pattern decorative breeze block.",
+      "image": "/images/products/ccb-star-vent-250.png",
+      "price": 300,
+      "referenceUrl": "https://concrete.co.ke/product/star-vent-block-250mm-x-250mm-x-70mm/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-flower-breeze-300",
+      "cat": "vent",
+      "catLabel": "Vent & breeze · 3D",
+      "name": "Flower Breeze Block 300×300×70mm",
+      "use": "3D flower ventilation and decorative wall block.",
+      "image": "/images/products/ccb-flower-breeze-300.png",
+      "price": 300,
+      "referenceUrl": "https://concrete.co.ke/product/flower-breeze-block-300x300x70mm/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-round-vent",
+      "cat": "vent",
+      "catLabel": "Vent & breeze · Round",
+      "name": "Round Vent / Breeze Blocks",
+      "use": "Round perforations for light and airflow through walls.",
+      "image": "/images/products/ccb-round-vent.png",
+      "price": 200,
+      "referenceUrl": "https://concrete.co.ke/product/round-vent-blocks-round-breeze-blocks/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-decorative-vent-200sq",
+      "cat": "vent",
+      "catLabel": "Ventilation blocks",
+      "name": "Decorative Vent Block 200×200×60mm",
+      "use": "Boundary walls, balconies and perimeter screening.",
+      "image": "/images/products/ccb-decorative-vent-200sq.png",
+      "price": 200,
+      "referenceUrl": "https://concrete.co.ke/product/200mm-x-200mm-x-60mm-decorative-concrete-vent-block-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-louver-150",
+      "cat": "vent",
+      "catLabel": "Louver blocks",
+      "name": "Louver Blocks 300×150×150mm",
+      "use": "Ventilation and sunlight control with textured profile.",
+      "image": "/images/products/ccb-louver-150.jpg",
+      "price": 130,
+      "referenceUrl": "https://concrete.co.ke/product/300mmx150mmx150mm-louver-blocks-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "sale"
+    },
+    {
+      "id": "ccb-louver-150-variant",
+      "cat": "vent",
+      "catLabel": "Louver blocks",
+      "name": "Louver Blocks 300×150×150mm (alt listing)",
+      "use": "Louvers for façades and compound walls.",
+      "image": "/images/products/ccb-louver-150-variant.jpg",
+      "price": 130,
+      "referenceUrl": "https://concrete.co.ke/product/louvers-blocks-and-ventilation-blocks-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-louver-200",
+      "cat": "vent",
+      "catLabel": "Louver blocks",
+      "name": "Louver Blocks 300×200×200mm",
+      "use": "Larger profile louvers for architectural projects.",
+      "image": "/images/products/ccb-louver-200.png",
+      "price": 150,
+      "referenceUrl": "https://concrete.co.ke/product/300mmx200mmx200mm-louver-blocks-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-road-culvert-300-a",
+      "cat": "precast",
+      "catLabel": "Road culverts",
+      "name": "300mm Road Culverts",
+      "use": "Road crossings and culvert drainage runs.",
+      "image": "/images/products/ccb-road-culvert-300-a.jpg",
+      "price": 1500,
+      "referenceUrl": "https://concrete.co.ke/product/300mm-road-culverts-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-road-culvert-300-b",
+      "cat": "precast",
+      "catLabel": "Road culverts",
+      "name": "300mm Road Culverts (Concrete pipes)",
+      "use": "Concrete culverts for drainage under roads.",
+      "image": "/images/products/ccb-road-culvert-300-b.jpg",
+      "price": 1500,
+      "referenceUrl": "https://concrete.co.ke/product/300mm-road-culverts-in-kenya-concrete-pipes/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-road-channel-precast",
+      "cat": "precast",
+      "catLabel": "Road channels",
+      "name": "Precast Concrete Road Channels",
+      "use": "Kerbside surface water collection.",
+      "image": "/images/products/ccb-road-channel-precast.jpg",
+      "price": 250,
+      "referenceUrl": "https://concrete.co.ke/product/precast-concrete-road-channels-in-kenya/",
+      "listingNote": "Reference image generic — confirm profile with Galana."
+    },
+    {
+      "id": "ccb-fencing-post-10ft-a",
+      "cat": "precast",
+      "catLabel": "Fencing posts",
+      "name": "10ft Concrete Fencing Posts",
+      "use": "Perimeter fencing and compound walls.",
+      "image": "/images/products/ccb-fencing-post-10ft-a.jpg",
+      "price": 1500,
+      "compareAtPrice": 1650,
+      "referenceUrl": "https://concrete.co.ke/product/10ft-long-concrete-fencing-posts-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "sale"
+    },
+    {
+      "id": "ccb-fencing-post-10ft-b",
+      "cat": "precast",
+      "catLabel": "Fencing posts",
+      "name": "10 Ft Long Concrete Posts",
+      "use": "Fencing, landscaping and structural posts.",
+      "image": "/images/products/ccb-fencing-post-10ft-b.jpg",
+      "price": 1500,
+      "compareAtPrice": 1650,
+      "referenceUrl": "https://concrete.co.ke/product/10-ft-long-concrete-posts/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "sale"
+    },
+    {
+      "id": "ccb-balustrades-run",
+      "cat": "precast",
+      "catLabel": "Balusters / rails",
+      "name": "Concrete Balustrades",
+      "use": "Balconies, terraces and staircase guarding.",
+      "image": "/images/products/ccb-balustrades-run.png",
+      "price": 550,
+      "compareAtPrice": 750,
+      "referenceUrl": "https://concrete.co.ke/product/concrete-balustrades/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-spindle-2ft",
+      "cat": "precast",
+      "catLabel": "Concrete spindles",
+      "name": "2ft Concrete Spindles / Balusters",
+      "use": "Staircase and balcony spindle infill.",
+      "image": "/images/products/ccb-spindle-2ft.jpg",
+      "price": 550,
+      "referenceUrl": "https://concrete.co.ke/product/2ft-long-concrete-spindles-in-kenya-balusters/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-wall-coping-225",
+      "cat": "precast",
+      "catLabel": "Wall copings",
+      "name": "225×600mm Wall Copings",
+      "use": "Protective and decorative wall tops.",
+      "image": "/images/products/ccb-wall-coping-225.jpg",
+      "price": 120,
+      "referenceUrl": "https://concrete.co.ke/product/225mmx600mm-wall-copings-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-coping-stones-225",
+      "cat": "precast",
+      "catLabel": "Coping stones",
+      "name": "225×600mm Coping Stones",
+      "use": "Decorative coping stones for masonry walls.",
+      "image": "/images/products/ccb-coping-stones-225.png",
+      "price": 120,
+      "referenceUrl": "https://concrete.co.ke/product/coping-stones-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ."
+    },
+    {
+      "id": "ccb-terrazzo-laundry-modern",
+      "cat": "sinks",
+      "catLabel": "Terrazzo laundry sinks",
+      "name": "Terrazzo Laundry Room Sink",
+      "use": "Modern laundry / wash areas with durable terrazzo finish.",
+      "image": "/images/products/ccb-terrazzo-laundry-modern.png",
+      "price": 2950,
+      "referenceUrl": "https://concrete.co.ke/product/terrazzo-laundry-room-sink-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "featured"
+    },
+    {
+      "id": "ccb-terrazzo-laundry-premium",
+      "cat": "sinks",
+      "catLabel": "Terrazzo laundry sinks",
+      "name": "Premium Terrazzo Laundry / Dhobi Sink",
+      "use": "Large-format laundry sink with integrated drainage.",
+      "image": "/images/products/ccb-terrazzo-laundry-premium.png",
+      "price": 14000,
+      "referenceUrl": "https://concrete.co.ke/product/laundry-room-sinks-kenya-terrazzo-dhobi-sink/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "featured"
+    },
+    {
+      "id": "ccb-white-dhobi-sink",
+      "cat": "sinks",
+      "catLabel": "Laundry sinks",
+      "name": "White Dhobi Sink",
+      "use": "Outdoor / laundry wash sinks in white concrete finish.",
+      "image": "/images/products/pre-dhobi-sink.jpg",
+      "price": 5950,
+      "compareAtPrice": 7000,
+      "referenceUrl": "https://concrete.co.ke/product/white-dhobi-sink-laundry-sink-kenya-concrete-wash-sink/",
+      "listingNote": "Photo interim — Galana dhobi sink imagery.",
+      "badge": "featured"
+    },
+    {
+      "id": "ccb-window-sills",
+      "cat": "precast",
+      "catLabel": "Window sills",
+      "name": "Window Sills",
+      "use": "Residential and commercial window sill units.",
+      "image": "/images/products/pre-wall.jpg",
+      "price": 400,
+      "referenceUrl": "https://concrete.co.ke/product/window-sills-in-kenya/",
+      "listingNote": "Photo interim — replace with Galana window sill photography.",
+      "badge": "featured"
+    },
+    {
+      "id": "ccb-cobblestones-generic",
+      "cat": "paving",
+      "catLabel": "Cobble stones",
+      "name": "Cobble Stones",
+      "use": "Classic cobble paving for paths and driveways.",
+      "image": "/images/products/pav-shell.jpg",
+      "price": 2000,
+      "referenceUrl": "https://concrete.co.ke/product/cobble-stones-for-sale-in-kenya/",
+      "listingNote": "Photo interim — Galana cobble photography.",
+      "badge": "featured"
+    },
+    {
+      "id": "ccb-grass-paver-385",
+      "cat": "paving",
+      "catLabel": "Grass pavers · large format",
+      "name": "385×585mm 3D Grass Pavers",
+      "use": "Eco-friendly parking and driveway grids.",
+      "image": "/images/products/ccb-grass-pavers-lattice.png",
+      "price": 350,
+      "referenceUrl": "https://concrete.co.ke/product/385mmx585mm-3d-grass-pavers-in-kenya/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "featured"
+    },
+    {
+      "id": "ccb-ornate-balusters",
+      "cat": "precast",
+      "catLabel": "Balusters · ornate",
+      "name": "Ornate Concrete Balusters & Spindles",
+      "use": "Ornate staircase and balcony components.",
+      "image": "/images/products/ccb-ornate-balusters.jpg",
+      "price": 550,
+      "referenceUrl": "https://concrete.co.ke/product/ornate-concrete-balusters-spindles-perfect-for-outdoor-indoor-use/",
+      "listingNote": "Reference listing — Galana specification & stock may differ.",
+      "badge": "featured"
     }
   ],
   "faq": [
@@ -610,7 +994,7 @@
         "logistics",
         "lead"
       ],
-      "answer": "We dispatch across Kenya and can coordinate East Africa deliveries. Typical lead times depend on product and plant load \u2014 share your site location in a quote request for a concrete timeline."
+      "answer": "We dispatch across Kenya and can coordinate East Africa deliveries. Typical lead times depend on product and plant load — share your site location in a quote request for a concrete timeline."
     },
     {
       "keywords": [
@@ -634,7 +1018,7 @@
         "block",
         "driveway"
       ],
-      "answer": "Paving estimates use m\u00b2 \u00d7 blocks per m\u00b2 plus a wastage buffer for cuts. Patterns and edge restraints may add margin \u2014 the calculator is a solid first pass."
+      "answer": "Paving estimates use m² × blocks per m² plus a wastage buffer for cuts. Patterns and edge restraints may add margin — the calculator is a solid first pass."
     },
     {
       "keywords": [
@@ -650,7 +1034,7 @@
         "price",
         "cost"
       ],
-      "answer": "Indicative pricing is confirmed per project. Use \u201cRequest quote\u201d with your calculator + cart \u2014 we respond with formal pricing."
+      "answer": "Indicative pricing is confirmed per project. Use “Request quote” with your calculator + cart — we respond with formal pricing."
     },
     {
       "keywords": [

@@ -19,7 +19,7 @@ export default function Home() {
       <main>
         <Hero />
         <CalculatorSection />
-        <ProductsSection />
+        <ProductsSection variant="home" />
         <ContactFooter />
       </main>
       <CartDrawer />

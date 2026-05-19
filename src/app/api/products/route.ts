@@ -4,7 +4,14 @@ import { loadSiteData } from "@/lib/load-site-data";
 
 export const dynamic = "force-dynamic";
 
-const VALID_CATS = new Set(["pipes", "precast", "paving", "roofing"]);
+const VALID_CATS = new Set([
+  "pipes",
+  "precast",
+  "paving",
+  "roofing",
+  "vent",
+  "sinks",
+]);
 
 export async function GET(request: NextRequest) {
   const cat = request.nextUrl.searchParams.get("cat");
@@ -25,6 +32,10 @@ export async function GET(request: NextRequest) {
         use: p.use,
         image: p.image,
         price: p.price,
+        compareAtPrice: p.compareAtPrice,
+        referenceUrl: p.referenceUrl,
+        listingNote: p.listingNote,
+        badge: p.badge,
       })),
     },
     {

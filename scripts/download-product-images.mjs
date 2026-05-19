@@ -1,7 +1,7 @@
 /**
  * Downloads remote product images into public/images/products/
  * Rewrites product.image to /images/products/<id>.<ext>
- * Writes merged JSON to public/data/data.json (canonical).
+ * Reads/writes public/data/data.json (canonical for runtime); mirrors data/data.json.
  */
 import { createWriteStream, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -11,9 +11,9 @@ import { Readable } from "node:stream";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
-const jsonPath = join(root, "data", "data.json");
+const jsonPath = join(root, "public", "data", "data.json");
+const jsonMirrorPath = join(root, "data", "data.json");
 const outDir = join(root, "public", "images", "products");
-const outJson = join(root, "public", "data", "data.json");
 
 function extFromUrl(url, contentType) {
   const lower = url.toLowerCase();
@@ -35,7 +35,8 @@ async function download(url, destPath) {
 
 async function main() {
   mkdirSync(outDir, { recursive: true });
-  mkdirSync(dirname(outJson), { recursive: true });
+  mkdirSync(dirname(jsonPath), { recursive: true });
+  mkdirSync(dirname(jsonMirrorPath), { recursive: true });
 
   const raw = JSON.parse(readFileSync(jsonPath, "utf8"));
   const failures = [];
@@ -56,12 +57,13 @@ async function main() {
   }
 
   const jsonOut = JSON.stringify(raw, null, 2) + "\n";
-  writeFileSync(outJson, jsonOut, "utf8");
   writeFileSync(jsonPath, jsonOut, "utf8");
+  writeFileSync(jsonMirrorPath, jsonOut, "utf8");
   console.log(
     JSON.stringify(
       {
-        wrote: outJson,
+        wrote: jsonPath,
+        mirrored: jsonMirrorPath,
         imagesDir: outDir,
         downloaded: (raw.products ?? []).filter((x) =>
           String(x.image ?? "").startsWith("/images/products/")

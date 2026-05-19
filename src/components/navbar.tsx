@@ -45,7 +45,7 @@ export function Navbar() {
           aria-label="Galana Group home"
           onClick={() => setOpen(false)}
         >
-          <SiteLogo priority heightPx={52} className="nav-logo-mark" />
+          <SiteLogo priority heightPx={70} className="nav-logo-mark bg-blue-300" />
           <Image
             src={SITE_LOGO_NAME_SRC}
             alt=""

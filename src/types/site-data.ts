@@ -102,6 +102,10 @@ export interface SiteData {
      image: string;
      /** Price in KES (optional for admin) */
      price?: number;
+     compareAtPrice?: number;
+     referenceUrl?: string;
+     listingNote?: string;
+     badge?: "new" | "sale" | "featured";
    }>;
   faq: Array<{ keywords: string[]; answer: string }>;
 }

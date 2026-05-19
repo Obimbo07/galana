@@ -22,7 +22,7 @@ export default function ProductsPage() {
     <GalanaProvider data={siteData}>
       <Navbar />
       <main>
-        <ProductsSection />
+        <ProductsSection variant="store" />
         <ContactFooter />
       </main>
       <CartDrawer />

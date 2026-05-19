@@ -2,25 +2,79 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import { useGalana } from "@/providers/galana-provider";
+
+/** Full-bleed hero backgrounds — copy/overlays stay static; only these cycle. */
+const HERO_BACKGROUND_SLIDES = [
+  "/wallpaper/combines.png",
+  "/wallpaper/pavement-lay.png",
+  "/wallpaper/rooftiles.jpeg",
+] as const;
+
+const HERO_SLIDE_INTERVAL_MS = 7000;
+
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  return reduced;
+}
 
 export function Hero() {
   const { data } = useGalana();
+  const reducedMotion = usePrefersReducedMotion();
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const slides = useMemo(
+    () =>
+      reducedMotion
+        ? [HERO_BACKGROUND_SLIDES[0]]
+        : [...HERO_BACKGROUND_SLIDES],
+    [reducedMotion]
+  );
 
   const h = data.hero;
 
+  useEffect(() => {
+    if (reducedMotion || slides.length < 2) return;
+    const id = window.setInterval(() => {
+      setSlideIndex((i) => (i + 1) % slides.length);
+    }, HERO_SLIDE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [reducedMotion, slides.length]);
+
+  useEffect(() => {
+    if (slideIndex >= slides.length) setSlideIndex(0);
+  }, [slides.length, slideIndex]);
+
   return (
     <section id="hero">
-      <div className="hero-photo">
-        <Image
-          src="/wallpaper/combines.png"
-          alt="Galana concrete pipes, paving, roof tiles and precast products"
-          fill
-          priority
-          sizes="100vw"
-          quality={92}
-          className="hero-photo-img"
-        />
+      <div className="hero-photo" aria-hidden="true">
+        <div className="hero-photo-carousel">
+          {slides.map((src, i) => (
+            <div
+              key={src}
+              className={`hero-photo-slide${i === slideIndex ? " hero-photo-slide-active" : ""}`}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="100vw"
+                quality={93}
+                priority={i === 0}
+                fetchPriority={i === slideIndex ? "high" : "low"}
+                className="hero-photo-img"
+              />
+            </div>
+          ))}
+        </div>
       </div>
       <div className="hero-bg" aria-hidden />
       <div className="hero-shell">

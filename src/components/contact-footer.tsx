@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { NavSocialLinks } from "@/components/nav-social";
@@ -181,17 +180,7 @@ export function ContactFooter() {
                 </div>
               </div>
             </div>
-            <div className="quote-box quote-box-visual reveal reveal-delay-3">
-              <div className="contact-photo-rail" aria-hidden>
-                <Image
-                  src="/wallpaper/rooftiles.jpeg"
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 100vw, 220px"
-                  className="contact-photo-rail-img"
-                />
-                <div className="contact-photo-rail-scrim" />
-              </div>
+            <div className="quote-box reveal reveal-delay-3">
               {!quoteSent ? (
                 <div id="quoteForm">
                   <h3>Request a Quote</h3>
