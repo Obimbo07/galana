@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   useCallback,
   useEffect,
+  useDeferredValue,
   useMemo,
   useRef,
   useState,
@@ -12,6 +14,7 @@ import {
 } from "react";
 import { catalogShuffleSeed, shuffleWithSeed } from "@/lib/catalog-shuffle";
 import { useGalana } from "@/providers/galana-provider";
+import { useWishlist } from "@/hooks/use-wishlist";
 import type { SiteData } from "@/types/site-data";
 
 export type ProductsSectionVariant = "home" | "store";
@@ -99,6 +102,10 @@ function filterCatalog(
 ): CatalogProduct[] {
   const list = products ?? [];
   return cat === "all" ? list : list.filter((p) => p.cat === cat);
+}
+
+function normalizeQuery(value: string): string {
+  return value.trim().toLowerCase();
 }
 
 function ProductBadges({
@@ -287,6 +294,8 @@ function ProductCard({
   onQuickView?: () => void;
 }) {
   const { addToCart } = useGalana();
+  const { has: isWished, toggle: toggleWish } = useWishlist();
+  const wished = isWished(p.id);
 
   const staggerStyle = {
     ["--reveal-i" as string]: String(index),
@@ -300,6 +309,28 @@ function ProductCard({
       style={staggerStyle}
     >
       <ProductBadges p={p} />
+      <button
+        type="button"
+        className={`product-wishlist-btn${wished ? " is-active" : ""}`}
+        aria-pressed={wished}
+        aria-label={wished ? `Remove ${p.name} from wishlist` : `Add ${p.name} to wishlist`}
+        title={wished ? "Saved to wishlist" : "Save to wishlist"}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleWish(p.id);
+        }}
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path
+            d="M12 21s-7.5-4.55-9.5-9.05C1.05 8.4 3.3 5 6.8 5c1.95 0 3.4 1.05 4.2 2.3.8-1.25 2.25-2.3 4.2-2.3 3.5 0 5.75 3.4 4.3 6.95C19.5 16.45 12 21 12 21z"
+            fill={wished ? "currentColor" : "none"}
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
       <div className="product-img-wrap">
         <Image
           src={p.image}
@@ -573,7 +604,18 @@ export function ProductsSection({
     return m;
   }, [embedded]);
 
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams?.get("q") ?? "";
+  const savedOnly = searchParams?.get("saved") === "1";
+  const { ids: wishlistIds } = useWishlist();
   const [cat, setCat] = useState("all");
+  const [query, setQuery] = useState(initialQuery);
+
+  // Keep query in sync when user navigates here via header search
+  useEffect(() => {
+    const q = searchParams?.get("q") ?? "";
+    setQuery(q);
+  }, [searchParams]);
   const [items, setItems] = useState<CatalogProduct[]>(() =>
     filterCatalog(embedded, "all")
   );
@@ -630,9 +672,31 @@ export function ProductsSection({
     [items, catalogSeed, cat]
   );
 
+  const deferredQuery = useDeferredValue(query);
+  const wishlistSet = useMemo(() => new Set(wishlistIds), [wishlistIds]);
+  const filteredBrowse = useMemo(() => {
+    const q = normalizeQuery(deferredQuery);
+    let pool = browseOrdered;
+    if (savedOnly) pool = pool.filter((product) => wishlistSet.has(product.id));
+    if (!q) return pool;
+
+    return pool.filter((product) => {
+      const haystack = normalizeQuery(
+        [
+          product.name,
+          product.use,
+          product.catLabel,
+          product.listingNote ?? "",
+          product.badge ?? "",
+        ].join(" ")
+      );
+      return haystack.includes(q);
+    });
+  }, [browseOrdered, deferredQuery, savedOnly, wishlistSet]);
+
   useEffect(() => {
     browseViewportRef.current?.scrollTo({ left: 0, behavior: "auto" });
-  }, [cat, browseOrdered]);
+  }, [cat, browseOrdered, deferredQuery]);
 
   useEffect(() => {
     const track = browseTrackRef.current;
@@ -664,6 +728,8 @@ export function ProductsSection({
   }, []);
 
   const empty = browseOrdered.length === 0;
+  const searchActive = normalizeQuery(query).length > 0;
+  const filteredEmpty = filteredBrowse.length === 0;
 
   const carouselLabel = useMemo(() => {
     const label = FILTERS.find(([id]) => id === cat)?.[1] ?? "Products";
@@ -684,6 +750,12 @@ export function ProductsSection({
     },
     [scrollToBrowse]
   );
+
+  const resetCatalogFilters = useCallback(() => {
+    setCat("all");
+    setQuery("");
+    scrollToBrowse();
+  }, [scrollToBrowse]);
 
   const openQuickView = useCallback((p: CatalogProduct) => {
     setQuickViewProduct(p);
@@ -800,6 +872,54 @@ export function ProductsSection({
             </p>
           </header>
 
+          <form
+            className="products-search-bar shop-search-bar"
+            role="search"
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <label className="sr-only" htmlFor="product-search-input">
+              Search products
+            </label>
+            <span className="products-search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </span>
+            <input
+              id="product-search-input"
+              type="search"
+              className="products-search-input"
+              placeholder="Search products, materials, or category"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              aria-label="Search products"
+              autoComplete="off"
+            />
+            <button
+              type="button"
+              className="products-search-reset btn-outline"
+              onClick={resetCatalogFilters}
+              disabled={!searchActive && cat === "all"}
+            >
+              Clear filters
+            </button>
+          </form>
+
+          {savedOnly ? (
+            <div className="catalog-saved-banner" role="status">
+              <span>
+                <strong>Showing your saved items</strong>
+                {wishlistIds.length > 0
+                  ? ` · ${wishlistIds.length} in your wishlist`
+                  : " · your wishlist is empty"}
+              </span>
+              <Link href="/products" className="catalog-saved-clear">
+                Show all products
+              </Link>
+            </div>
+          ) : null}
+
           <div
             className="products-filter shop-filter-bar"
             id="productsFilter"
@@ -844,12 +964,23 @@ export function ProductsSection({
               aria-label={carouselLabel}
             >
               <div ref={browseTrackRef} className="products-carousel-track">
-                {empty ? (
+                {searchActive && filteredEmpty ? (
+                  <div className="products-carousel-empty">
+                    <p>No products match “{query.trim()}”.</p>
+                    <button
+                      type="button"
+                      className="btn-primary products-empty-action"
+                      onClick={resetCatalogFilters}
+                    >
+                      View all products
+                    </button>
+                  </div>
+                ) : empty ? (
                   <p className="products-carousel-empty">
                     No products in this category yet.
                   </p>
                 ) : (
-                  browseOrdered.map((p, i) => (
+                  filteredBrowse.map((p, i) => (
                     <div key={p.id} className="products-carousel-slide">
                       <ProductCard
                         p={p}

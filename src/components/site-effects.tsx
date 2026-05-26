@@ -7,13 +7,19 @@ export function SiteEffects() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => {
-      document
-        .getElementById("siteHeader")
-        ?.classList.toggle("scrolled", window.scrollY > 60);
+    const header = document.getElementById("siteHeader");
+    let ticking = false;
+    const apply = () => {
+      ticking = false;
+      header?.classList.toggle("scrolled", window.scrollY > 60);
     };
-    window.addEventListener("scroll", onScroll);
-    onScroll();
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(apply);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    apply();
 
     const observe = new IntersectionObserver(
       (entries) => {

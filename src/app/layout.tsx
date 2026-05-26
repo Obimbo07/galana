@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+import { ThemeInit } from "@/components/theme-init";
 import { AuthProvider } from "@/providers/auth-provider";
+import { bootstrapGalanaTheme } from "@/lib/galana-theme";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -36,8 +39,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${cormorant.variable}`}>
+    <html
+      lang="en"
+      className={`${outfit.variable} ${cormorant.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <Script
+          id="galana-theme-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: bootstrapGalanaTheme() }}
+        />
+      </head>
       <body>
+        <ThemeInit />
         <AuthProvider>
           {children}
         </AuthProvider>

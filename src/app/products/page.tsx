@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ApplyModal } from "@/components/apply-modal";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ContactFooter } from "@/components/contact-footer";
@@ -22,7 +23,9 @@ export default function ProductsPage() {
     <GalanaProvider data={siteData}>
       <Navbar />
       <main>
-        <ProductsSection variant="store" />
+        <Suspense fallback={null}>
+          <ProductsSection variant="store" />
+        </Suspense>
         <ContactFooter />
       </main>
       <CartDrawer />

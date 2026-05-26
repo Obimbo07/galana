@@ -3,6 +3,7 @@ import { ApplyModal } from "@/components/apply-modal";
 import { CalculatorSection } from "@/components/calculator-section";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ContactFooter } from "@/components/contact-footer";
+import { CtaStrip } from "@/components/cta-strip";
 import { Navbar } from "@/components/navbar";
 import { SiteEffects } from "@/components/site-effects";
 import { SupportWidget } from "@/components/support-widget";
@@ -23,6 +24,16 @@ export default function CalculatorPage() {
       <Navbar />
       <main>
         <CalculatorSection />
+        <CtaStrip
+          eyebrow="Take it further"
+          title="Numbers ready? Turn them into a real order."
+          sub="Drop your calculated quantities into a quote, browse matching products, or speak with our advisors for delivery scheduling."
+          actions={[
+            { href: "/products", label: "View products", variant: "primary" },
+            { href: "/#contact", label: "Talk to us", variant: "outline" },
+            { href: "/services", label: "See services", variant: "outline" },
+          ]}
+        />
         <ContactFooter />
       </main>
       <CartDrawer />

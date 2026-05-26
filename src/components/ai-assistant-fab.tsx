@@ -3,10 +3,11 @@ import type { SVGProps } from "react";
 function AssistantGlyph(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden {...props}>
-      <path
-        fill="currentColor"
-        d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2zm0 14H5.17L4 17.17V4h16v12z"
-      />
+      <rect x="4" y="3" width="16" height="12" rx="3" fill="currentColor" />
+      <polygon points="9 15 8 20 13 15" fill="currentColor" />
+      <circle cx="9" cy="9" r="1" fill="#FFFFFF" />
+      <circle cx="12" cy="9" r="1" fill="#FFFFFF" />
+      <circle cx="15" cy="9" r="1" fill="#FFFFFF" />
     </svg>
   );
 }
