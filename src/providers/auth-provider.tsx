@@ -8,9 +8,11 @@ import {
   useState,
 } from "react";
 import {
+  GoogleAuthProvider,
   onAuthStateChanged,
   signOut as firebaseSignOut,
   signInWithEmailAndPassword,
+  signInWithPopup,
   createUserWithEmailAndPassword,
   updateProfile,
   sendPasswordResetEmail as firebaseSendPasswordResetEmail,
@@ -23,6 +25,7 @@ interface AuthContextValue {
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, displayName?: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   /** Updates Firebase Auth profile display name for the signed-in user. */
   updateDisplayName: (displayName: string) => Promise<void>;
@@ -52,16 +55,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
+    if (!isGalanaFirebaseClientConfigured()) {
+      throw new Error(
+        "Sign-in is not available. Firebase client configuration is missing."
+      );
+    }
     const auth = getGalanaFirebaseAuth();
-    await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email.trim(), password);
   }, []);
 
   const signUp = useCallback(async (email: string, password: string, displayName?: string) => {
+    if (!isGalanaFirebaseClientConfigured()) {
+      throw new Error(
+        "Sign-up is not available. Firebase client configuration is missing."
+      );
+    }
     const auth = getGalanaFirebaseAuth();
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);
     if (displayName && cred.user) {
       await updateProfile(cred.user, { displayName });
     }
+  }, []);
+
+  const signInWithGoogle = useCallback(async () => {
+    if (!isGalanaFirebaseClientConfigured()) {
+      throw new Error(
+        "Google sign-in is not available. Firebase client configuration is missing."
+      );
+    }
+    const auth = getGalanaFirebaseAuth();
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    await signInWithPopup(auth, provider);
   }, []);
 
   const signOut = useCallback(async () => {
@@ -94,6 +119,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loading,
     signIn,
     signUp,
+    signInWithGoogle,
     signOut,
     updateDisplayName,
     sendPasswordResetEmail,
