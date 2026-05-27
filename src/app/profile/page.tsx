@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { ProfileSignInPanel } from "@/components/profile-sign-in-panel";
 import { useAuth } from "@/providers/auth-provider";
 import type { QuoteRequest } from "@/types/galana-firestore";
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,30 +45,22 @@ export default function ProfilePage() {
     };
   }, [user]);
 
-  if (!user) {
+  if (authLoading) {
     return (
-      <div className="checkout-section-inner">
-        <nav className="checkout-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/">Home</Link>
-          <span className="checkout-breadcrumb-sep" aria-hidden>
-            /
-          </span>
-          <span style={{ color: "var(--text)" }}>Profile</span>
-        </nav>
-        <header className="checkout-intro reveal" style={{ opacity: 1 }}>
-          <h1 className="checkout-heading">
-            Sign in to view your <em>profile</em>
-          </h1>
-          <p className="checkout-lead">
-            Please sign in to access your saved quotes and track ongoing projects. Use{" "}
-            <strong>Profile</strong> in the header after you sign in.
-          </p>
-          <Link href="/" className="btn-outline">
-            Go to homepage
-          </Link>
-        </header>
+      <div
+        className="checkout-section-inner checkout-loading"
+        style={{ minHeight: "32vh", justifyContent: "center" }}
+      >
+        <div className="checkout-spinner" aria-hidden />
+        <p style={{ margin: "0.75rem 0 0", color: "var(--muted)", fontSize: "0.9rem" }}>
+          Checking sign-in…
+        </p>
       </div>
     );
+  }
+
+  if (!user) {
+    return <ProfileSignInPanel />;
   }
 
   return (

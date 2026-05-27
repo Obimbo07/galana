@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   useCallback,
   useEffect,
+  useDeferredValue,
   useMemo,
   useRef,
   useState,
@@ -12,6 +14,7 @@ import {
 } from "react";
 import { catalogShuffleSeed, shuffleWithSeed } from "@/lib/catalog-shuffle";
 import { useGalana } from "@/providers/galana-provider";
+import { useWishlist } from "@/hooks/use-wishlist";
 import type { SiteData } from "@/types/site-data";
 
 export type ProductsSectionVariant = "home" | "store";
@@ -60,36 +63,43 @@ const SHOP_CATEGORY_TILES: Array<{
   cat: string;
   title: string;
   blurb: string;
+  image: string;
 }> = [
   {
     cat: "pipes",
     title: "Drainage systems",
     blurb: "Pipes, culverts & access structures",
+    image: "/images/wallpapers/concrete-pipes.png",
   },
   {
     cat: "precast",
     title: "Precast concrete",
     blurb: "Walls, channels, fencing & more",
+    image: "/images/products/pre-wall.jpg",
   },
   {
     cat: "paving",
     title: "Paving & cabros",
     blurb: "Driveways, slabs & decorative paving",
+    image: "/images/wallpapers/pavement-lay.png",
   },
   {
     cat: "roofing",
     title: "Roof tiles",
     blurb: "Profiles & ridge accessories",
+    image: "/images/wallpapers/rooftiles.jpeg",
   },
   {
     cat: "vent",
     title: "Vent & breeze",
     blurb: "Louvers & decorative vents",
+    image: "/images/products/ccb-decorative-vent-200sq.png",
   },
   {
     cat: "sinks",
     title: "Laundry sinks",
     blurb: "Dhobi & terrazzo sinks",
+    image: "/images/products/ccb-terrazzo-laundry-premium.png",
   },
 ];
 
@@ -99,6 +109,10 @@ function filterCatalog(
 ): CatalogProduct[] {
   const list = products ?? [];
   return cat === "all" ? list : list.filter((p) => p.cat === cat);
+}
+
+function normalizeQuery(value: string): string {
+  return value.trim().toLowerCase();
 }
 
 function ProductBadges({
@@ -287,6 +301,8 @@ function ProductCard({
   onQuickView?: () => void;
 }) {
   const { addToCart } = useGalana();
+  const { has: isWished, toggle: toggleWish } = useWishlist();
+  const wished = isWished(p.id);
 
   const staggerStyle = {
     ["--reveal-i" as string]: String(index),
@@ -300,6 +316,28 @@ function ProductCard({
       style={staggerStyle}
     >
       <ProductBadges p={p} />
+      <button
+        type="button"
+        className={`product-wishlist-btn${wished ? " is-active" : ""}`}
+        aria-pressed={wished}
+        aria-label={wished ? `Remove ${p.name} from wishlist` : `Add ${p.name} to wishlist`}
+        title={wished ? "Saved to wishlist" : "Save to wishlist"}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleWish(p.id);
+        }}
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path
+            d="M12 21s-7.5-4.55-9.5-9.05C1.05 8.4 3.3 5 6.8 5c1.95 0 3.4 1.05 4.2 2.3.8-1.25 2.25-2.3 4.2-2.3 3.5 0 5.75 3.4 4.3 6.95C19.5 16.45 12 21 12 21z"
+            fill={wished ? "currentColor" : "none"}
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
       <div className="product-img-wrap">
         <Image
           src={p.image}
@@ -422,43 +460,25 @@ function ShopSpotlightPair({
   );
 }
 
-function HorizontalProductRail({
-  eyebrow,
-  title,
-  subtitle,
+function PopularPicksGrid({
   items,
-  ariaLabel,
-  shuffleOffset,
   catalogSeed,
   onQuickView,
 }: {
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
   items: CatalogProduct[];
-  ariaLabel: string;
-  shuffleOffset: number;
   catalogSeed: number;
-  onQuickView?: (product: CatalogProduct) => void;
+  onQuickView: (product: CatalogProduct) => void;
 }) {
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const ordered = useMemo(
-    () => shuffleWithSeed(items, catalogSeed + shuffleOffset),
-    [items, catalogSeed, shuffleOffset]
+    () => shuffleWithSeed(items, catalogSeed + 433).slice(0, 16),
+    [items, catalogSeed]
   );
 
-  const scrollCarousel = useCallback((dir: -1 | 1) => {
-    const el = viewportRef.current;
-    if (!el) return;
-    const step = Math.max(240, Math.round(el.clientWidth * 0.78));
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  }, []);
-
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
+    const grid = gridRef.current;
+    if (!grid) return;
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -466,73 +486,40 @@ function HorizontalProductRail({
           if (e.isIntersecting) e.target.classList.add("visible");
         });
       },
-      {
-        threshold: 0,
-        rootMargin: "80px 0px 120px 0px",
-        root: null,
-      }
+      { threshold: 0, rootMargin: "80px 0px 120px 0px" }
     );
 
-    track.querySelectorAll(".product-card.reveal").forEach((el) => io.observe(el));
-
+    grid.querySelectorAll(".product-card.reveal").forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [ordered]);
 
   if (ordered.length === 0) return null;
 
   return (
-    <section className="shop-rail reveal">
-      <header className="shop-rail-header">
-        <div>
-          {eyebrow ? (
-            <p className="shop-row-eyebrow">{eyebrow}</p>
-          ) : null}
-          <h3 className="shop-row-title">{title}</h3>
-          {subtitle ? <p className="shop-row-sub">{subtitle}</p> : null}
-        </div>
-        <div className="shop-rail-nav">
-          <button
-            type="button"
-            className="shop-rail-arrow"
-            aria-label={`Scroll ${title} left`}
-            onClick={() => scrollCarousel(-1)}
-          >
-            ‹
-          </button>
-          <button
-            type="button"
-            className="shop-rail-arrow"
-            aria-label={`Scroll ${title} right`}
-            onClick={() => scrollCarousel(1)}
-          >
-            ›
-          </button>
-        </div>
+    <section
+      className="shop-store-section shop-popular reveal"
+      aria-labelledby="shop-popular-heading"
+    >
+      <header className="shop-row-heading">
+        <p className="shop-row-eyebrow">Curated for you</p>
+        <h3 id="shop-popular-heading" className="shop-row-title">
+          Popular picks
+        </h3>
+        <p className="shop-row-sub">
+          New arrivals and community favourites — two rows of standouts across
+          every department.
+        </p>
       </header>
-
-      <div className="products-carousel-wrap shop-rail-carousel shop-rail-carousel--compact">
-        <div
-          ref={viewportRef}
-          className="products-carousel-viewport shop-rail-viewport"
-          tabIndex={0}
-          role="region"
-          aria-roledescription="carousel"
-          aria-label={ariaLabel}
-        >
-          <div ref={trackRef} className="products-carousel-track">
-            {ordered.map((p, i) => (
-              <div key={p.id} className="products-carousel-slide">
-                <ProductCard
-                  p={p}
-                  index={i}
-                  onQuickView={
-                    onQuickView ? () => onQuickView(p) : undefined
-                  }
-                />
-              </div>
-            ))}
+      <div ref={gridRef} className="shop-popular-grid" role="list">
+        {ordered.map((p, i) => (
+          <div key={p.id} className="shop-popular-grid-cell" role="listitem">
+            <ProductCard
+              p={p}
+              index={i}
+              onQuickView={() => onQuickView(p)}
+            />
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );
@@ -557,13 +544,18 @@ export function ProductsSection({
     return [pool[0], pool[1]];
   }, [embedded, catalogSeed]);
 
-  const newArrivalsList = useMemo(() => {
-    const flagged = embedded.filter((p) => p.badge === "new");
-    if (flagged.length) return flagged;
-    return embedded.filter((p) => p.badge === "featured").slice(0, 16);
+  const popularPicksList = useMemo(() => {
+    const newItems = embedded.filter((p) => p.badge === "new");
+    const featured = embedded.filter((p) => p.badge === "featured");
+    const seen = new Set<string>();
+    const merged: CatalogProduct[] = [];
+    for (const p of [...newItems, ...featured, ...embedded]) {
+      if (seen.has(p.id)) continue;
+      seen.add(p.id);
+      merged.push(p);
+    }
+    return merged;
   }, [embedded]);
-
-  const trendingPool = useMemo(() => embedded, [embedded]);
 
   const categoryCounts = useMemo(() => {
     const m = new Map<string, number>();
@@ -573,7 +565,27 @@ export function ProductsSection({
     return m;
   }, [embedded]);
 
+  const categoryImages = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const tile of SHOP_CATEGORY_TILES) {
+      const fromCatalog = embedded.find((p) => p.cat === tile.cat)?.image;
+      m.set(tile.cat, fromCatalog ?? tile.image);
+    }
+    return m;
+  }, [embedded]);
+
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams?.get("q") ?? "";
+  const savedOnly = searchParams?.get("saved") === "1";
+  const { ids: wishlistIds } = useWishlist();
   const [cat, setCat] = useState("all");
+  const [query, setQuery] = useState(initialQuery);
+
+  // Keep query in sync when user navigates here via header search
+  useEffect(() => {
+    const q = searchParams?.get("q") ?? "";
+    setQuery(q);
+  }, [searchParams]);
   const [items, setItems] = useState<CatalogProduct[]>(() =>
     filterCatalog(embedded, "all")
   );
@@ -630,9 +642,31 @@ export function ProductsSection({
     [items, catalogSeed, cat]
   );
 
+  const deferredQuery = useDeferredValue(query);
+  const wishlistSet = useMemo(() => new Set(wishlistIds), [wishlistIds]);
+  const filteredBrowse = useMemo(() => {
+    const q = normalizeQuery(deferredQuery);
+    let pool = browseOrdered;
+    if (savedOnly) pool = pool.filter((product) => wishlistSet.has(product.id));
+    if (!q) return pool;
+
+    return pool.filter((product) => {
+      const haystack = normalizeQuery(
+        [
+          product.name,
+          product.use,
+          product.catLabel,
+          product.listingNote ?? "",
+          product.badge ?? "",
+        ].join(" ")
+      );
+      return haystack.includes(q);
+    });
+  }, [browseOrdered, deferredQuery, savedOnly, wishlistSet]);
+
   useEffect(() => {
     browseViewportRef.current?.scrollTo({ left: 0, behavior: "auto" });
-  }, [cat, browseOrdered]);
+  }, [cat, browseOrdered, deferredQuery]);
 
   useEffect(() => {
     const track = browseTrackRef.current;
@@ -656,14 +690,12 @@ export function ProductsSection({
     return () => io.disconnect();
   }, [browseOrdered]);
 
-  const scrollBrowseCarousel = useCallback((dir: -1 | 1) => {
-    const el = browseViewportRef.current;
-    if (!el) return;
-    const step = Math.max(240, Math.round(el.clientWidth * 0.82));
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  }, []);
-
   const empty = browseOrdered.length === 0;
+  const searchActive = normalizeQuery(query).length > 0;
+  const filteredEmpty = filteredBrowse.length === 0;
+  const filteredCount = filteredBrowse.length;
+  const activeCategoryLabel =
+    FILTERS.find(([id]) => id === cat)?.[1] ?? "All products";
 
   const carouselLabel = useMemo(() => {
     const label = FILTERS.find(([id]) => id === cat)?.[1] ?? "Products";
@@ -684,6 +716,12 @@ export function ProductsSection({
     },
     [scrollToBrowse]
   );
+
+  const resetCatalogFilters = useCallback(() => {
+    setCat("all");
+    setQuery("");
+    scrollToBrowse();
+  }, [scrollToBrowse]);
 
   const openQuickView = useCallback((p: CatalogProduct) => {
     setQuickViewProduct(p);
@@ -714,8 +752,8 @@ export function ProductsSection({
         </header>
 
         {variant === "home" && spotlightPair ? (
-          <>
-            <header className="shop-row-heading reveal">
+          <div className="shop-store-section shop-spotlight-block reveal">
+            <header className="shop-row-heading">
               <p className="shop-row-eyebrow">Featured highlights</p>
               <h3 className="shop-row-title">Hand-picked for your next pour</h3>
               <p className="shop-row-sub">
@@ -727,10 +765,13 @@ export function ProductsSection({
               primary={spotlightPair[0]}
               secondary={spotlightPair[1]}
             />
-          </>
+          </div>
         ) : null}
 
-        <section className="shop-by-category reveal" aria-labelledby="shop-by-cat-heading">
+        <section
+          className="shop-store-section shop-by-category reveal"
+          aria-labelledby="shop-by-cat-heading"
+        >
           <header className="shop-row-heading">
             <p className="shop-row-eyebrow">Collections</p>
             <h3 id="shop-by-cat-heading" className="shop-row-title">
@@ -744,17 +785,32 @@ export function ProductsSection({
           <div className="shop-category-grid">
             {SHOP_CATEGORY_TILES.map((tile) => {
               const count = categoryCounts.get(tile.cat) ?? 0;
+              const selected = cat === tile.cat;
+              const imageSrc = categoryImages.get(tile.cat) ?? tile.image;
               return (
                 <button
                   key={tile.cat}
                   type="button"
-                  className="shop-category-tile"
+                  className={`shop-category-tile${selected ? " shop-category-tile-active" : ""}`}
+                  aria-pressed={selected}
                   onClick={() => selectCategory(tile.cat)}
                 >
-                  <span className="shop-category-tile-title">{tile.title}</span>
-                  <span className="shop-category-tile-blurb">{tile.blurb}</span>
-                  <span className="shop-category-tile-meta">
-                    {count} product{count === 1 ? "" : "s"}
+                  <span className="shop-category-tile-bg" aria-hidden="true">
+                    <Image
+                      src={imageSrc}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
+                      className="shop-category-tile-img"
+                    />
+                    <span className="shop-category-tile-scrim" />
+                  </span>
+                  <span className="shop-category-tile-content">
+                    <span className="shop-category-tile-title">{tile.title}</span>
+                    <span className="shop-category-tile-blurb">{tile.blurb}</span>
+                    <span className="shop-category-tile-meta">
+                      {count} product{count === 1 ? "" : "s"}
+                    </span>
                   </span>
                 </button>
               );
@@ -762,31 +818,15 @@ export function ProductsSection({
           </div>
         </section>
 
-        <HorizontalProductRail
-          eyebrow="Just landed"
-          title="New arrivals"
-          subtitle="Fresh catalogue additions — swipe to explore."
-          items={newArrivalsList}
-          ariaLabel="New arrivals product carousel"
-          shuffleOffset={211}
-          catalogSeed={catalogSeed}
-          onQuickView={openQuickView}
-        />
-
-        <HorizontalProductRail
-          eyebrow="Community favourites"
-          title="Popular picks"
-          subtitle="Rotated mix across categories."
-          items={trendingPool.slice(0, Math.min(trendingPool.length, 24))}
-          ariaLabel="Popular picks carousel"
-          shuffleOffset={433}
+        <PopularPicksGrid
+          items={popularPicksList}
           catalogSeed={catalogSeed}
           onQuickView={openQuickView}
         />
 
         <section
           id="browse-catalog"
-          className="shop-browse-all reveal"
+          className="shop-store-section shop-browse-all reveal"
           aria-labelledby="browse-catalog-heading"
         >
           <header className="shop-row-heading">
@@ -795,61 +835,155 @@ export function ProductsSection({
               Browse everything
             </h3>
             <p className="shop-row-sub">
-              Filter by department, then glide horizontally — optimised for thumb
-              and trackpad scrolling on site visits.
+              Search, filter by department, and add to cart — the full Galana
+              inventory in one place.
             </p>
           </header>
 
-          <div
-            className="products-filter shop-filter-bar"
-            id="productsFilter"
-            role="tablist"
-            aria-label="Product departments"
-          >
-            {FILTERS.map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                role="tab"
-                aria-selected={cat === id}
-                className={`filter-btn${cat === id ? " active" : ""}`}
-                onClick={() => setCat(id)}
+          <div className="catalog-toolbar">
+            <form
+              className="products-search-bar catalog-search"
+              role="search"
+              onSubmit={(event) => event.preventDefault()}
+            >
+              <label className="sr-only" htmlFor="product-search-input">
+                Search products
+              </label>
+              <span className="products-search-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.5-3.5" />
+                </svg>
+              </span>
+              <input
+                id="product-search-input"
+                type="search"
+                className="products-search-input"
+                placeholder="Search by name, material, or category…"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                aria-label="Search products"
+                autoComplete="off"
+              />
+              {searchActive ? (
+                <button
+                  type="button"
+                  className="products-search-clear"
+                  aria-label="Clear search"
+                  onClick={() => setQuery("")}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              ) : null}
+            </form>
+
+            {savedOnly ? (
+              <div className="catalog-saved-banner" role="status">
+                <span>
+                  <strong>Showing your saved items</strong>
+                  {wishlistIds.length > 0
+                    ? ` · ${wishlistIds.length} in your wishlist`
+                    : " · your wishlist is empty"}
+                </span>
+                <Link href="/products" className="catalog-saved-clear">
+                  Show all products
+                </Link>
+              </div>
+            ) : null}
+
+            <div className="catalog-filter-panel">
+              <div className="catalog-filter-panel-head">
+                <span className="catalog-filter-label">Department</span>
+                <div className="catalog-results-meta" aria-live="polite">
+                  <span className="catalog-results-meta-pill">
+                    {activeCategoryLabel}
+                  </span>
+                  <span className="catalog-results-meta-text">
+                    {filteredCount} result{filteredCount === 1 ? "" : "s"}
+                    {searchActive ? ` · “${query.trim()}”` : ""}
+                  </span>
+                </div>
+              </div>
+
+              <div
+                className="catalog-filter-chips"
+                id="productsFilter"
+                role="tablist"
+                aria-label="Product departments"
               >
-                {label}
-              </button>
-            ))}
+                {FILTERS.map(([id, label]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    role="tab"
+                    aria-selected={cat === id}
+                    className={`catalog-filter-chip${cat === id ? " is-active" : ""}`}
+                    onClick={() => selectCategory(id)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="catalog-toolbar-actions">
+                {syncing ? (
+                  <p className="products-sync-hint" aria-live="polite">
+                    Updating catalogue…
+                  </p>
+                ) : null}
+                <button
+                  type="button"
+                  className="catalog-reset-btn"
+                  onClick={resetCatalogFilters}
+                  disabled={!searchActive && cat === "all"}
+                >
+                  Reset all
+                </button>
+              </div>
+            </div>
           </div>
 
-          {syncing ? (
-            <p className="products-sync-hint" aria-live="polite">
-              Updating catalogue…
-            </p>
-          ) : null}
-
-          <div className="products-carousel-wrap shop-browse-carousel">
-            <button
-              type="button"
-              className="products-carousel-arrow products-carousel-arrow-prev"
-              aria-label="Scroll products left"
-              onClick={() => scrollBrowseCarousel(-1)}
-            >
-              ‹
-            </button>
+          <div className="products-carousel-wrap shop-browse-carousel shop-catalog-grid">
             <div
               ref={browseViewportRef}
               className="products-carousel-viewport"
-              tabIndex={0}
               role="region"
-              aria-roledescription="carousel"
               aria-label={carouselLabel}
             >
               <div ref={browseTrackRef} className="products-carousel-track">
-                {empty ? (
+                {searchActive && filteredEmpty ? (
+                  <div className="products-carousel-empty">
+                    <p>No products match “{query.trim()}”.</p>
+                    <button
+                      type="button"
+                      className="btn-primary products-empty-action"
+                      onClick={resetCatalogFilters}
+                    >
+                      View all products
+                    </button>
+                  </div>
+                ) : empty ? (
                   <p className="products-carousel-empty">
                     No products in this category yet.
                   </p>
                 ) : (
-                  browseOrdered.map((p, i) => (
+                  filteredBrowse.map((p, i) => (
                     <div key={p.id} className="products-carousel-slide">
                       <ProductCard
                         p={p}
@@ -861,14 +995,6 @@ export function ProductsSection({
                 )}
               </div>
             </div>
-            <button
-              type="button"
-              className="products-carousel-arrow products-carousel-arrow-next"
-              aria-label="Scroll products right"
-              onClick={() => scrollBrowseCarousel(1)}
-            >
-              ›
-            </button>
           </div>
 
           <div className="shop-store-footer-cta reveal">

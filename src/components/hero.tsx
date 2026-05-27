@@ -39,6 +39,17 @@ export function Hero() {
     [reducedMotion]
   );
 
+  /** Defer mounting non-first slides until after first paint so the LCP image isn't
+   *  starved by 2 additional 2 MB PNGs decoded in parallel. */
+  const [mountedSlides, setMountedSlides] = useState(1);
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const idle =
+      (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
+        .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 800));
+    idle(() => setMountedSlides(slides.length));
+  }, [slides.length]);
+
   const h = data.hero;
 
   useEffect(() => {
@@ -57,7 +68,7 @@ export function Hero() {
     <section id="hero">
       <div className="hero-photo" aria-hidden="true">
         <div className="hero-photo-carousel">
-          {slides.map((src, i) => (
+          {slides.slice(0, mountedSlides).map((src, i) => (
             <div
               key={src}
               className={`hero-photo-slide${i === slideIndex ? " hero-photo-slide-active" : ""}`}
@@ -67,9 +78,10 @@ export function Hero() {
                 alt=""
                 fill
                 sizes="100vw"
-                quality={93}
+                quality={i === 0 ? 80 : 75}
                 priority={i === 0}
                 fetchPriority={i === slideIndex ? "high" : "low"}
+                loading={i === 0 ? "eager" : "lazy"}
                 className="hero-photo-img"
               />
             </div>

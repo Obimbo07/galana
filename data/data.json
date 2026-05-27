@@ -230,6 +230,46 @@
           "Technology"
         ],
         "modalKey": "IT & Digital Marketing"
+      },
+      {
+        "slug": "site-supervisor",
+        "title": "Supervisor",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Operations"
+        ],
+        "modalKey": "Supervisor"
+      },
+      {
+        "slug": "marketing-executive",
+        "title": "Marketing Executive",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Marketing"
+        ],
+        "modalKey": "Marketing Executive"
+      },
+      {
+        "slug": "store-keeper",
+        "title": "Store Keeper",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Inventory"
+        ],
+        "modalKey": "Store Keeper"
+      },
+      {
+        "slug": "social-media-marketing-specialist",
+        "title": "Social Media Marketing Specialist",
+        "tags": [
+          "Nairobi",
+          "Full-Time",
+          "Marketing"
+        ],
+        "modalKey": "Social Media Marketing Specialist"
       }
     ]
   },
