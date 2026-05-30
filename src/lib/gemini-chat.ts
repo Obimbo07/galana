@@ -7,8 +7,47 @@ import {
 import type { ChatApiMessage } from "@/types/chat";
 import type { SiteData } from "@/types/site-data";
 
+/** Models that no longer have free-tier quota for many API keys (May 2026). */
+const DEPRECATED_DEFAULT_MODELS = new Set([
+  "gemini-2.0-flash",
+  "gemini-2.0-flash-lite",
+  "gemini-1.5-flash",
+  "gemini-1.5-flash-8b",
+]);
+
+export const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash";
+
+export const GEMINI_MODEL_FALLBACKS = [
+  "gemini-2.5-flash",
+  "gemini-2.5-flash-lite",
+] as const;
+
 export function resolveGeminiModelName(): string {
-  return process.env.GEMINI_MODEL?.trim() || "gemini-2.0-flash";
+  const configured = process.env.GEMINI_MODEL?.trim();
+  if (configured && !DEPRECATED_DEFAULT_MODELS.has(configured)) {
+    return configured;
+  }
+  if (configured && DEPRECATED_DEFAULT_MODELS.has(configured)) {
+    return DEFAULT_GEMINI_MODEL;
+  }
+  return DEFAULT_GEMINI_MODEL;
+}
+
+/** Primary model first, then fallbacks (deduped). */
+export function getGeminiModelCandidates(): string[] {
+  const primary = resolveGeminiModelName();
+  return [...new Set([primary, ...GEMINI_MODEL_FALLBACKS])];
+}
+
+export function isRetryableGeminiError(err: unknown): boolean {
+  const status = getGeminiErrorStatus(err);
+  return status === 429 || status === 404 || status === 503;
+}
+
+export function getGeminiErrorStatus(err: unknown): number | undefined {
+  if (!err || typeof err !== "object") return undefined;
+  const status = (err as { status?: unknown }).status;
+  return typeof status === "number" ? status : undefined;
 }
 
 export function buildFullSystemInstruction(data: SiteData): string {
@@ -100,10 +139,14 @@ export function normalizeGeminiHistory(messages: ChatApiMessage[]): {
   return { history, lastUserText };
 }
 
-export function createGeminiModel(apiKey: string, systemInstruction: string) {
+export function createGeminiModel(
+  apiKey: string,
+  systemInstruction: string,
+  modelName?: string
+) {
   const ai = new GoogleGenerativeAI(apiKey);
   return ai.getGenerativeModel({
-    model: resolveGeminiModelName(),
+    model: modelName ?? resolveGeminiModelName(),
     systemInstruction,
     generationConfig: {
       temperature: 0.55,

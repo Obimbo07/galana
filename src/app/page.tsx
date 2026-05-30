@@ -4,7 +4,10 @@ import { ContactFooter } from "@/components/contact-footer";
 import { CalculatorSection } from "@/components/calculator-section";
 import { CtaStrip } from "@/components/cta-strip";
 import { Hero } from "@/components/hero";
+import { ProductShowcaseSection } from "@/components/product-showcase-section";
 import { ProductsSection } from "@/components/products-section";
+import { ServicesCarousel } from "@/components/services-carousel";
+// import { TrustedBySection } from "@/components/trusted-by-section";
 import { Navbar } from "@/components/navbar";
 import { SiteEffects } from "@/components/site-effects";
 import { SupportWidget } from "@/components/support-widget";
@@ -20,6 +23,9 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <ProductShowcaseSection />
+        <ServicesCarousel />
+        {/* <TrustedBySection /> — re-enable once partner logos are ready */}
         <CalculatorSection />
         <Suspense fallback={null}>
           <ProductsSection variant="home" />

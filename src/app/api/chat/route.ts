@@ -8,6 +8,9 @@ import { loadSiteData } from "@/lib/load-site-data";
 import {
   buildFullSystemInstruction,
   createGeminiModel,
+  getGeminiErrorStatus,
+  getGeminiModelCandidates,
+  isRetryableGeminiError,
   normalizeGeminiHistory,
 } from "@/lib/gemini-chat";
 import type {
@@ -82,12 +85,25 @@ function parseBody(body: unknown): ChatRequestBody {
 }
 
 function summarizeGeminiFailure(err: unknown): string {
-  if (err instanceof GoogleGenerativeAIResponseError)
-    return "The assistant could not complete that reply. Try shorter questions or WhatsApp.";
-  if (err instanceof GoogleGenerativeAIAbortError)
+  const status = getGeminiErrorStatus(err);
+  if (status === 429) {
+    return "The AI assistant has hit its usage limit. Please wait a minute and try again, or use WhatsApp for immediate help.";
+  }
+  if (status === 404) {
+    return "The configured AI model is unavailable. Ask your admin to set GEMINI_MODEL=gemini-2.5-flash in the environment.";
+  }
+  if (status === 401 || status === 403) {
+    return "The AI assistant API key is invalid or lacks permission. Check GEMINI_API_KEY in your server environment.";
+  }
+  if (err instanceof GoogleGenerativeAIResponseError) {
+    return "The assistant could not complete that reply. Try a shorter question or contact us on WhatsApp.";
+  }
+  if (err instanceof GoogleGenerativeAIAbortError) {
     return "Assistant request cancelled.";
-  if (err instanceof GoogleGenerativeAIError)
+  }
+  if (err instanceof GoogleGenerativeAIError) {
     return "Assistant service temporarily unavailable.";
+  }
   return "Assistant encountered an unexpected error.";
 }
 
@@ -124,23 +140,24 @@ export async function POST(req: Request) {
     return NextResponse.json(payload, { status: 400 });
   }
 
-  const model = createGeminiModel(apiKey, instruction);
+  const modelCandidates = getGeminiModelCandidates();
   const signal = req.signal;
 
   try {
     if (parsed.stream) {
       const stream = new ReadableStream<Uint8Array>({
         async start(controller) {
-          let chat;
-          try {
-            chat = model.startChat({
-              history: history.slice(),
-            });
-            const geminiRes = await chat.sendMessageStream(lastUserText, {
-              signal,
-            });
-            let streamedFull = "";
+          let lastErr: unknown;
+
+          for (const modelName of modelCandidates) {
             try {
+              const model = createGeminiModel(apiKey, instruction, modelName);
+              const chat = model.startChat({ history: history.slice() });
+              const geminiRes = await chat.sendMessageStream(lastUserText, {
+                signal,
+              });
+
+              let streamedFull = "";
               for await (const chunk of geminiRes.stream) {
                 let full = "";
                 try {
@@ -154,9 +171,7 @@ export async function POST(req: Request) {
                   streamedFull = full;
                   if (delta) {
                     controller.enqueue(
-                      encoder.encode(
-                        `${JSON.stringify({ delta })}\n`
-                      )
+                      encoder.encode(`${JSON.stringify({ delta })}\n`)
                     );
                   }
                   continue;
@@ -166,34 +181,28 @@ export async function POST(req: Request) {
                   encoder.encode(`${JSON.stringify({ delta: full })}\n`)
                 );
               }
-            } catch (loopErr: unknown) {
-              const fallback = summarizeGeminiFailure(loopErr);
+
               controller.enqueue(
                 encoder.encode(
-                  `${JSON.stringify({ error: fallback })}\n`
+                  `${JSON.stringify({
+                    done: true,
+                    sessionId: parsed.sessionId,
+                  })}\n`
                 )
               );
               controller.close();
               return;
+            } catch (err: unknown) {
+              lastErr = err;
+              if (!isRetryableGeminiError(err)) break;
             }
-
-            controller.enqueue(
-              encoder.encode(
-                `${JSON.stringify({
-                  done: true,
-                  sessionId: parsed.sessionId,
-                })}\n`
-              )
-            );
-            controller.close();
-          } catch (outerErr: unknown) {
-            const fallback =
-              summarizeGeminiFailure(outerErr);
-            controller.enqueue(
-              encoder.encode(`${JSON.stringify({ error: fallback })}\n`)
-            );
-            controller.close();
           }
+
+          const fallback = summarizeGeminiFailure(lastErr);
+          controller.enqueue(
+            encoder.encode(`${JSON.stringify({ error: fallback })}\n`)
+          );
+          controller.close();
         },
       });
 
@@ -206,22 +215,37 @@ export async function POST(req: Request) {
       });
     }
 
-    const chat = model.startChat({ history });
-    const res = await chat.sendMessage(lastUserText, { signal });
-    let full = "";
-    try {
-      full = res.response.text();
-    } catch (extractErr: unknown) {
-      const payload: ChatErrorBody = {
-        ok: false,
-        message: summarizeGeminiFailure(extractErr),
-      };
-      return NextResponse.json(payload, { status: 422 });
+    let lastErr: unknown;
+    for (const modelName of modelCandidates) {
+      try {
+        const model = createGeminiModel(apiKey, instruction, modelName);
+        const chat = model.startChat({ history });
+        const res = await chat.sendMessage(lastUserText, { signal });
+        let full = "";
+        try {
+          full = res.response.text();
+        } catch (extractErr: unknown) {
+          const payload: ChatErrorBody = {
+            ok: false,
+            message: summarizeGeminiFailure(extractErr),
+          };
+          return NextResponse.json(payload, { status: 422 });
+        }
+        return NextResponse.json({
+          message: full.trim(),
+          sessionId: parsed.sessionId,
+        });
+      } catch (err: unknown) {
+        lastErr = err;
+        if (!isRetryableGeminiError(err)) break;
+      }
     }
-    return NextResponse.json({
-      message: full.trim(),
-      sessionId: parsed.sessionId,
-    });
+
+    const payload: ChatErrorBody = {
+      ok: false,
+      message: summarizeGeminiFailure(lastErr),
+    };
+    return NextResponse.json(payload, { status: 503 });
   } catch (err: unknown) {
     const payload: ChatErrorBody = {
       ok: false,
