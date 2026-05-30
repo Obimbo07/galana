@@ -8,8 +8,8 @@ import { useGalana } from "@/providers/galana-provider";
 /** Full-bleed hero backgrounds — copy/overlays stay static; only these cycle. */
 const HERO_BACKGROUND_SLIDES = [
   "/wallpaper/combines.png",
-  "/wallpaper/pavement-lay.png",
-  "/wallpaper/rooftiles.jpeg",
+  "/wallpaper/improved_images_4k_conrete-pipes.png",
+  "/wallpaper/ariel-shot-galana-workmanship.png",
 ] as const;
 
 const HERO_SLIDE_INTERVAL_MS = 7000;

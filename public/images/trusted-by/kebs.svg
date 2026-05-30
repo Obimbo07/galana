@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" role="img" aria-label="KEBS">
+  <rect x="2" y="8" width="40" height="40" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <path d="M14 28h16M22 20v16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="54" y="26" fill="currentColor" font-family="system-ui,sans-serif" font-size="15" font-weight="700" letter-spacing="0.06em">KEBS</text>
+  <text x="54" y="42" fill="currentColor" font-family="system-ui,sans-serif" font-size="8.5" font-weight="500" opacity="0.75">Kenya Bureau of Standards</text>
+</svg>

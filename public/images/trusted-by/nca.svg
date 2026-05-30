@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" role="img" aria-label="National Construction Authority">
+  <path d="M8 44V16l18-8 18 8v28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M20 36V24l6-3 6 3v12" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="54" y="26" fill="currentColor" font-family="system-ui,sans-serif" font-size="15" font-weight="700" letter-spacing="0.04em">NCA</text>
+  <text x="54" y="42" fill="currentColor" font-family="system-ui,sans-serif" font-size="8" font-weight="500" opacity="0.75">National Construction Authority</text>
+</svg>
