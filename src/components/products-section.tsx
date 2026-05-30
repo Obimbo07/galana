@@ -12,6 +12,12 @@ import {
   useState,
   type CSSProperties,
 } from "react";
+import {
+  CatalogLoadingStatus,
+  PopularPicksSkeleton,
+  ProductCarouselSkeleton,
+  SpotlightSkeleton,
+} from "@/components/products-loading";
 import { catalogShuffleSeed, shuffleWithSeed } from "@/lib/catalog-shuffle";
 import { useGalana } from "@/providers/galana-provider";
 import { useWishlist } from "@/hooks/use-wishlist";
@@ -295,22 +301,25 @@ function ProductCard({
   p,
   index,
   onQuickView,
+  showReveal = false,
 }: {
   p: CatalogProduct;
   index: number;
   onQuickView?: () => void;
+  /** Off by default in the shop — avoids opacity:0 when IO runs before mount. */
+  showReveal?: boolean;
 }) {
   const { addToCart } = useGalana();
   const { has: isWished, toggle: toggleWish } = useWishlist();
   const wished = isWished(p.id);
 
-  const staggerStyle = {
-    ["--reveal-i" as string]: String(index),
-  } as CSSProperties;
+  const staggerStyle = showReveal
+    ? ({ ["--reveal-i" as string]: String(index) } as CSSProperties)
+    : undefined;
 
   return (
     <article
-      className="product-card ecommerce-card reveal reveal-stagger-item"
+      className={`product-card ecommerce-card${showReveal ? " reveal reveal-stagger-item" : ""}`}
       data-cat={p.cat}
       data-product-id={p.id}
       style={staggerStyle}
@@ -469,35 +478,16 @@ function PopularPicksGrid({
   catalogSeed: number;
   onQuickView: (product: CatalogProduct) => void;
 }) {
-  const gridRef = useRef<HTMLDivElement>(null);
-
   const ordered = useMemo(
     () => shuffleWithSeed(items, catalogSeed + 433).slice(0, 16),
     [items, catalogSeed]
   );
 
-  useEffect(() => {
-    const grid = gridRef.current;
-    if (!grid) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("visible");
-        });
-      },
-      { threshold: 0, rootMargin: "80px 0px 120px 0px" }
-    );
-
-    grid.querySelectorAll(".product-card.reveal").forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [ordered]);
-
   if (ordered.length === 0) return null;
 
   return (
     <section
-      className="shop-store-section shop-popular reveal"
+      className="shop-store-section shop-popular"
       aria-labelledby="shop-popular-heading"
     >
       <header className="shop-row-heading">
@@ -510,7 +500,7 @@ function PopularPicksGrid({
           every department.
         </p>
       </header>
-      <div ref={gridRef} className="shop-popular-grid" role="list">
+      <div className="shop-popular-grid" role="list">
         {ordered.map((p, i) => (
           <div key={p.id} className="shop-popular-grid-cell" role="listitem">
             <ProductCard
@@ -590,6 +580,7 @@ export function ProductsSection({
     filterCatalog(embedded, "all")
   );
   const [syncing, setSyncing] = useState(false);
+  const [initialSync, setInitialSync] = useState(true);
   const [quickViewProduct, setQuickViewProduct] =
     useState<CatalogProduct | null>(null);
 
@@ -631,7 +622,8 @@ export function ProductsSection({
         setItems(optimistic);
       })
       .finally(() => {
-        if (!ac.signal.aborted) setSyncing(false);
+        setSyncing(false);
+        setInitialSync(false);
       });
 
     return () => ac.abort();
@@ -667,28 +659,6 @@ export function ProductsSection({
   useEffect(() => {
     browseViewportRef.current?.scrollTo({ left: 0, behavior: "auto" });
   }, [cat, browseOrdered, deferredQuery]);
-
-  useEffect(() => {
-    const track = browseTrackRef.current;
-    if (!track) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("visible");
-        });
-      },
-      {
-        threshold: 0,
-        rootMargin: "100px 0px 140px 0px",
-        root: null,
-      }
-    );
-
-    track.querySelectorAll(".product-card.reveal").forEach((el) => io.observe(el));
-
-    return () => io.disconnect();
-  }, [browseOrdered]);
 
   const empty = browseOrdered.length === 0;
   const searchActive = normalizeQuery(query).length > 0;
@@ -730,9 +700,16 @@ export function ProductsSection({
   const closeQuickView = useCallback(() => setQuickViewProduct(null), []);
 
   const totalListed = embedded.length;
+  const showSpotlightSkeleton =
+    variant === "home" && initialSync && !spotlightPair;
+  const browseShowsSkeleton = (initialSync || syncing) && !searchActive;
 
   return (
-    <section id="products" className="shop-storefront">
+    <section
+      id="products"
+      className={`shop-storefront${syncing || initialSync ? " shop-storefront--loading" : ""}`}
+      aria-busy={syncing || initialSync}
+    >
       <ProductQuickViewDialog
         product={quickViewProduct}
         onClose={closeQuickView}
@@ -751,7 +728,9 @@ export function ProductsSection({
           </p>
         </header>
 
-        {variant === "home" && spotlightPair ? (
+        {showSpotlightSkeleton ? (
+          <SpotlightSkeleton />
+        ) : variant === "home" && spotlightPair ? (
           <div className="shop-store-section shop-spotlight-block reveal">
             <header className="shop-row-heading">
               <p className="shop-row-eyebrow">Featured highlights</p>
@@ -943,9 +922,11 @@ export function ProductsSection({
 
               <div className="catalog-toolbar-actions">
                 {syncing ? (
-                  <p className="products-sync-hint" aria-live="polite">
-                    Updating catalogue…
-                  </p>
+                  <CatalogLoadingStatus
+                    label={
+                      initialSync ? "Loading products…" : "Updating catalogue…"
+                    }
+                  />
                 ) : null}
                 <button
                   type="button"
@@ -959,43 +940,47 @@ export function ProductsSection({
             </div>
           </div>
 
-          <div className="products-carousel-wrap shop-browse-carousel shop-catalog-grid">
-            <div
-              ref={browseViewportRef}
-              className="products-carousel-viewport"
-              role="region"
-              aria-label={carouselLabel}
-            >
-              <div ref={browseTrackRef} className="products-carousel-track">
-                {searchActive && filteredEmpty ? (
-                  <div className="products-carousel-empty">
-                    <p>No products match “{query.trim()}”.</p>
-                    <button
-                      type="button"
-                      className="btn-primary products-empty-action"
-                      onClick={resetCatalogFilters}
-                    >
-                      View all products
-                    </button>
-                  </div>
-                ) : empty ? (
-                  <p className="products-carousel-empty">
-                    No products in this category yet.
-                  </p>
-                ) : (
-                  filteredBrowse.map((p, i) => (
-                    <div key={p.id} className="products-carousel-slide">
-                      <ProductCard
-                        p={p}
-                        index={i}
-                        onQuickView={() => openQuickView(p)}
-                      />
+          {browseShowsSkeleton ? (
+            <ProductCarouselSkeleton count={variant === "home" ? 6 : 5} />
+          ) : (
+            <div className="products-carousel-wrap shop-browse-carousel shop-catalog-grid">
+              <div
+                ref={browseViewportRef}
+                className="products-carousel-viewport"
+                role="region"
+                aria-label={carouselLabel}
+              >
+                <div ref={browseTrackRef} className="products-carousel-track">
+                  {searchActive && filteredEmpty ? (
+                    <div className="products-carousel-empty">
+                      <p>No products match “{query.trim()}”.</p>
+                      <button
+                        type="button"
+                        className="btn-primary products-empty-action"
+                        onClick={resetCatalogFilters}
+                      >
+                        View all products
+                      </button>
                     </div>
-                  ))
-                )}
+                  ) : empty ? (
+                    <p className="products-carousel-empty">
+                      No products in this category yet.
+                    </p>
+                  ) : (
+                    filteredBrowse.map((p, i) => (
+                      <div key={p.id} className="products-carousel-slide">
+                        <ProductCard
+                          p={p}
+                          index={i}
+                          onQuickView={() => openQuickView(p)}
+                        />
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div className="shop-store-footer-cta reveal">
             <Link href="/#contact" className="btn-outline shop-outline-btn">

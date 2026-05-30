@@ -5,6 +5,7 @@ import { CalculatorSection } from "@/components/calculator-section";
 import { CtaStrip } from "@/components/cta-strip";
 import { Hero } from "@/components/hero";
 import { ProductShowcaseSection } from "@/components/product-showcase-section";
+import { ProductsSectionHomeSkeleton } from "@/components/products-loading";
 import { ProductsSection } from "@/components/products-section";
 import { ServicesCarousel } from "@/components/services-carousel";
 // import { TrustedBySection } from "@/components/trusted-by-section";
@@ -27,7 +28,7 @@ export default function Home() {
         <ServicesCarousel />
         {/* <TrustedBySection /> — re-enable once partner logos are ready */}
         <CalculatorSection />
-        <Suspense fallback={null}>
+        <Suspense fallback={<ProductsSectionHomeSkeleton />}>
           <ProductsSection variant="home" />
         </Suspense>
         <CtaStrip />

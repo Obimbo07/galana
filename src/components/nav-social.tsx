@@ -2,13 +2,7 @@ import type { SiteData } from "@/types/site-data";
 
 type SocialKey = keyof NonNullable<SiteData["social"]>;
 
-const ORDER: SocialKey[] = [
-  "linkedin",
-  "instagram",
-  "facebook",
-  "youtube",
-  "twitter",
-];
+const ORDER: SocialKey[] = ["instagram", "facebook", "linkedin"];
 
 function Icon({ id }: { id: SocialKey }) {
   switch (id) {
